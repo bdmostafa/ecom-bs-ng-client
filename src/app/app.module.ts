@@ -11,6 +11,8 @@ import { ProductComponent } from './components/product/product.component';
 import { ThankyouComponent } from './components/thankyou/thankyou.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
