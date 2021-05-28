@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { ProductService } from './product.service';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { IProductServer } from '../models/product.model';
 
 @Injectable({
@@ -239,6 +239,56 @@ export class CartService {
     }
   }
 
+  checkoutFromCart(userId: string) {
+    this.http
+      .post(this.SERVER_URL + '/orders/payment', null)
+      .subscribe((res: { success: boolean }) => {
+        if (res.success) {
+          this.resetCartInfoServer();
+
+          this.http
+            .post(this.SERVER_URL + 'orders/new', {
+              userId,
+              products: this.cartInfoClient.productInfo,
+            })
+            .subscribe((data: IOrderResponse) => {
+              this.orderService.getOrderById(data.orderId).then((products) => {
+                if (data.success) {
+                  // To pass additional information
+                  const navigationExtras: NavigationExtras = {
+                    state: {
+                      products,
+                      message: data.message,
+                      orderId: data.orderId,
+                      total: this.cartInfoClient.total,
+                    },
+                  };
+
+                  // TODO HIDE SPINNER
+
+                  this.router
+                    .navigate(['/thankyou'], navigationExtras)
+                    .then((p) => {
+                      // Reset cartInfoClient, cartTotal
+                      this.cartInfoClient = {
+                        total: 0,
+                        productInfo: [{ inCart: 0, _id: '' }],
+                      };
+                      this.cartTotal$.next(0);
+
+                      // Update local storage
+                      localStorage.setItem(
+                        'cart',
+                        JSON.stringify(this.cartInfoClient)
+                      );
+                    });
+                }
+              });
+            });
+        }
+      });
+  }
+
   private calculateTotal() {
     let total = 0;
 
@@ -263,4 +313,16 @@ export class CartService {
     };
     this.cartData$.next({ ...this.cartInfoServer });
   }
+}
+
+interface IOrderResponse {
+  orderId: string;
+  success: boolean;
+  message: string;
+  products: [
+    {
+      _id: string;
+      numInCart: string;
+    }
+  ];
 }
