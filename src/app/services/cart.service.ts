@@ -25,7 +25,7 @@ export class CartService {
     ],
   };
 
-  // Data variable to store cart information on the server
+  // Data variable to store the cart info on the server (inside ng app)
   private cartInfoServer: ICartServer = {
     total: 0,
     data: [
@@ -152,5 +152,21 @@ export class CartService {
         } // END OF ELSE
       }
     });
+  }
+
+  private calculateTotal() {
+    let total = 0;
+
+    // Loop through each cart and calculate total price
+    this.cartInfoServer.data.forEach(prod => {
+      const {numInCart} = prod;
+      const {price} = prod.product;
+
+      total += numInCart * price;
+    });
+
+    // TODO ASSIGN TOTAL PRICE TO DATA VARIABLE
+    this.cartInfoServer.total = total;
+    this.cartTotal$.next(this.cartInfoServer.total);
   }
 }
