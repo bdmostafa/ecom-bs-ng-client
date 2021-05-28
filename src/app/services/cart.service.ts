@@ -201,6 +201,44 @@ export class CartService {
     }
   }
 
+  deleteProductFromCart(idx: number) {
+    if (window.confirm('Are you sure to remove the product?')) {
+      // Delete from data variables to store
+      this.cartInfoServer.data.splice(idx, 1);
+      this.cartInfoClient.productInfo.splice(idx, 1);
+      this.calculateTotal();
+
+      this.cartInfoClient.total = this.cartInfoServer.total;
+
+      // Assign default value to cartInfoClient if total is 0
+      // And update local storage through updated cartInfoClient object
+      if (this.cartInfoClient.total === 0) {
+        this.cartInfoClient = {
+          total: 0,
+          productInfo: [{ inCart: 0, _id: '' }],
+        };
+        localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
+      } else {
+        localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
+      }
+
+      // Assign default value to cartInfoServer if total is 0.
+      // And emit cartData object
+      if (this.cartInfoServer.total === 0) {
+        this.cartInfoServer = {
+          total: 0,
+          data: [{ numInCart: 0, product: undefined }],
+        };
+        this.cartData$.next({ ...this.cartInfoServer });
+      } else {
+        this.cartData$.next({ ...this.cartInfoServer });
+      }
+    } else {
+      // Cancel Button click -> Not willing to remove
+      return;
+    }
+  }
+
   private calculateTotal() {
     let total = 0;
 
