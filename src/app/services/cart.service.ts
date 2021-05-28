@@ -255,4 +255,12 @@ export class CartService {
     // Emit the current value total
     this.cartTotal$.next(this.cartInfoServer.total);
   }
+
+  private resetCartInfoServer() {
+    this.cartInfoServer = {
+      total: 0,
+      data: [{ numInCart: 0, product: undefined }],
+    };
+    this.cartData$.next({ ...this.cartInfoServer });
+  }
 }
