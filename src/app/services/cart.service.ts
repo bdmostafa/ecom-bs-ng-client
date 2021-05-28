@@ -65,6 +65,8 @@ export class CartService {
               this.cartInfoServer.data[0].numInCart = prod.inCart;
               this.cartInfoServer.data[0].product = actualProductInfo;
               // TODO Create CalculateTotal Function and replace it here
+
+              // Update cartInfoClient and local storage
               this.cartInfoClient.total = this.cartInfoServer.total;
               localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
             } else {
@@ -74,9 +76,12 @@ export class CartService {
                 product: actualProductInfo,
               });
               // TODO Create CalculateTotal Function and replace it here
+
+              // Update cartInfoClient and local storage
               this.cartInfoClient.total = this.cartInfoServer.total;
               localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
             }
+            // Emits the current value to new subscribers
             this.cartData$.next({ ...this.cartInfoServer });
           });
       });
@@ -96,8 +101,11 @@ export class CartService {
         this.cartInfoClient.productInfo[0]._id = product._id;
 
         // TODO Create CalculateTotal Function and replace it here
+        // Update cartInfoClient and local storage
         this.cartInfoClient.total = this.cartInfoServer.total;
         localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
+
+        // Emits the current value to new subscribers
         this.cartData$.next({ ...this.cartInfoServer });
 
         // TODO DISPLAY A TOAST NOTIFICATION
@@ -146,27 +154,67 @@ export class CartService {
           // TODO DISPLAY A TOAST NOTIFICATION
 
           // TODO Create CalculateTotal Function and replace it here
+
+          // Update cartInfoClient and local storage
           this.cartInfoClient.total = this.cartInfoServer.total;
           localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
+
+          // Emits the current value to new subscribers
           this.cartData$.next({ ...this.cartInfoServer });
         } // END OF ELSE
       }
     });
   }
 
+  updateCart(idx: number, increase: boolean) {
+    let data = this.cartInfoServer.data[idx];
+
+    if (increase) {
+      // If product quantity is more than number in cart, increase it
+      data.numInCart < data.product.quantity
+        ? data.numInCart++
+        : data.product.quantity;
+      this.cartInfoClient.productInfo[idx].inCart = data.numInCart;
+      this.calculateTotal();
+
+      // Update cartInfoClient and local storage
+      this.cartInfoClient.total = this.cartInfoServer.total;
+      localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
+
+      // Emits the current value to new subscribers
+      this.cartData$.next({ ...this.cartInfoServer });
+    } else {
+      data.numInCart--;
+
+      if (data.numInCart < 1) {
+        // TODO DELETE FROM CART
+        this.cartData$.next({ ...this.cartInfoServer });
+      } else {
+        this.cartData$.next({ ...this.cartInfoServer });
+        this.cartInfoClient.productInfo[idx].inCart = data.numInCart;
+        this.calculateTotal();
+
+        // Update cartInfoClient and local storage
+        this.cartInfoClient.total = this.cartInfoServer.total;
+        localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
+      }
+    }
+  }
+
   private calculateTotal() {
     let total = 0;
 
     // Loop through each cart and calculate total price
-    this.cartInfoServer.data.forEach(prod => {
-      const {numInCart} = prod;
-      const {price} = prod.product;
+    this.cartInfoServer.data.forEach((prod) => {
+      const { numInCart } = prod;
+      const { price } = prod.product;
 
       total += numInCart * price;
     });
 
-    // TODO ASSIGN TOTAL PRICE TO DATA VARIABLE
+    // Assign total price to data variable to store
     this.cartInfoServer.total = total;
+    // Emit the current value total
     this.cartTotal$.next(this.cartInfoServer.total);
   }
 }
