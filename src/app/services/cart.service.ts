@@ -7,6 +7,8 @@ import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
 import { NavigationExtras, Router } from '@angular/router';
 import { IProductServer } from '../models/product.model';
+import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +44,8 @@ export class CartService {
 
   constructor(
     private http: HttpClient,
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService,
     private productService: ProductService,
     private orderService: OrderService,
     private router: Router
@@ -53,7 +57,11 @@ export class CartService {
     let info: ICartPublic = JSON.parse(localStorage.getItem('cart'));
 
     // Check whether the info is null or has some data
-    if (info != null && info != undefined && info.productInfo[0].inCart != 0) {
+    if (
+      info !== null &&
+      info !== undefined &&
+      info.productInfo[0].inCart !== 0
+    ) {
       this.cartInfoClient = info;
 
       //  Loop through each entry and put it in the cartInfoServer object
@@ -64,8 +72,8 @@ export class CartService {
             if (this.cartInfoServer.data[0].numInCart === 0) {
               this.cartInfoServer.data[0].numInCart = prod.inCart;
               this.cartInfoServer.data[0].product = actualProductInfo;
-              // TODO Create CalculateTotal Function and replace it here
-
+              // Calculate total price
+              this.calculateTotal();
               // Update cartInfoClient and local storage
               this.cartInfoClient.total = this.cartInfoServer.total;
               localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
@@ -75,7 +83,8 @@ export class CartService {
                 numInCart: prod.inCart,
                 product: actualProductInfo,
               });
-              // TODO Create CalculateTotal Function and replace it here
+              // Calculate total price
+              this.calculateTotal();
 
               // Update cartInfoClient and local storage
               this.cartInfoClient.total = this.cartInfoServer.total;
@@ -91,16 +100,18 @@ export class CartService {
   addToCart(id: string, qty?: number) {
     this.productService.getProduct(id).subscribe((product) => {
       // 1. If the cart is empty
-      if (this.cartInfoServer.data[0].product != undefined) {
+      if (this.cartInfoServer.data[0].product === undefined) {
+        console.log('1');
         this.cartInfoServer.data[0].product = product;
-        this.cartInfoServer.data[0].numInCart = qty != undefined ? qty : 1;
+        this.cartInfoServer.data[0].numInCart = qty !== undefined ? qty : 1;
 
-        // TODO CALCULATE TOTAL AMOUNT
+        // Calculate total price
+        this.calculateTotal();
+
         this.cartInfoClient.productInfo[0].inCart =
           this.cartInfoServer.data[0].numInCart;
         this.cartInfoClient.productInfo[0]._id = product._id;
 
-        // TODO Create CalculateTotal Function and replace it here
         // Update cartInfoClient and local storage
         this.cartInfoClient.total = this.cartInfoServer.total;
         localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
@@ -108,39 +119,67 @@ export class CartService {
         // Emits the current value to new subscribers
         this.cartData$.next({ ...this.cartInfoServer });
 
-        // TODO DISPLAY A TOAST NOTIFICATION
+        // Success Toastr
+        this.toastr.success(
+          `${product.title} is added to the cart successfully!`,
+          'Add To Cart',
+          {
+            progressBar: true,
+            positionClass: 'toast-top-right',
+            progressAnimation: 'increasing',
+            timeOut: 2000,
+          }
+        );
       }
       // 2. If the cart has items
       else {
+        console.log(this.cartInfoServer);
         // idx = -1 or a positive value
         let idx = this.cartInfoServer.data.findIndex(
           (p) => p.product._id === product._id
         );
-
-        //    2.a. If that item is already in the cart
+        console.log('2', idx);
+        //    2.a. If that item is already in the cart, update qty
         //    idx -> positive value
-        if (idx != -1) {
-          if (qty != undefined && qty <= product.quantity) {
+        if (idx !== -1) {
+          console.log('2a');
+          if (qty !== undefined && qty <= product.quantity) {
             this.cartInfoServer.data[idx].numInCart =
               this.cartInfoServer.data[idx].numInCart < product.quantity
                 ? qty
                 : product.quantity;
           } else {
-            this.cartInfoServer.data[idx].numInCart =
-              this.cartInfoServer.data[idx].numInCart < product.quantity
-                ? this.cartInfoServer.data[idx].numInCart++
-                : product.quantity;
+            this.cartInfoServer.data[idx].numInCart < product.quantity
+              ? this.cartInfoServer.data[idx].numInCart++
+              : product.quantity;
           }
 
-          // TODO CALCULATE TOTAL AMOUNT
           this.cartInfoClient.productInfo[idx].inCart =
             this.cartInfoServer.data[idx].numInCart;
+          // console.log(this.cartInfoServer.data[idx], product.quantity)
+          // Calculate total price
+          this.calculateTotal();
 
-          // TODO DISPLAY A TOAST NOTIFICATION
+          // Update cartInfoClient and local storage
+          this.cartInfoClient.total = this.cartInfoServer.total;
+          localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
+
+          // Info Toastr
+          this.toastr.info(
+            `${product.title} quantity is updated to the cart successfully!`,
+            'Update Product Quantity',
+            {
+              progressBar: true,
+              positionClass: 'toast-top-right',
+              progressAnimation: 'increasing',
+              timeOut: 1000,
+            }
+          );
         } // END OF IF
 
         //   2.b. If that item is not in the cart (idx is -1)
         else {
+          console.log('2b');
           this.cartInfoServer.data.push({
             numInCart: 1,
             product: product,
@@ -151,9 +190,20 @@ export class CartService {
             _id: product._id,
           });
 
-          // TODO DISPLAY A TOAST NOTIFICATION
+          // Success Toastr
+          this.toastr.success(
+            `${product.title} is added to the cart successfully!`,
+            'Add To Cart',
+            {
+              progressBar: true,
+              positionClass: 'toast-top-right',
+              progressAnimation: 'increasing',
+              timeOut: 2000,
+            }
+          );
 
-          // TODO Create CalculateTotal Function and replace it here
+          // Calculate total price
+          this.calculateTotal();
 
           // Update cartInfoClient and local storage
           this.cartInfoClient.total = this.cartInfoServer.total;
@@ -163,6 +213,7 @@ export class CartService {
           this.cartData$.next({ ...this.cartInfoServer });
         } // END OF ELSE
       }
+      console.log(this.cartInfoServer);
     });
   }
 
@@ -187,7 +238,8 @@ export class CartService {
       data.numInCart--;
 
       if (data.numInCart < 1) {
-        // TODO DELETE FROM CART
+        // Delete product from the cart and emit the current value
+        this.deleteProductFromCart(idx);
         this.cartData$.next({ ...this.cartInfoServer });
       } else {
         this.cartData$.next({ ...this.cartInfoServer });
@@ -264,7 +316,8 @@ export class CartService {
                     },
                   };
 
-                  // TODO HIDE SPINNER
+                  // Hide spinner
+                  this.spinner.hide().then();
 
                   this.router
                     .navigate(['/thankyou'], navigationExtras)
@@ -286,11 +339,28 @@ export class CartService {
               });
             });
         }
+        // If res.success is false
+        else {
+          this.spinner.hide().then();
+          this.router.navigateByUrl('/checkout').then();
+
+          // Error Toastr
+          this.toastr.error(
+            `Sorry, failed to order successfully. Please try again!`,
+            'Order Failed',
+            {
+              progressBar: true,
+              positionClass: 'toast-top-right',
+              progressAnimation: 'increasing',
+              timeOut: 1500,
+            }
+          );
+        }
       });
   }
 
   private calculateTotal() {
-    let total = 0;
+    let total: number = 0;
 
     // Loop through each cart and calculate total price
     this.cartInfoServer.data.forEach((prod) => {
