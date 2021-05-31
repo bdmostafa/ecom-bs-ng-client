@@ -40,7 +40,7 @@ export class CartService {
 
   /* OBSERVABLES FOR THE COMPONENTS TO SUBSCRIBE*/
   cartTotal$ = new BehaviorSubject<number>(0);
-  cartData$ = new BehaviorSubject<ICartServer>(this.cartInfoServer);
+  cartInfo$ = new BehaviorSubject<ICartServer>(this.cartInfoServer);
 
   constructor(
     private http: HttpClient,
@@ -51,7 +51,7 @@ export class CartService {
     private router: Router
   ) {
     this.cartTotal$.next(this.cartInfoServer.total);
-    this.cartData$.next(this.cartInfoServer);
+    this.cartInfo$.next(this.cartInfoServer);
 
     // Get the info from Local Storage
     let info: ICartPublic = JSON.parse(localStorage.getItem('cart'));
@@ -91,7 +91,7 @@ export class CartService {
               localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
             }
             // Emits the current value to new subscribers
-            this.cartData$.next({ ...this.cartInfoServer });
+            this.cartInfo$.next({ ...this.cartInfoServer });
           });
       });
     }
@@ -117,7 +117,7 @@ export class CartService {
         localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
 
         // Emits the current value to new subscribers
-        this.cartData$.next({ ...this.cartInfoServer });
+        this.cartInfo$.next({ ...this.cartInfoServer });
 
         // Success Toastr
         this.toastr.success(
@@ -210,10 +210,11 @@ export class CartService {
           localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
 
           // Emits the current value to new subscribers
-          this.cartData$.next({ ...this.cartInfoServer });
+          this.cartInfo$.next({ ...this.cartInfoServer });
         } // END OF ELSE
       }
-      console.log(this.cartInfoServer);
+      // console.log(this.cartInfoServer);
+      console.log(this.cartTotal$, this.cartInfo$)
     });
   }
 
@@ -233,16 +234,16 @@ export class CartService {
       localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
 
       // Emits the current value to new subscribers
-      this.cartData$.next({ ...this.cartInfoServer });
+      this.cartInfo$.next({ ...this.cartInfoServer });
     } else {
       data.numInCart--;
 
       if (data.numInCart < 1) {
         // Delete product from the cart and emit the current value
         this.deleteProductFromCart(idx);
-        this.cartData$.next({ ...this.cartInfoServer });
+        this.cartInfo$.next({ ...this.cartInfoServer });
       } else {
-        this.cartData$.next({ ...this.cartInfoServer });
+        this.cartInfo$.next({ ...this.cartInfoServer });
         this.cartInfoClient.productInfo[idx].inCart = data.numInCart;
         this.calculateTotal();
 
@@ -281,9 +282,9 @@ export class CartService {
           total: 0,
           data: [{ numInCart: 0, product: undefined }],
         };
-        this.cartData$.next({ ...this.cartInfoServer });
+        this.cartInfo$.next({ ...this.cartInfoServer });
       } else {
-        this.cartData$.next({ ...this.cartInfoServer });
+        this.cartInfo$.next({ ...this.cartInfoServer });
       }
     } else {
       // Cancel Button click -> Not willing to remove
@@ -359,6 +360,17 @@ export class CartService {
       });
   }
 
+  calculateSubTotal(idx): number {
+    let subTotal = 0;
+
+    const prod = this.cartInfoServer.data[idx];
+
+    subTotal = prod.product.price * prod.numInCart;
+
+    return subTotal;
+  }
+
+
   private calculateTotal() {
     let total: number = 0;
 
@@ -381,7 +393,7 @@ export class CartService {
       total: 0,
       data: [{ numInCart: 0, product: undefined }],
     };
-    this.cartData$.next({ ...this.cartInfoServer });
+    this.cartInfo$.next({ ...this.cartInfoServer });
   }
 }
 
