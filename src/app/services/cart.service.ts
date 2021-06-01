@@ -235,6 +235,7 @@ export class CartService {
 
       // Emits the current value to new subscribers
       this.cartInfo$.next({ ...this.cartInfoServer });
+      console.log('increase', data.numInCart)
     } else {
       data.numInCart--;
 
@@ -251,6 +252,7 @@ export class CartService {
         this.cartInfoClient.total = this.cartInfoServer.total;
         localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
       }
+      console.log('decrease', data.numInCart)
     }
   }
 

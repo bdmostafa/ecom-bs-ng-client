@@ -1,0 +1,59 @@
+ 
+  form {
+    margin: 0 auto;
+    text-align: center;
+    width: 130px;
+  }
+  
+  .qty-btn {
+    display: inline-block;
+    border: 1px solid rgba(221, 221, 221, 0.986);
+    margin: 0px;
+    width: 40px;
+    height: 40px;
+    padding: 10px 0 12px;
+    text-align: center;
+    background: rgba(238, 238, 238, 0.986);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    vertical-align: top;
+  }
+  
+  .qty-btn:hover {
+    cursor: pointer;
+  }
+  
+  form #decrease {
+    margin-right: -4px;
+    border-radius: 8px 0 0 8px;
+    background: rgba(255, 0, 0, 0.973);
+    color: rgba(255, 255, 255, 0.973);
+  }
+  
+  form #increase {
+    margin-left: -4px;
+    border-radius: 0 8px 8px 0;
+    background: rgba(0, 128, 0, 0.973);
+    color: rgba(255, 255, 255, 0.973);
+  }
+
+  
+  input#qty-number {
+    text-align: center;
+    border: none;
+    border-top: .25px solid #e7e7e7;
+    border-bottom: .25px solid #e7e7e7;
+    margin: 0px;
+    width: 40px;
+    height: 40px;
+  }
+  
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
