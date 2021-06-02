@@ -13,11 +13,26 @@ export class OrderService {
   constructor(private http: HttpClient) { }
 
   getOrderById(orderId: string) {
-    return this.http.get<IProductResponse[]>(this.SERVER_URL + '/orders/' + orderId).toPromise();
+    return this.http.get<IOrderResponse[]>(this.SERVER_URL + '/orders/' + orderId).toPromise();
   }
 }
 
-
+interface IOrderResponse {
+  _id: string;
+  productOrdered: [{
+    product: string,
+    quantity: number
+  }];
+  status: string;
+  success: boolean;
+  message: string;
+  customer: [{
+    _id: string,
+    name: string,
+    email: string
+  }];
+  date: string;
+}
 
 interface IProductResponse {
   _id: string;

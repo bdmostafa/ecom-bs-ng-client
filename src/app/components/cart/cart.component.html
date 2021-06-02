@@ -36,11 +36,19 @@
               </td>
 
               <td>
-                <p class="d-flex align-items-center justify-content-center mt-4">{{ cart.product.title | uppercase }}</p>
+                <p
+                  class="d-flex align-items-center justify-content-center mt-4"
+                >
+                  {{ cart.product.title | uppercase }}
+                </p>
               </td>
 
               <td>
-                <p class="d-flex align-items-center justify-content-center mt-4">{{ cart.product.price | currency: "USD" }}</p>
+                <p
+                  class="d-flex align-items-center justify-content-center mt-4"
+                >
+                  {{ cart.product.price | currency: "USD" }}
+                </p>
               </td>
 
               <td>
@@ -70,19 +78,26 @@
               </td>
 
               <td>
-                <p  class="d-flex align-items-center justify-content-center mt-4">
-                  {{ cart.numInCart }} * {{ cart.product.price | currency: "USD" }}
+                <p
+                  class="d-flex align-items-center justify-content-center mt-4"
+                >
+                  {{ cart.numInCart }} *
+                  {{ cart.product.price | currency: "USD" }}
                 </p>
               </td>
 
               <td>
-                <p  class="d-flex align-items-center justify-content-center mt-4">
+                <p
+                  class="d-flex align-items-center justify-content-center mt-4"
+                >
                   {{ cartService.calculateSubTotal(idx) | currency: "USD" }}
                 </p>
               </td>
 
               <td>
-                <span class="text-danger d-flex justify-content-center mt-4" style="cursor: pointer"
+                <span
+                  class="text-danger d-flex justify-content-center mt-4"
+                  style="cursor: pointer"
                   ><i
                     class="fa fa-trash"
                     (click)="cartService.deleteProductFromCart(idx)"
@@ -96,13 +111,24 @@
               <td></td>
               <td></td>
               <td></td>
-              <td> <h5> TOTAL </h5> </td>
-              <td> <h5> {{ cartTotal | currency: "USD" }} </h5> </td>
+              <td><h5>TOTAL</h5></td>
+              <td>
+                <h5>{{ cartTotal | currency: "USD" }}</h5>
+              </td>
               <td></td>
             </tr>
           </tbody>
         </table>
       </div>
+
+      <div class="col-md-12 d-flex mb-5">
+        <div class="d-flex justify-content-end w-100">
+            <!-- TODO SHIPPING INFO PROCESS -->
+            <!-- <a routerLink="/" class="btn btn-success btn-sm">Continue Shopping</a> -->
+          <a routerLink="/checkout" class="btn btn-danger btn-sm ml-2">Checkout</a>
+        </div>
+      </div>
+
     </div>
   </ng-container>
 </div>

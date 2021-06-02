@@ -214,7 +214,7 @@ export class CartService {
         } // END OF ELSE
       }
       // console.log(this.cartInfoServer);
-      console.log(this.cartTotal$, this.cartInfo$)
+      console.log(this.cartTotal$, this.cartInfo$);
     });
   }
 
@@ -235,7 +235,7 @@ export class CartService {
 
       // Emits the current value to new subscribers
       this.cartInfo$.next({ ...this.cartInfoServer });
-      console.log('increase', data.numInCart)
+      console.log('increase', data.numInCart);
     } else {
       data.numInCart--;
 
@@ -252,7 +252,7 @@ export class CartService {
         this.cartInfoClient.total = this.cartInfoServer.total;
         localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
       }
-      console.log('decrease', data.numInCart)
+      console.log('decrease', data.numInCart);
     }
   }
 
@@ -301,20 +301,30 @@ export class CartService {
         if (res.success) {
           this.resetCartInfoServer();
 
+          // Create an array object according to backend data request requirement
+          const cartInfo = [];
+          this.cartInfoClient.productInfo.map((c) => {
+            const product = c._id;
+            const quantity = c.inCart;
+            cartInfo.push({
+              product,
+              quantity,
+            });
+          });
+          console.log(this.cartInfoClient.productInfo, cartInfo);
           this.http
-            .post(this.SERVER_URL + 'orders/new', {
-              userId,
-              products: this.cartInfoClient.productInfo,
-            })
-            .subscribe((data: IOrderResponse) => {
-              this.orderService.getOrderById(data.orderId).then((products) => {
-                if (data.success) {
+            .post(this.SERVER_URL + '/orders/create', cartInfo)
+            .subscribe((orderData: IOrderResponse) => {
+              console.log("orderData", orderData)
+              this.orderService.getOrderById(orderData._id).then((order) => {
+                console.log("order", order)
+                if (orderData.success) {
                   // To pass additional information
                   const navigationExtras: NavigationExtras = {
                     state: {
-                      products,
-                      message: data.message,
-                      orderId: data.orderId,
+                      products: order,
+                      message: orderData.message,
+                      orderId: orderData._id,
                       total: this.cartInfoClient.total,
                     },
                   };
@@ -325,6 +335,7 @@ export class CartService {
                   this.router
                     .navigate(['/thankyou'], navigationExtras)
                     .then((p) => {
+                      console.log(p)
                       // Reset cartInfoClient, cartTotal
                       this.cartInfoClient = {
                         total: 0,
@@ -349,7 +360,7 @@ export class CartService {
 
           // Error Toastr
           this.toastr.error(
-            `Sorry, failed to order successfully. Please try again!`,
+            `Sorry, failed to order. Please try again!`,
             'Order Failed',
             {
               progressBar: true,
@@ -371,7 +382,6 @@ export class CartService {
 
     return subTotal;
   }
-
 
   private calculateTotal() {
     let total: number = 0;
@@ -400,7 +410,7 @@ export class CartService {
 }
 
 interface IOrderResponse {
-  orderId: string;
+  _id: string;
   success: boolean;
   message: string;
   products: [
