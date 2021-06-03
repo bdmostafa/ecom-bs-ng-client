@@ -315,17 +315,15 @@ export class CartService {
           this.http
             .post(this.SERVER_URL + '/orders/create', cartInfo)
             .subscribe((orderData: IOrderResponse) => {
-              console.log("orderData", orderData)
+              console.log('orderData', orderData);
               this.orderService.getOrderById(orderData._id).then((order) => {
-                console.log("order", order)
+                console.log('order', order);
                 if (orderData.success) {
                   // To pass additional information
                   const navigationExtras: NavigationExtras = {
                     state: {
-                      products: order,
-                      message: orderData.message,
-                      orderId: orderData._id,
-                      total: this.cartInfoClient.total,
+                      order,
+                      totalPrice: this.cartInfoClient.total,
                     },
                   };
 
@@ -335,7 +333,7 @@ export class CartService {
                   this.router
                     .navigate(['/thankyou'], navigationExtras)
                     .then((p) => {
-                      console.log(p)
+                      console.log(p);
                       // Reset cartInfoClient, cartTotal
                       this.cartInfoClient = {
                         total: 0,
@@ -411,12 +409,15 @@ export class CartService {
 
 interface IOrderResponse {
   _id: string;
+  customer: string;
+  date: string;
+  status: string;
   success: boolean;
   message: string;
-  products: [
+  productOrdered: [
     {
-      _id: string;
-      numInCart: string;
+      product: string;
+      quantity: number;
     }
   ];
 }

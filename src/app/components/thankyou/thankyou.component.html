@@ -1,1 +1,59 @@
-<p>thankyou works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12" id="tableOrderData">
+      <div class="jumbotron text-center">
+        <h1 class="display-3">Congratulations!!!</h1>
+        <p class="lead">
+          <!-- TODO SENDING EMAIL CONFIRMATION -->
+          <strong>Please check your email</strong> for order confirmation copy.
+        </p>
+        <hr />
+        <p></p>
+
+        <p>
+          Your Order Id : <strong>{{ orderId }}</strong>
+        </p>
+      </div>
+
+      <div class="text-right d-flex ml-auto mb-3 w-25">
+        <button class="btn btn-success btn-block ml-auto" (click)="openPDF()">Download PDF</button>
+      </div>
+
+      <table class="table table-bordered table-hover">
+        <thead class="thead-info">
+          <tr>
+            <th>Image</th>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>SubTotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of productOrdered">
+            <td>
+              <img
+                [src]="p.product.image"
+                alt="{{ p.product.title }}"
+                class="img-thumbnail border: none"
+                width="100px"
+              />
+            </td>
+            <td>{{ p.product.title }}</td>
+            <td>{{ p.product.price | currency: "USD" }}</td>
+            <td>{{ p.quantity }}</td>
+            <td>{{ p.quantity * p.product.price | currency: "USD" }}</td>
+          </tr>
+
+          <tr class="border-0 font-weight-bold">
+            <td style="border: none"></td>
+            <td style="border: none"></td>
+            <td style="border: none"></td>
+            <td style="border: none">TOTAL</td>
+            <td>{{ cartTotal | currency: "USD" }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
