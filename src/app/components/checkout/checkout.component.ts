@@ -29,6 +29,7 @@ export class CheckoutComponent implements OnInit {
   processCheckout() {
     this.spinner.show().then(c => {
       // console.log(c)
+      // TODO USER_ID PASSING AS PARAMETER
       this.cartService.checkoutFromCart('1');
     });
   }

@@ -103,12 +103,18 @@
                 />
                 <div class="card-header">
                   <div class="card-title">
-                    <p>{{ product.title | uppercase }}</p>
+                    <p>{{ product.title.substr(0, 50) | uppercase }}</p>
                   </div>
                 </div>
                 <div class="card-body">
-                  <h6>{{ product.description.substr(0, 50) }} ...</h6>
-                  <p class="lead">{{ product.price | currency: "USD" }}</p>
+                  <h6>{{ product.description.substr(0, 150) }} ...</h6>
+                  <h3 class="">{{ product.price | currency: "USD" }}</h3>
+                  <p>
+                    <del class="product-old-price">{{
+                      product.price + product.price * 0.1 | currency: "USD"
+                    }}</del>
+                    (10% Off)
+                  </p>
                 </div>
 
                 <div

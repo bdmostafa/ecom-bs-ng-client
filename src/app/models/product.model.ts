@@ -8,7 +8,7 @@ export interface IProductServer {
     quantity: number;
     createdAt: string;
     updatedAt: string;
-    // images: string;
+    images: string;
   }
   
   export interface ServerResponse {
