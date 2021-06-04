@@ -6,6 +6,7 @@ import { ProductComponent } from './components/product/product.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ThankyouComponent } from './components/thankyou/thankyou.component';
+import { CategoryComponent } from './components/category/category.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,9 @@ const routes: Routes = [
   },
   {
     path: 'products/:id', component: ProductComponent
+  },
+  {
+    path: 'products/category/:categoryName', component: CategoryComponent
   },
   {
     path: 'cart', component: CartComponent

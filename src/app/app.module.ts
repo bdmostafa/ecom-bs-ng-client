@@ -17,6 +17,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import { UniqueFilterPipe } from './pipes/unique-filter.pipe';
 import { BdCurrencyPipe } from './pipes/bd-currency.pipe';
+import { CategoryComponent } from './components/category/category.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { BdCurrencyPipe } from './pipes/bd-currency.pipe';
     CartComponent,
     CheckoutComponent,
     UniqueFilterPipe,
-    BdCurrencyPipe
+    BdCurrencyPipe,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,
