@@ -15,6 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
+import { UniqueFilterPipe } from './pipes/unique-filter.pipe';
+import { BdCurrencyPipe } from './pipes/bd-currency.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { ToastrModule } from 'ngx-toastr';
     ProductComponent,
     ThankyouComponent,
     CartComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    UniqueFilterPipe,
+    BdCurrencyPipe
   ],
   imports: [
     BrowserModule,

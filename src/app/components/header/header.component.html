@@ -5,13 +5,17 @@
     <div class="container">
       <ul class="header-links pull-left">
         <li>
-          <a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a>
+          <a href="#"><i class="fa fa-phone"></i> +880-111-222-333</a>
         </li>
         <li>
-          <a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a>
+          <a href="#"
+            ><i class="fa fa-envelope-o"></i> support@ecom-bs-test.com</a
+          >
         </li>
         <li>
-          <a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a>
+          <a href="#"
+            ><i class="fa fa-map-marker"></i> 4, Mohakhali, Dhaka, Bangladesh</a
+          >
         </li>
       </ul>
       <ul class="header-links pull-right">
@@ -19,7 +23,7 @@
           <a href="#"><i class="fa fa-dollar"></i> USD</a>
         </li>
         <li>
-          <a href="#"><i class="fa fa-user-o"></i> My Account</a>
+          <a href="#"><i class="fa fa-user-o"></i> Login</a>
         </li>
       </ul>
     </div>
@@ -36,7 +40,7 @@
         <div class="col-md-3">
           <div class="header-logo">
             <a href="#" class="logo">
-              <img src="/assets/img/logo.png" alt="" />
+              <img width="200" src="/assets/img/logo.png" alt="" />
             </a>
           </div>
         </div>
@@ -46,13 +50,17 @@
         <div class="col-md-6">
           <div class="header-search">
             <form>
-              <select class="input-select">
+              <select class="input-select" ng-model="orderProp">
                 <option value="0">All Categories</option>
-                <option value="1">Category 01</option>
-                <option value="1">Category 02</option>
+                <option
+                  *ngFor="let product of products | uniqueFilter: 'category'"
+                  value="{{ product.category }}"
+                >
+                  {{ product.category }}
+                </option>
               </select>
               <input class="input" placeholder="Search here" />
-              <button class="search-btn">Search</button>
+              <button class="search-btn pb-0">Search</button>
             </form>
           </div>
         </div>
@@ -66,7 +74,7 @@
               <a href="#">
                 <i class="fa fa-heart-o"></i>
                 <span>Your Wishlist</span>
-                <div class="qty">2</div>
+                <div class="qty">0</div>
               </a>
             </div>
             <!-- /Wishlist -->
