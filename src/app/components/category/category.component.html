@@ -1,0 +1,130 @@
+<!-- BREADCRUMB -->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+      <!-- row -->
+      <div class="row">
+        <div class="col-md-12">
+          <ul class="breadcrumb-tree">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">All Categories</a></li>
+            <li>
+              <a href="#">{{ categoryProducts[0].category }}</a>
+            </li>
+           
+          </ul>
+        </div>
+      </div>
+      <!-- /row -->
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /BREADCRUMB -->
+  
+  <!-- Section -->
+  <div class="section">
+    <!-- container -->
+    <div class="container">
+      <!-- row -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-title text-center">
+            <h3 class="title">Related Products Of {{ categoryProducts[0].category }}</h3>
+          </div>
+        </div>
+  
+        <!-- product -->
+        <div class="col-md-12">
+          <div *ngFor="let product of categoryProducts; let idx = index">
+            <div class="product col-md-3 h-100" *ngIf="idx < 4">
+              <div class="product-img">
+                <img
+                  width="200"
+                  height="300"
+                  [src]="product.image"
+                  alt="product.title"
+                  (click)="selectProduct(product._id)"
+                />
+              </div>
+              <div class="product-body">
+                <p class="product-category">{{ product.category }}</p>
+                <h3 class="product-name">
+                  <a href="#">{{ product.title }}</a>
+                </h3>
+                <h4 class="product-price">
+                  {{ product.price | currency: "USD" }}
+                  <del class="product-old-price">{{
+                    product.price + product.price * 0.1 | currency: "USD"
+                  }}</del>
+                  (10% Off)
+                </h4>
+                <div class="product-rating"></div>
+                <div class="product-btns">
+                  <button class="add-to-wishlist">
+                    <i class="fa fa-heart-o"></i
+                    ><span class="tooltipp">add to wishlist</span>
+                  </button>
+                  <button class="add-to-compare">
+                    <i class="fa fa-exchange"></i
+                    ><span class="tooltipp">add to compare</span>
+                  </button>
+                  <button class="quick-view">
+                    <i class="fa fa-eye"></i
+                    ><span class="tooltipp">quick view</span>
+                  </button>
+                </div>
+              </div>
+              <div class="add-to-cart">
+                <button class="add-to-cart-btn" (click)="addToCart(product?._id)">
+                  <i class="fa fa-shopping-cart"></i> add to cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /product -->
+      </div>
+      <!-- /row -->
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /Section -->
+  
+  <!-- NEWSLETTER -->
+  <div id="newsletter" class="section">
+    <!-- container -->
+    <div class="container">
+      <!-- row -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="newsletter">
+            <p>Sign Up for the <strong>NEWSLETTER</strong></p>
+            <form>
+              <input class="input" type="email" placeholder="Enter Your Email" />
+              <button class="newsletter-btn">
+                <i class="fa fa-envelope"></i> Subscribe
+              </button>
+            </form>
+            <ul class="newsletter-follow">
+              <li>
+                <a href="#"><i class="fa fa-facebook"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-instagram"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-pinterest"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- /row -->
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /NEWSLETTER -->
+  

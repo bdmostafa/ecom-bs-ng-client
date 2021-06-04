@@ -18,6 +18,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { UniqueFilterPipe } from './pipes/unique-filter.pipe';
 import { BdCurrencyPipe } from './pipes/bd-currency.pipe';
 import { CategoryComponent } from './components/category/category.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { CategoryComponent } from './components/category/category.component';
     HttpClientModule,
     NgbModule,
     NgxSpinnerModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

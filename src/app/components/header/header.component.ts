@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/products/category', category]).then();
   }
 
-  // selectedCat() {
-  //   console.log(this.selectedCategory)
-  // }
+  selectedCat() {
+    console.log(this.selectedCategory)
+  }
 }

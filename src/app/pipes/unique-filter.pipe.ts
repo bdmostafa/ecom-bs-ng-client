@@ -8,7 +8,7 @@ import _ from 'lodash';
 @Injectable()
 export class UniqueFilterPipe implements PipeTransform {
   transform(items: any[], args: any[]): any {
-    console.log(items, args);
+    // console.log(items, args);
     // lodash uniqBy function
     return _.uniqBy(items, args);
   }
