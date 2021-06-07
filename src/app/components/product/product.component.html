@@ -80,7 +80,7 @@
           <div>
             <h3 class="product-price">{{ product.price | currency: "USD" }}</h3>
             <span class="product-available">
-              {{ product?.quantity >= 1 ? "In Stock" : "Out of Stock" }}
+              {{ product?.quantity >= 1 ? "In Stock (" + product?.quantity + ")" : "Out of Stock" }}
             </span>
             <h3>
               <del class="product-old-price">{{
