@@ -7,6 +7,9 @@ import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ThankyouComponent } from './components/thankyou/thankyou.component';
 import { CategoryComponent } from './components/category/category.component';
+import { LoginComponent } from './components/login/login.component';
+import { UserComponent } from './components/user/user.component';
+import { UserGuard } from './guard/user.guard';
 
 const routes: Routes = [
   {
@@ -19,10 +22,16 @@ const routes: Routes = [
     path: 'products/category/:categoryName', component: CategoryComponent
   },
   {
+    path: 'users/login', component: LoginComponent
+  },
+  {
+    path: 'users/me', component: UserComponent, canActivate:[UserGuard]
+  },
+  {
     path: 'cart', component: CartComponent
   },
   {
-    path: 'checkout', component: CheckoutComponent
+    path: 'checkout', component: CheckoutComponent, canActivate:[UserGuard]
   },
   {
     path: 'thankyou', component: ThankyouComponent

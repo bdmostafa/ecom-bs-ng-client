@@ -19,6 +19,25 @@ import { UniqueFilterPipe } from './pipes/unique-filter.pipe';
 import { BdCurrencyPipe } from './pipes/bd-currency.pipe';
 import { CategoryComponent } from './components/category/category.component';
 import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './components/login/login.component';
+import { UserComponent } from './components/user/user.component';
+import {
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+  GoogleLoginProvider,
+  FacebookLoginProvider,
+} from 'angularx-social-login';
+
+// const config = new AuthServiceConfig([
+//   {
+//     id: GoogleLoginProvider.PROVIDER_ID,
+//     provider: new GoogleLoginProvider('799705726167-vn6184fsovmps0kpbg5c7jabv15r3ias.apps.googleusercontent.com')
+//   }
+
+// ]);
+// export function provideConfig() {
+//   return config;
+// }
 
 @NgModule({
   declarations: [
@@ -32,7 +51,9 @@ import { FormsModule } from '@angular/forms';
     CheckoutComponent,
     UniqueFilterPipe,
     BdCurrencyPipe,
-    CategoryComponent
+    CategoryComponent,
+    UserComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,9 +63,29 @@ import { FormsModule } from '@angular/forms';
     NgbModule,
     NgxSpinnerModule,
     ToastrModule.forRoot(),
-    FormsModule
+    FormsModule,
+    SocialLoginModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '682568102359-op611k59kdpleab7bvitpjries242orn.apps.googleusercontent.com'
+            ),
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('clientId'),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

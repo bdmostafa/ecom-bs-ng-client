@@ -23,7 +23,10 @@
           <a href="#"><i class="fa fa-dollar"></i> USD</a>
         </li>
         <li>
-          <a href="#"><i class="fa fa-user-o"></i> Login</a>
+          <a routerLink="/users/me"
+            ><i class="fa fa-user-o"></i>
+            {{ authState === false ? "LOGIN" : "My Account" }}</a
+          >
         </li>
       </ul>
     </div>
@@ -60,11 +63,15 @@
                   {{ product.category }}
                 </option>
               </select>
-            <input class="input" placeholder="Search here" />
-              <button class="search-btn pb-0" (click)="selectCategory(this.selectedCategory)" >Search</button>
-           
-            <!-- TODO Filtering products and selected category page routing -->
-            
+              <input class="input" placeholder="Search here" />
+              <button
+                class="search-btn pb-0"
+                (click)="selectCategory(this.selectedCategory)"
+              >
+                Search
+              </button>
+
+              <!-- TODO Filtering products and selected category page routing -->
             </form>
           </div>
         </div>
@@ -103,7 +110,7 @@
               <div class="cart-dropdown">
                 <div
                   class="cart-list"
-                  **ngIf="cartInfo.data[0].numInCart !== 0"
+                  *ngIf="cartInfo.data[0].numInCart !== 0"
                 >
                   <div
                     class="product-widget"
