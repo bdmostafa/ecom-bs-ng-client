@@ -10,6 +10,7 @@ import { CategoryComponent } from './components/category/category.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserComponent } from './components/user/user.component';
 import { UserGuard } from './guard/user.guard';
+import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,9 @@ const routes: Routes = [
   },
   {
     path: 'users/me', component: UserComponent, canActivate:[UserGuard]
+  },
+  {
+    path: 'users/create', component: RegisterComponent
   },
   {
     path: 'cart', component: CartComponent

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
   SocialAuthService,
@@ -31,6 +31,18 @@ export class UserService {
         this.authState$.next(this.auth);
         this.userData$.next(user);
       }
+    });
+  }
+
+  // Register user with name, email and password
+  registerUser(formData: any): Observable<{ message: string }> {
+    const { name, email, password, confirmPassword} = formData;
+    console.log(formData);
+    return this.http.post<{ message: string }>(`${this.SERVER_URL}/users/create`, {
+      name,
+      email,
+      password,
+      confirmPassword
     });
   }
 

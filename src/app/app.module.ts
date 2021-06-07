@@ -18,7 +18,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { UniqueFilterPipe } from './pipes/unique-filter.pipe';
 import { BdCurrencyPipe } from './pipes/bd-currency.pipe';
 import { CategoryComponent } from './components/category/category.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { UserComponent } from './components/user/user.component';
 import {
@@ -27,6 +27,7 @@ import {
   GoogleLoginProvider,
   FacebookLoginProvider,
 } from 'angularx-social-login';
+import { RegisterComponent } from './components/register/register.component';
 
 // const config = new AuthServiceConfig([
 //   {
@@ -54,6 +55,7 @@ import {
     CategoryComponent,
     UserComponent,
     LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +67,7 @@ import {
     ToastrModule.forRoot(),
     FormsModule,
     SocialLoginModule,
+    ReactiveFormsModule
   ],
   providers: [
     {
