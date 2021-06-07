@@ -1,0 +1,92 @@
+
+<div class="container p-5 login_continer">
+  <div class="d-flex justify-content-center h-100">
+    <div class="card">
+      <div class="card-header">
+        <h3>Register New User</h3>
+      </div>
+      <div class="card-body ml-5 mt-3">
+        <!-- Reactive Model Form -->
+        <form
+          (ngSubmit)="registerUser()"
+          [formGroup]="registrationForm"
+          class="form-horizontal"
+          novalidate
+        >
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <input
+              class="form-control"
+              formControlName="name"
+              id="name"
+              name="name"
+              placeholder="John"
+              required
+              type="text"
+            />
+          </div>
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"
+                ><i class="fas fa-envelope"></i
+              ></span>
+            </div>
+            <input
+              class="form-control"
+              formControlName="email"
+              id="email"
+              name="email"
+              placeholder="you@example.com"
+              required
+              type="text"
+            />
+          </div>
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-key"></i></span>
+            </div>
+            <input
+              class="form-control"
+              formControlName="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              required
+              type="password"
+            />
+          </div>
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-key"></i></span>
+            </div>
+            <input
+              class="form-control"
+              formControlName="confirmPassword"
+              id="password-confirm"
+              name="password-confirmation"
+              placeholder="Password"
+              required
+              type="password"
+            />
+          </div>
+          <div class="form-group">
+            <button
+              [disabled]="registrationForm.invalid && registrationForm.touched"
+              class="btn mr-5 float-right login_btn"
+              type="submit"
+            >
+              <i class="fa fa-user-plus"></i> Register
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer">
+        <div class="d-flex justify-content-center links">
+          Do you have an account?<a [routerLink]="['/users/login']">Sign In</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
