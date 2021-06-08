@@ -36,6 +36,15 @@ import { AdminHeaderComponent } from './components/admin-header/admin-header.com
 import { AdminSidebarComponent } from './components/admin-sidebar/admin-sidebar.component';
 import { AdminFooterComponent } from './components/admin-footer/admin-footer.component';
 import { AdminSettingComponent } from './components/admin-setting/admin-setting.component';
+import { CreateProductComponent } from './components/create-product/create-product.component';
+import { GenerateProductComponent } from './components/generate-product/generate-product.component';
+import { ProductsByCategoryComponent } from './components/products-by-category/products-by-category.component';
+import { AllOrdersComponent } from './components/all-orders/all-orders.component';
+import { OrderByIdComponent } from './components/order-by-id/order-by-id.component';
+import { PendingOrdersComponent } from './components/pending-orders/pending-orders.component';
+import { OrdersByDateComponent } from './components/orders-by-date/orders-by-date.component';
+import { AllUsersComponent } from './components/all-users/all-users.component';
+import { CreateUserComponent } from './components/create-user/create-user.component';
 
 // const config = new AuthServiceConfig([
 //   {
@@ -72,6 +81,15 @@ import { AdminSettingComponent } from './components/admin-setting/admin-setting.
     AdminSidebarComponent,
     AdminFooterComponent,
     AdminSettingComponent,
+    CreateProductComponent,
+    GenerateProductComponent,
+    ProductsByCategoryComponent,
+    AllOrdersComponent,
+    OrderByIdComponent,
+    PendingOrdersComponent,
+    OrdersByDateComponent,
+    AllUsersComponent,
+    CreateUserComponent,
   ],
   imports: [
     BrowserModule,

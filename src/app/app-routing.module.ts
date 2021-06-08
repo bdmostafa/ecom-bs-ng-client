@@ -14,6 +14,15 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeLayoutComponent } from './components/home-layout/home-layout.component';
 import { AdminLayoutComponent } from './components/admin-layout/admin-layout.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { CreateProductComponent } from './components/create-product/create-product.component';
+import { GenerateProductComponent } from './components/generate-product/generate-product.component';
+import { ProductsByCategoryComponent } from './components/products-by-category/products-by-category.component';
+import { AllOrdersComponent } from './components/all-orders/all-orders.component';
+import { OrderByIdComponent } from './components/order-by-id/order-by-id.component';
+import { PendingOrdersComponent } from './components/pending-orders/pending-orders.component';
+import { OrdersByDateComponent } from './components/orders-by-date/orders-by-date.component';
+import { AllUsersComponent } from './components/all-users/all-users.component';
+import { CreateUserComponent } from './components/create-user/create-user.component';
 
 const routes: Routes = [
   // Define routes for the landing / home page under a separate component for the layout of home page
@@ -69,6 +78,42 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: AdminDashboardComponent,
+      },
+      {
+        path: 'products-by-category',
+        component: ProductsByCategoryComponent,
+      },
+      {
+        path: 'create-product',
+        component: CreateProductComponent,
+      },
+      {
+        path: 'generate-products',
+        component: GenerateProductComponent,
+      },
+      {
+        path: 'all-orders',
+        component: AllOrdersComponent,
+      },
+      {
+        path: 'orders/:orderId',
+        component: OrderByIdComponent,
+      },
+      {
+        path: 'pending-orders',
+        component: PendingOrdersComponent,
+      },
+      {
+        path: 'order-by-date',
+        component: OrdersByDateComponent,
+      },
+      {
+        path: 'all-users',
+        component: AllUsersComponent,
+      },
+      {
+        path: 'create-user',
+        component: CreateUserComponent,
       },
     ],
   },
