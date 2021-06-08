@@ -70,7 +70,7 @@ const routes: Routes = [
       },
     ],
   },
-  // Define routes for the admin panel under a separate component for the layout of home page
+  // Define routes for the admin panel under a separate component for the layout of AdminLayoutComponent
   {
     path: 'admin',
     component: AdminLayoutComponent,
