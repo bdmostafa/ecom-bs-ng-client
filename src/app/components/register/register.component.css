@@ -93,3 +93,7 @@ input:focus {
 .links a {
   margin-left: 4px;
 }
+
+.text-danger {
+  color: yellow !important;
+}
