@@ -28,4 +28,11 @@ export class ProductService {
       this.SERVER_URL + '/products/category/' + categoryName
     );
   }
+
+  // Register user with name, email and password
+  createProduct(formData: any): Observable<IProductServer> {
+    const { title } = formData;
+    console.log(formData);
+    return this.http.post<IProductServer>(`${this.SERVER_URL}/products/create`, formData);
+  }
 }
