@@ -15,9 +15,14 @@ export class OrderService {
   getOrderById(orderId: string) {
     return this.http.get<IOrderResponse[]>(this.SERVER_URL + '/orders/' + orderId).toPromise();
   }
+
+  getMyOrders() {
+    return this.http.get<IOrderResponse[]>(this.SERVER_URL + '/orders/user/my-orders').toPromise();
+  }
+
 }
 
-interface IOrderResponse {
+export interface IOrderResponse {
   _id: string;
   productOrdered: [{
     product: string,

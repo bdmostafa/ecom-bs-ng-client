@@ -1,176 +1,142 @@
-<div class="container emp-profile">
+<div class="container user-profile">
+  <h2 class="text-center mb-3">Welcome {{ myUser.name }} </h2>
   <form novalidate>
     <div class="row">
       <div class="col-md-4">
         <div class="profile-img">
-          <img [src]="myUser?.photoUrl || 'https://banner2.cleanpng.com/20180505/upw/kisspng-computer-icons-avatar-businessperson-interior-desi-corporae-5aee195c6d1683.4671087315255535004468.jpg'" alt="{{ myUser?.name }}" />
+          <img
+            [src]="
+              myUser?.photoUrl ||
+              'https://banner2.cleanpng.com/20180505/upw/kisspng-computer-icons-avatar-businessperson-interior-desi-corporae-5aee195c6d1683.4671087315255535004468.jpg'
+            "
+            alt="{{ myUser?.name }}"
+          />
           <div class="file btn btn-lg btn-primary">
             Change Photo
             <input name="file" type="file" />
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
-        <div class="profile-head">
-          <h5>
-            {{ myUser?.name }}
-          </h5>
-          <h6>Web Developer and Designer</h6>
-          <p class="proile-rating">RANKINGS : <span>8/10</span></p>
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a
-                aria-controls="home"
-                aria-selected="true"
-                class="nav-link active"
-                data-toggle="tab"
-                href="#home"
-                id="home-tab"
-                role="tab"
-                >About</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                aria-controls="profile"
-                aria-selected="false"
-                class="nav-link"
-                data-toggle="tab"
-                href="#profile"
-                id="profile-tab"
-                role="tab"
-                >Timeline</a
-              >
-            </li>
-          </ul>
+        <div class="profile-work">
+          <h4>PROFILE INFO</h4>
+
+          <p><strong>User Id: </strong>{{ myUser.id || myUser.userId }}</p>
+
+          <p><strong>Name: </strong> {{ myUser.name || myUser.username }}</p>
+
+          <p><strong>Email: </strong> {{ myUser.email }}</p>
+
+          <p>
+            <strong>Phone: </strong>
+            {{ myUser?.phone || 880 - 111 - 222 - 333 }}
+          </p>
+
+          <p>
+            <strong>Profession: </strong>
+            {{ myUser?.profession || "Your Profession" }}
+          </p>
         </div>
-      </div>
-      <div class="col-md-2">
         <button
           (click)="logout()"
-          class="btn btn-secondary btn-sm"
-          name="btnAddMore"
-          type="button"
+          class="btn btn-secondary btn-lg"
         >
           Logout
         </button>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4">
-        <div class="profile-work">
-          <p>WORK LINK</p>
-          <a href="#">Portfolios</a><br />
-
-          <p>SKILLS</p>
-          <a href="">Front-end</a><br />
-          <a href="">Back-end</a><br />
-          <a href="">DevOps</a><br />
-        </div>
-      </div>
       <div class="col-md-8">
-        <div class="tab-content profile-tab" id="myTabContent">
-          <div
-            aria-labelledby="home-tab"
-            class="tab-pane fade show active"
-            id="home"
-            role="tabpanel"
-          >
-            <div class="row">
-              <div class="col-md-6">
-                <label>User Id</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{ myUser.id || myUser.userId }}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Name</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{ myUser.name || myUser.username }}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Email</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{ myUser.email }}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Phone</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{ myUser?.phone || 880-111-222-333 }}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Profession</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{ myUser?.profession || 'Full Stack Developer' }}</p>
-              </div>
-            </div>
-          </div>
-          <div
-            aria-labelledby="profile-tab"
-            class="tab-pane fade"
-            id="profile"
-            role="tabpanel"
-          >
-            <div class="row">
-              <div class="col-md-6">
-                <label>Experience</label>
-              </div>
-              <div class="col-md-6">
-                <p>Expert</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Hourly Rate</label>
-              </div>
-              <div class="col-md-6">
-                <p>10$/hr</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Total Projects</label>
-              </div>
-              <div class="col-md-6">
-                <p>230</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>English Level</label>
-              </div>
-              <div class="col-md-6">
-                <p>Expert</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Availability</label>
-              </div>
-              <div class="col-md-6">
-                <p>6 months</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <label>Your Bio</label><br />
-                <p>Your detail description</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <table class="table">
+          <thead class="table-dark">
+            <tr class="text-center">
+              <th>#Order Qty</th>
+              <th>Image</th>
+              <th>Title</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <ng-container *ngFor="let order of userOrderData; let idx = index">
+              <tr>
+                <td>{{ idx + 1 }} </td>
+              </tr>
+              <tr *ngFor="let u of order.productOrdered; let idx = index">
+                <td></td>
+                <td class="d-flex align-items-center justify-content-around">
+                  <img
+                    [src]="u.product?.image"
+                    alt="{{ u.product?.title }}"
+                    height="60"
+                    class="order-1"
+                  />
+                </td>
+
+                <td>
+                  <p
+                    class="
+                      d-flex
+                      align-items-center
+                      justify-content-center
+                      mt-4
+                    "
+                  >
+                    {{ u.product?.title | uppercase }}
+                  </p>
+                </td>
+
+                <td>
+                  <p
+                    class="
+                      d-flex
+                      align-items-center
+                      justify-content-center
+                      mt-4
+                    "
+                  >
+                    {{ u.product?.price | currency: "USD" }}
+                  </p>
+                </td>
+
+                <td>
+                  <p
+                    class="
+                      d-flex
+                      align-items-center
+                      justify-content-center
+                      mt-4
+                    "
+                  >
+                    {{ u.quantity }}
+                  </p>
+                </td>
+                <td>
+                  <p
+                    class="
+                      d-flex
+                      align-items-center
+                      justify-content-center
+                      mt-4
+                    "
+                  >
+                    {{ u.quantity * u.product?.price | currency: "USD" }}
+                  </p>
+                </td>
+              </tr>
+            </ng-container>
+            
+          </tbody>
+          <tr class="border-0">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><h5>TOTAL</h5></td>
+            <td>
+              <h5>{{ calculateTotal() | currency: "USD" }}</h5>
+            </td>
+            <td></td>
+          </tr>
+        </table>
       </div>
     </div>
   </form>

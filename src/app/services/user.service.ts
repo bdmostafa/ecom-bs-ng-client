@@ -18,7 +18,7 @@ export class UserService {
   private SERVER_URL = environment.SERVER_URL;
   private user;
   authState$ = new BehaviorSubject<boolean>(this.auth);
-  userData$ = new BehaviorSubject<SocialUser | IUserResponse>(null);
+  userData$ = new BehaviorSubject<SocialUser | ILoginUserResponse>(null);
 
   constructor(
     private authService: SocialAuthService,
@@ -35,10 +35,10 @@ export class UserService {
   }
 
   // Register user with name, email and password
-  registerUser(formData: any): Observable<{ message: string }> {
+  registerUser(formData: any): Observable<IRegisterUserResponse> {
     const { name, email, password, confirmPassword} = formData;
     console.log(formData);
-    return this.http.post<{ message: string }>(`${this.SERVER_URL}/users/create`, {
+    return this.http.post<IRegisterUserResponse>(`${this.SERVER_URL}/users/create`, {
       name,
       email,
       password,
@@ -50,7 +50,7 @@ export class UserService {
   loginUser(email: string, password: string) {
     this.http
       .post(`${this.SERVER_URL}/users/login`, { email, password })
-      .subscribe((data: IUserResponse) => {
+      .subscribe((data: ILoginUserResponse) => {
         if (data.msg === 'Successfully LoggedIn') {
           this.auth = true;
         }
@@ -90,13 +90,14 @@ export class UserService {
   }
 }
 
-export interface IUserResponse {
-  // token: string;
-  // auth: boolean;
+export interface ILoginUserResponse {
   email: string;
   msg: string;
   name: string;
   role: string;
-  // photoUrl: string;
-  // userId: string;
+}
+export interface IRegisterUserResponse {
+  email: string;
+  name: string;
+  role: string;
 }
