@@ -32,6 +32,10 @@ import { PasswordPatternDirective } from './directives/password-pattern.directiv
 import { HomeLayoutComponent } from './components/home-layout/home-layout.component';
 import { AdminLayoutComponent } from './components/admin-layout/admin-layout.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { AdminHeaderComponent } from './components/admin-header/admin-header.component';
+import { AdminSidebarComponent } from './components/admin-sidebar/admin-sidebar.component';
+import { AdminFooterComponent } from './components/admin-footer/admin-footer.component';
+import { AdminSettingComponent } from './components/admin-setting/admin-setting.component';
 
 // const config = new AuthServiceConfig([
 //   {
@@ -64,6 +68,10 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
     HomeLayoutComponent,
     AdminLayoutComponent,
     AdminDashboardComponent,
+    AdminHeaderComponent,
+    AdminSidebarComponent,
+    AdminFooterComponent,
+    AdminSettingComponent,
   ],
   imports: [
     BrowserModule,

@@ -67,7 +67,7 @@ const routes: Routes = [
     component: AdminLayoutComponent,
     children: [
       {
-        path: 'abc',
+        path: 'dashboard',
         component: AdminDashboardComponent,
       },
     ],

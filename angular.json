@@ -19,14 +19,16 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/admin-lte/plugins/fontawesome-free/css/all.min.css",
+              "node_modules/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css",
+              "node_modules/admin-lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css",
+              "node_modules/admin-lte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css",
+              "node_modules/admin-lte/dist/css/adminlte.min.css"
             ],
             "scripts": [
               "src/assets/js/jquery.min.js",
@@ -34,7 +36,20 @@
               "src/assets/js/slick.min.js",
               "src/assets/js/nouislider.min.js",
               "src/assets/js/jquery.zoom.min.js",
-              "src/assets/js/main.js"
+              "src/assets/js/main.js",
+              "node_modules/admin-lte/plugins/datatables/jquery.dataTables.min.js",
+              "node_modules/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js",
+              "node_modules/admin-lte/plugins/datatables-responsive/js/dataTables.responsive.min.js",
+              "node_modules/admin-lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js",
+              "node_modules/admin-lte/plugins/datatables-buttons/js/dataTables.buttons.min.js",
+              "node_modules/admin-lte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js",
+              "node_modules/admin-lte/plugins/jszip/jszip.min.js",
+              "node_modules/admin-lte/plugins/pdfmake/pdfmake.min.js",
+              "node_modules/admin-lte/plugins/pdfmake/vfs_fonts.js",
+              "node_modules/admin-lte/plugins/datatables-buttons/js/buttons.html5.min.js",
+              "node_modules/admin-lte/plugins/datatables-buttons/js/buttons.print.min.js",
+              "node_modules/admin-lte/plugins/datatables-buttons/js/buttons.colVis.min.js",
+              "node_modules/admin-lte/dist/js/adminlte.min.js"
             ]
           },
           "configurations": {
@@ -91,13 +106,8 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.css"],
             "scripts": []
           }
         },
@@ -109,9 +119,7 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
