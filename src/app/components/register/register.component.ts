@@ -73,20 +73,19 @@ export class RegisterComponent implements OnInit {
         console.log(passwordState);
         this.comparePassword = passwordState;
       });
-      console.log(this.registrationForm)
+    console.log(this.registrationForm);
   }
 
   registerUser() {
-    console.log(this.registrationForm)
+    console.log(this.registrationForm);
     if (this.registrationForm.invalid) {
       return;
     }
 
     // @ts-ignore
-    this.userService
-      .registerUser({ ...this.registrationForm.value })
-      .subscribe((response: { message: string }) => {
-        console.log(response)
+    this.userService.registerUser({ ...this.registrationForm.value }).subscribe(
+      (response: { message: string }) => {
+        console.log(response);
         this.registrationMessage = response.message;
 
         // Error handling with ToastrService
@@ -102,21 +101,32 @@ export class RegisterComponent implements OnInit {
         );
 
         this.router.navigateByUrl('/users/login');
-        
-      }, (error) => {
-        console.log(error)
-         // Error handling with ToastrService
-         this.toastr.error(
-          error.error,
-          error.statusText,
-          {
+      },
+      // Error handling with ToastrService
+      (error: any) => {
+        console.log(error);
+        const statusText = error.statusText;
+        // If error.error is array
+        if (typeof error.error === 'object' && error.error instanceof Array) {
+          error.error.forEach((element) => {
+            this.toastr.error(element.msg, statusText, {
+              progressBar: true,
+              positionClass: 'toast-top-right',
+              progressAnimation: 'increasing',
+              timeOut: 3000,
+            });
+          });
+        } else {
+          // When error.error is not an array
+          this.toastr.error(error.error, error.statusText, {
             progressBar: true,
             positionClass: 'toast-top-right',
             progressAnimation: 'increasing',
             timeOut: 3000,
-          }
-        );
-      });
+          });
+        }
+      }
+    );
 
     this.registrationForm.reset();
   }
