@@ -28,6 +28,7 @@ import {
   FacebookLoginProvider,
 } from 'angularx-social-login';
 import { RegisterComponent } from './components/register/register.component';
+import { PasswordPatternDirective } from './directives/password-pattern.directive';
 
 // const config = new AuthServiceConfig([
 //   {
@@ -56,6 +57,7 @@ import { RegisterComponent } from './components/register/register.component';
     UserComponent,
     LoginComponent,
     RegisterComponent,
+    PasswordPatternDirective,
   ],
   imports: [
     BrowserModule,

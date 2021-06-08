@@ -10,9 +10,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  name: string;
-  email: string;
-  password: string;
+  user = new User();
 
   constructor(
     private authService: SocialAuthService,
@@ -38,9 +36,10 @@ export class LoginComponent implements OnInit {
     this.userService.signInWithGoogle();
   }
 
-  processLogin(form: NgForm) {
-    const email = this.email;
-    const password = this.password;
+  onSubmit(form: NgForm) {
+    console.log(form)
+    const email = this.user.email;
+    const password = this.user.password;
 
     if (form.invalid) {
       return;
@@ -49,4 +48,9 @@ export class LoginComponent implements OnInit {
     form.reset();
     this.userService.loginUser(email, password);
   }
+}
+
+export class User {
+  public email: string;
+  public password: string;
 }

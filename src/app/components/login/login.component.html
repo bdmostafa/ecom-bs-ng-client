@@ -6,26 +6,45 @@
         <div class="d-flex justify-content-end social_icon">
           <span><i class="fab fa-facebook-square"></i></span>
           <span><i class="fab fa-google-plus-square"></i></span>
-          <span><i class="fab fa-twitter-square"></i></span>
         </div>
       </div>
       <div class="card-body">
         <!-- Template Driven Form (TDF) -->
-        <form novalidate #myForm="ngForm">
+        <form
+          novalidate
+          #loginForm="ngForm"
+          (ngSubmit)="loginForm.form.valid && onSubmit(loginForm)"
+        >
+          <!-- {{ loginForm.value | json }}
+          {{ loginForm.form | json }} -->
           <div class="input-group form-group">
             <div class="input-group-prepend">
               <span class="input-group-text"><i class="fas fa-user"></i></span>
             </div>
             <input
               type="text"
-              class="form-control"
+              class="form-control w-75"
               placeholder="email"
               id="email"
               type="email"
-              [(ngModel)]="email"
+              [(ngModel)]="user.email"
               name="email"
+              #email="ngModel"
               required
+              email
             />
+            <span
+              class="text-danger"
+              *ngIf="email.touched && email.errors?.required"
+            >
+              Email is required
+            </span>
+            <span
+              class="text-danger"
+              *ngIf="email.touched && email.errors?.email"
+            >
+              Enter a valid email address
+            </span>
           </div>
           <div class="input-group form-group">
             <div class="input-group-prepend">
@@ -33,13 +52,31 @@
             </div>
             <input
               type="password"
-              class="form-control"
+              class="form-control w-75"
               placeholder="password"
               id="password"
-              [(ngModel)]="password"
+              [(ngModel)]="user.password"
               name="password"
+              #password="ngModel"
               required
+              appPasswordPattern
             />
+            <span
+              class="text-danger"
+              *ngIf="
+                (password.touched) &&
+                password.errors?.required
+              "
+            >
+              Password is required
+            </span>
+            <span
+              class="text-danger"
+              *ngIf="password.touched && password.errors?.invalidPassword"
+            >
+              Password should have minimum 6 characters, at least 1 uppercase
+              letter, 1 lowercase letter and 1 number
+            </span>
           </div>
           <div class="row align-items-center remember">
             <input type="checkbox" />Remember Me
@@ -49,8 +86,7 @@
               type="submit"
               value="Login"
               class="btn float-right login_btn"
-              (click)="processLogin(myForm)"
-              [disabled]="myForm.invalid && myForm.touched"
+              [disabled]="loginForm.invalid && loginForm.touched"
             />
           </div>
           <div class="mt-5 pt-1">
