@@ -29,6 +29,9 @@ import {
 } from 'angularx-social-login';
 import { RegisterComponent } from './components/register/register.component';
 import { PasswordPatternDirective } from './directives/password-pattern.directive';
+import { HomeLayoutComponent } from './components/home-layout/home-layout.component';
+import { AdminLayoutComponent } from './components/admin-layout/admin-layout.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 
 // const config = new AuthServiceConfig([
 //   {
@@ -58,6 +61,9 @@ import { PasswordPatternDirective } from './directives/password-pattern.directiv
     LoginComponent,
     RegisterComponent,
     PasswordPatternDirective,
+    HomeLayoutComponent,
+    AdminLayoutComponent,
+    AdminDashboardComponent,
   ],
   imports: [
     BrowserModule,

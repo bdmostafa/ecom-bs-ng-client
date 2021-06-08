@@ -11,43 +11,78 @@ import { LoginComponent } from './components/login/login.component';
 import { UserComponent } from './components/user/user.component';
 import { UserGuard } from './guard/user.guard';
 import { RegisterComponent } from './components/register/register.component';
+import { HomeLayoutComponent } from './components/home-layout/home-layout.component';
+import { AdminLayoutComponent } from './components/admin-layout/admin-layout.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
+  // Define routes for the landing / home page under a separate component for the layout of home page
   {
-    path: '', component: HomeComponent
+    path: '',
+    component: HomeLayoutComponent,
+    children: [
+      {
+        path: '',
+        component: HomeComponent,
+      },
+      {
+        path: 'products/:id',
+        component: ProductComponent,
+      },
+      {
+        path: 'products/category/:categoryName',
+        component: CategoryComponent,
+      },
+      {
+        path: 'users/login',
+        component: LoginComponent,
+      },
+      {
+        path: 'users/me',
+        component: UserComponent,
+        canActivate: [UserGuard],
+      },
+      {
+        path: 'users/create',
+        component: RegisterComponent,
+      },
+      {
+        path: 'cart',
+        component: CartComponent,
+      },
+      {
+        path: 'checkout',
+        component: CheckoutComponent,
+        canActivate: [UserGuard],
+      },
+      {
+        path: 'thankyou',
+        component: ThankyouComponent,
+      },
+    ],
   },
+  // Define routes for the admin panel under a separate component for the layout of home page
   {
-    path: 'products/:id', component: ProductComponent
+    path: 'admin',
+    component: AdminLayoutComponent,
+    children: [
+      {
+        path: 'abc',
+        component: AdminDashboardComponent,
+      },
+    ],
   },
+  // Wildcard Route if no route is found == 404 NOTFOUND page
   {
-    path: 'products/category/:categoryName', component: CategoryComponent
-  },
-  {
-    path: 'users/login', component: LoginComponent
-  },
-  {
-    path: 'users/me', component: UserComponent, canActivate:[UserGuard]
-  },
-  {
-    path: 'users/create', component: RegisterComponent
-  },
-  {
-    path: 'cart', component: CartComponent
-  },
-  {
-    path: 'checkout', component: CheckoutComponent, canActivate:[UserGuard]
-  },
-  {
-    path: 'thankyou', component: ThankyouComponent
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: '',
   },
 ];
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    RouterModule.forRoot(routes)
-  ],
-  exports: [RouterModule]
+  imports: [CommonModule, RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
