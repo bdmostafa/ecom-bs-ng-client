@@ -1,1 +1,118 @@
-<p>all-orders works!</p>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>All Orders</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item">
+            <a [routerLink]="['/admin/dashboard']">Home</a>
+          </li>
+          <li class="breadcrumb-item active">All Orders</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <!-- Editable table -->
+        <div class="card">
+          <div class="card-body">
+            <div id="table" class="table-editable">
+              <table
+                class="
+                  table table-bordered table-responsive-md table-striped
+                  text-center
+                "
+              >
+                <tr>
+                  <th class="text-center">#No.</th>
+                  <th class="text-center">Order Id</th>
+                  <th class="text-center">Customer Name</th>
+                  <th class="text-center">
+                    Products
+                    <tr>
+                      <th>Image</th>
+                      <th>Name</th>
+                      <th>price</th>
+                      <th>quantity</th>
+                    </tr>
+                  </th>
+                  <th class="text-center">Date</th>
+                  <th class="text-center">Update Status</th>
+                </tr>
+                <tr *ngFor="let order of orders; let idx = index">
+                  <td>
+                    <span>{{ idx + 1 }}</span>
+                  </td>
+                  <td>
+                    <span>{{ order._id }}</span>
+                  </td>
+                  <td>
+                    <span>{{ order?.customer?.name }}</span>
+                  </td>
+                  <td>
+                    <tr *ngFor="let p of order.productOrdered; let idx = index">
+                      <td class="w-25">
+                        <span
+                          ><img
+                            [src]="p.product.image"
+                            class="w-25 rounded img-thumbnail"
+                          />
+                        </span>
+                      </td>
+                      <td>
+                        <span>{{ p.product.title.slice(0, 25) }} </span>
+                      </td>
+                      <td>
+                        <span>{{ p.product.price }} </span>
+                      </td>
+                      <td>
+                        <span>{{ p.quantity }} </span>
+                      </td>
+                    </tr>
+                  </td>
+                  <td>
+                    <span>{{ order.date | date }}</span>
+                  </td>
+                  <td>
+                    <span>
+                        <!-- TODO Status change functionality -->
+                      <div ngbDropdown class="d-inline-block" >
+                        <button
+                          class="btn btn-outline-primary"
+                          id="dropdownBasic1"
+                          ngbDropdownToggle
+                        >
+                          {{ order.status }}
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                          <button ngbDropdownItem>Pending</button>
+                          <button ngbDropdownItem>Approved</button>
+                          <button ngbDropdownItem>Delivered</button>
+                        </div>
+                      </div>
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- Editable table -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<!-- /.content -->

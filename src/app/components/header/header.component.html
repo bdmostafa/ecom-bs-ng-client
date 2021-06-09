@@ -104,6 +104,7 @@
                 data-toggle="dropdown"
                 aria-expanded="true"
                 style="cursor: pointer"
+                id="dropdown-status"
                 routerLink="/cart"
               >
                 <i class="fa fa-shopping-cart"></i>
@@ -114,7 +115,7 @@
                   }}
                 </div>
               </a>
-              <div class="cart-dropdown">
+              <div aria-labelledby="dropdown-status" class="cart-dropdown">
                 <div
                   class="cart-list"
                   *ngIf="cartInfo.data[0].numInCart !== 0"

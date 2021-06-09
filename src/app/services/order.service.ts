@@ -20,6 +20,14 @@ export class OrderService {
     return this.http.get<IOrderResponse[]>(this.SERVER_URL + '/orders/user/my-orders').toPromise();
   }
 
+  getAllOrders() {
+    return this.http.get<IOrderResponse[]>(this.SERVER_URL + '/orders').toPromise();
+  }
+
+  updateOrderStatus(orderId: string, status: string) {
+    return this.http.patch<IOrderResponse>(this.SERVER_URL + '/orders/update/' + orderId, {status}).toPromise();
+  }
+
 }
 
 export interface IOrderResponse {
