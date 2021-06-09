@@ -29,10 +29,14 @@ export class ProductService {
     );
   }
 
-  // Register user with name, email and password
+  // Create product by form data
   createProduct(formData: any): Observable<IProductServer> {
-    const { title } = formData;
     console.log(formData);
     return this.http.post<IProductServer>(`${this.SERVER_URL}/products/create`, formData);
+  }
+
+  // Generate products from third party API
+  generateProductsByThirdParty() {
+    return this.http.get<IProductServer[]>(`${this.SERVER_URL}/products/generate-products`);
   }
 }

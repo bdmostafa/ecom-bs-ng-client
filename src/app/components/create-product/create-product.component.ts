@@ -66,7 +66,7 @@ export class CreateProductComponent implements OnInit {
       (response: IProductServer) => {
         console.log(response);
 
-        // Error handling with ToastrService
+        // Success notification with ToastrService
         this.toastr.success(
           'You created a product successfully',
           'Product Create',
