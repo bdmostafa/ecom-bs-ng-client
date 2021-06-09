@@ -56,6 +56,18 @@ export class UserService {
         }
         this.authState$.next(this.auth);
         this.userData$.next(data);
+
+         // Success notification with ToastrService
+         this.toastr.success(
+          "You have logged in Successfully",
+          "Login Success",
+          {
+            progressBar: true,
+            positionClass: 'toast-top-right',
+            progressAnimation: 'increasing',
+            timeOut: 3000,
+          }
+        );
       }, (error) => {
         console.log(error)
          // Error handling with ToastrService

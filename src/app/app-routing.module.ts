@@ -23,6 +23,7 @@ import { PendingOrdersComponent } from './components/pending-orders/pending-orde
 import { OrdersByDateComponent } from './components/orders-by-date/orders-by-date.component';
 import { AllUsersComponent } from './components/all-users/all-users.component';
 import { CreateUserComponent } from './components/create-user/create-user.component';
+import { AdminGuard } from './guard/admin.guard';
 
 const routes: Routes = [
   // Define routes for the landing / home page under a separate component for the layout of home page
@@ -74,6 +75,8 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminLayoutComponent,
+    // canActivate: [UserGuard],
+    canActivateChild: [AdminGuard],
     children: [
       {
         path: 'dashboard',
