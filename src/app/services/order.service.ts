@@ -28,6 +28,10 @@ export class OrderService {
     return this.http.patch<IOrderResponse>(this.SERVER_URL + '/orders/update/' + orderId, {status}).toPromise();
   }
 
+  getOrdersByDate() {
+    // TODO
+  }
+
 }
 
 export interface IOrderResponse {

@@ -39,4 +39,12 @@ export class ProductService {
   generateProductsByThirdParty() {
     return this.http.get<IProductServer[]>(`${this.SERVER_URL}/products/generate-products`);
   }
+
+  updateProduct() {
+    // TODO
+  }
+
+  deleteProduct() {
+    // TODO
+  }
 }

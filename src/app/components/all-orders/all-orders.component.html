@@ -73,7 +73,7 @@
                         <span>{{ p.product.title.slice(0, 25) }} </span>
                       </td>
                       <td>
-                        <span>{{ p.product.price }} </span>
+                        <span>{{ p.product.price | currency: 'USD' }} </span>
                       </td>
                       <td>
                         <span>{{ p.quantity }} </span>
@@ -85,7 +85,7 @@
                   </td>
                   <td>
                     <span>
-                        <!-- TODO Status change functionality -->
+                      <!-- TODO Status change functionality -->
                       <div ngbDropdown class="d-inline-block" >
                         <button
                           class="btn btn-outline-primary"
@@ -100,6 +100,27 @@
                           <button ngbDropdownItem>Delivered</button>
                         </div>
                       </div>
+                      <!-- <form
+                        #statusForm="ngForm"
+                        (ngSubmit)="
+                          statusForm.form.valid &&
+                            updateStatus(order._id, ngForm)
+                        "
+                      >
+                        <select
+                          class="form-control"
+                          name="status"
+                          [(ngModel)]="status"
+                          required
+                        >
+                          <option [value]="order.status">
+                            {{ order.status }}
+                          </option>
+                          <option *ngFor="let status of statusList">
+                            {{ status }}
+                          </option>
+                        </select>
+                      </form> -->
                     </span>
                   </td>
                 </tr>

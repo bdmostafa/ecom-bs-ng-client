@@ -9,7 +9,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AllOrdersComponent implements OnInit {
   orders: IOrderResponse[];
-  options = ['Pending', 'Approved', 'On going', 'Delivered'];
+  statusList = ['Pending', 'Approved', 'On going', 'Delivered'];
+  status: string;
 
   constructor(
     private toastr: ToastrService,
@@ -59,7 +60,7 @@ export class AllOrdersComponent implements OnInit {
   }
 
   // TODO status change functionality
-  updateStatus(id: string, status: string) {
+  updateStatus(id: string, status?: string) {
     console.log(id, status);
     this.orderService.updateOrderStatus(id, status).then(
       (order: IOrderResponse) => {

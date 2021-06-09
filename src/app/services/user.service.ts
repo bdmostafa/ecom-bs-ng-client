@@ -100,6 +100,14 @@ export class UserService {
     this.auth = false;
     this.authState$.next(this.auth);
   }
+
+  getAllUsers() {
+    // TODO
+  }
+
+  deleteUser() {
+    // TODO
+  }
 }
 
 export interface ILoginUserResponse {
