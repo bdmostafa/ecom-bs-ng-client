@@ -32,6 +32,10 @@ export class OrderService {
     // TODO
   }
 
+  getPendingOrders() {
+    // TODO
+  }
+
 }
 
 export interface IOrderResponse {
