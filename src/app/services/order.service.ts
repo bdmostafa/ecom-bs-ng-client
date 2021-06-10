@@ -4,28 +4,37 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrderService {
   private products: IProductResponse[] = [];
   private SERVER_URL = environment.SERVER_URL;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getOrderById(orderId: string) {
-    return this.http.get<IOrderResponse[]>(this.SERVER_URL + '/orders/' + orderId).toPromise();
+    return this.http
+      .get<IOrderResponse[]>(this.SERVER_URL + '/orders/' + orderId)
+      .toPromise();
   }
 
   getMyOrders() {
-    return this.http.get<IOrderResponse[]>(this.SERVER_URL + '/orders/user/my-orders').toPromise();
+    return this.http
+      .get<IOrderResponse[]>(this.SERVER_URL + '/orders/user/my-orders')
+      .toPromise();
   }
 
   getAllOrders() {
-    return this.http.get<IOrderResponse[]>(this.SERVER_URL + '/orders').toPromise();
+    return this.http
+      .get<IOrderResponse[]>(this.SERVER_URL + '/orders')
+      .toPromise();
   }
 
   updateOrderStatus(orderId: string, status: string) {
-    return this.http.patch<IOrderResponse>(this.SERVER_URL + '/orders/update/' + orderId, {status}).toPromise();
+    console.log(orderId, status)
+    return this.http
+      .patch<IOrderResponse>(this.SERVER_URL + '/orders/update/' + orderId, status)
+      .toPromise();
   }
 
   getOrdersByDate() {
@@ -35,23 +44,26 @@ export class OrderService {
   getPendingOrders() {
     // TODO
   }
-
 }
 
 export interface IOrderResponse {
   _id: string;
-  productOrdered: [{
-    product: string,
-    quantity: number
-  }];
+  productOrdered: [
+    {
+      product: string;
+      quantity: number;
+    }
+  ];
   status: string;
   success: boolean;
   message: string;
-  customer: [{
-    _id: string,
-    name: string,
-    email: string
-  }];
+  customer: [
+    {
+      _id: string;
+      name: string;
+      email: string;
+    }
+  ];
   date: string;
 }
 

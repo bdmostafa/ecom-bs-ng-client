@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 export class AllOrdersComponent implements OnInit {
   orders: IOrderResponse[];
   statusList = ['Pending', 'Approved', 'On going', 'Delivered'];
-  status: string;
+  statusData: IStatusInfo;
 
   constructor(
     private toastr: ToastrService,
@@ -60,8 +60,10 @@ export class AllOrdersComponent implements OnInit {
   }
 
   // TODO status change functionality
-  updateStatus(id: string, status?: string) {
-    console.log(id, status);
+  updateStatus(id: string, status: string) {
+    this.statusData = {id, status};
+    console.log(this.statusData);
+    
     this.orderService.updateOrderStatus(id, status).then(
       (order: IOrderResponse) => {
         if (order?.status) {
@@ -90,7 +92,7 @@ export class AllOrdersComponent implements OnInit {
           });
         } else {
           // When error.error is not an array
-          this.toastr.error(error.error, error.statusText, {
+          this.toastr.error(error.message, error.statusText, {
             progressBar: true,
             positionClass: 'toast-top-right',
             progressAnimation: 'increasing',
@@ -100,4 +102,10 @@ export class AllOrdersComponent implements OnInit {
       }
     );
   }
+
+}
+
+interface IStatusInfo {
+  id: string;
+  status: string;
 }

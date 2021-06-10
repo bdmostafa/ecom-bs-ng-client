@@ -47,7 +47,8 @@
                     </tr>
                   </th>
                   <th class="text-center">Date</th>
-                  <th class="text-center">Update Status</th>
+                  <th class="text-center">Status</th>
+                  <th class="text-center">Update</th>
                 </tr>
                 <tr *ngFor="let order of orders; let idx = index">
                   <td>
@@ -84,44 +85,41 @@
                     <span>{{ order.date | date }}</span>
                   </td>
                   <td>
+                    <span>{{ order.status | titlecase }}</span>
+                  </td>
+                  <td>
                     <span>
                       <!-- TODO Status change functionality -->
-                      <div ngbDropdown class="d-inline-block" >
+                      <!-- <div ngbDropdown class="d-inline-block" >
                         <button
                           class="btn btn-outline-primary"
                           id="dropdownBasic1"
                           ngbDropdownToggle
                         >
-                          {{ order.status }}
+                          {{ order.status | titlecase }}
                         </button>
                         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                           <button ngbDropdownItem>Pending</button>
                           <button ngbDropdownItem>Approved</button>
                           <button ngbDropdownItem>Delivered</button>
                         </div>
-                      </div>
-                      <!-- <form
-                        #statusForm="ngForm"
-                        (ngSubmit)="
-                          statusForm.form.valid &&
-                            updateStatus(order._id, ngForm)
-                        "
-                      >
-                        <select
+                      </div> -->
+                    
+                    <select
                           class="form-control"
                           name="status"
+                          (change)="updateStatus(order._id, $event.target.value)"
                           [(ngModel)]="status"
                           required
                         >
-                          <option [value]="order.status">
-                            {{ order.status }}
-                          </option>
-                          <option *ngFor="let status of statusList">
+                          <option [value]="status" *ngFor="let status of statusList">
                             {{ status }}
+                            <!-- <ng-container *ngFor="let s of statusData">
+                              {{ s.id === order._id ? s.status : order.status }}
+                            </ng-container> -->
                           </option>
                         </select>
-                      </form> -->
-                    </span>
+                      </span>
                   </td>
                 </tr>
               </table>
