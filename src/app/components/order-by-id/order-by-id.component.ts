@@ -36,7 +36,7 @@ export class OrderByIdComponent implements OnInit {
       return;
     }
 
-    // Load user orders if he/she has any orders
+    // Load order by Id
     this.orderService.getOrderById(this.fetchOrderForm.value.orderId).then(
       (order: IOrderResponse) => {
         console.log(order);

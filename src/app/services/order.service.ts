@@ -39,8 +39,10 @@ export class OrderService {
       .toPromise();
   }
 
-  getOrdersByDate() {
-    // TODO
+  getOrdersByDate(date: string) {
+    return this.http
+    .get<IOrderResponse[]>(this.SERVER_URL + '/orders/orders-by-date/' + date)
+    .toPromise();
   }
 
   getPendingOrders() {
