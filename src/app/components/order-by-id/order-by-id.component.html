@@ -1,2 +1,167 @@
-<!-- TODO -->
-<p>order-by-id works!</p>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Enter A Order Id</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item">
+            <a [routerLink]="['/admin/dashboard']">Home</a>
+          </li>
+          <li class="breadcrumb-item active">Order By Id</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="input-id">
+          <!-- Reactive Model Form -->
+          <form
+            (ngSubmit)="fetchOrder()"
+            [formGroup]="fetchOrderForm"
+            class="form-horizontal"
+            novalidate
+          >
+            <div class="input-group form-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fas fa-fingerprint"></i>
+                </span>
+              </div>
+              <input
+                class="form-control w-75"
+                formControlName="orderId"
+                id="orderId"
+                name="orderId"
+                placeholder="Mongo ID"
+                required
+                type="text"
+              />
+              <button
+                [disabled]="fetchOrderForm.invalid && fetchOrderForm.touched"
+                class="btn btn-primary mr-5 float-right btn-fetch"
+                type="submit"
+              >
+                <i class="fas fa-search-dollar"></i> Fetch Order
+              </button>
+              <span
+                class="text-danger"
+                *ngIf="
+                  orderId.invalid && orderId.touched && orderId.errors?.required
+                "
+              >
+                Order Id is required
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <!-- Editable table -->
+        <div class="card">
+          <div class="card-body">
+            <div id="table" class="table-editable">
+              <table
+                class="
+                  table table-bordered table-responsive-md table-striped
+                  text-center
+                "
+              >
+                <tr>
+                  <th class="text-center">Order Id</th>
+                  <th class="text-center">Customer Name</th>
+                  <th class="text-center">
+                    Products
+                    <tr>
+                      <th>#No.</th>
+                      <th>Image</th>
+                      <th>Name</th>
+                      <th>price</th>
+                      <th>quantity</th>
+                    </tr>
+                  </th>
+                  <th class="text-center">Date</th>
+                  <th class="text-center">Status</th>
+                  <th class="text-center">Update</th>
+                </tr>
+                <tr>
+                  <td>
+                    <span>{{ order._id }}</span>
+                  </td>
+                  <td>
+                    <span>{{ order?.customer?.name }}</span>
+                  </td>
+                  <td>
+                    <tr *ngFor="let p of order.productOrdered; let idx = index">
+                      <td>
+                        <span>{{ idx + 1 }} </span>
+                      </td>
+                      <td class="w-25">
+                        <span
+                          ><img
+                            [src]="p.product.image"
+                            class="w-25 rounded img-thumbnail"
+                          />
+                        </span>
+                      </td>
+                      <td>
+                        <span>{{ p.product.title.slice(0, 25) }} </span>
+                      </td>
+                      <td>
+                        <span>{{ p.product.price | currency: "USD" }} </span>
+                      </td>
+                      <td>
+                        <span>{{ p.quantity }} </span>
+                      </td>
+                    </tr>
+                  </td>
+                  <td>
+                    <span>{{ order.date | date }}</span>
+                  </td>
+                  <td>
+                    <span>{{ order.status | titlecase }}</span>
+                  </td>
+                  <td>
+                    <span>
+                      <!-- TODO Status change functionality -->
+                      <select
+                        class="form-control"
+                        name="status"
+                        (change)="updateStatus(order._id, $event.target.value)"
+                        [(ngModel)]="status"
+                        required
+                      >
+                        <option
+                          [value]="status"
+                          *ngFor="let status of statusList"
+                        >
+                          {{ status }}
+                        </option>
+                      </select>
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- Editable table -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<!-- /.content -->

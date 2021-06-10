@@ -99,7 +99,7 @@ const routes: Routes = [
         component: AllOrdersComponent,
       },
       {
-        path: 'orders/:orderId',
+        path: 'orders/order-by-id',
         component: OrderByIdComponent,
       },
       {

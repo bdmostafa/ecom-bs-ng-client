@@ -14,7 +14,7 @@ export class OrderService {
 
   getOrderById(orderId: string) {
     return this.http
-      .get<IOrderResponse[]>(this.SERVER_URL + '/orders/' + orderId)
+      .get<IOrderResponse>(this.SERVER_URL + '/orders/' + orderId)
       .toPromise();
   }
 
@@ -33,7 +33,9 @@ export class OrderService {
   updateOrderStatus(orderId: string, status: string) {
     console.log(orderId, status)
     return this.http
-      .patch<IOrderResponse>(this.SERVER_URL + '/orders/update/' + orderId, status)
+      .patch<IOrderResponse>(this.SERVER_URL + '/orders/update/' + orderId, {
+        status,
+      })
       .toPromise();
   }
 

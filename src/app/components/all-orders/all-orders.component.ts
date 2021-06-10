@@ -105,7 +105,7 @@ export class AllOrdersComponent implements OnInit {
 
 }
 
-interface IStatusInfo {
+export interface IStatusInfo {
   id: string;
   status: string;
 }
