@@ -44,7 +44,9 @@ export class OrderService {
   }
 
   getPendingOrders() {
-    // TODO
+    return this.http
+      .get<IOrderResponse[]>(this.SERVER_URL + '/orders/pending-orders')
+      .toPromise();
   }
 }
 

@@ -40,6 +40,7 @@
                   <th class="text-center">
                     Products
                     <tr>
+                      <th>#No.</th>
                       <th>Image</th>
                       <th>Name</th>
                       <th>price</th>
@@ -62,6 +63,9 @@
                   </td>
                   <td>
                     <tr *ngFor="let p of order.productOrdered; let idx = index">
+                      <td>
+                        <span>{{ idx + 1 }} </span>
+                      </td>
                       <td class="w-25">
                         <span
                           ><img
