@@ -103,7 +103,7 @@
                     <span>{{ order?.customer?.name }}</span>
                   </td>
                   <td>
-                    <tr *ngFor="let p of order.productOrdered; let idx = index">
+                    <tr *ngFor="let p of order?.productOrdered; let idx = index">
                       <td>
                         <span>{{ idx + 1 }} </span>
                       </td>
@@ -127,10 +127,10 @@
                     </tr>
                   </td>
                   <td>
-                    <span>{{ order.date | date }}</span>
+                    <span>{{ order?.date | date }}</span>
                   </td>
                   <td>
-                    <span>{{ order.status | titlecase }}</span>
+                    <span>{{ order?.status | titlecase }}</span>
                   </td>
                   <td>
                     <span>
