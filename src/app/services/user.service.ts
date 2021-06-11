@@ -102,7 +102,9 @@ export class UserService {
   }
 
   getAllUsers() {
-    // TODO
+    return this.http
+      .get<IUsersResponse[]>(this.SERVER_URL + '/users')
+      .toPromise();
   }
 
   deleteUser() {
@@ -117,6 +119,13 @@ export interface ILoginUserResponse {
   role: string;
 }
 export interface IRegisterUserResponse {
+  email: string;
+  name: string;
+  role: string;
+}
+export interface IUsersResponse {
+  _id: string;
+  createdAt: string;
   email: string;
   name: string;
   role: string;
