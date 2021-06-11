@@ -62,6 +62,9 @@ export class OrdersByDateComponent implements OnInit {
       // Error handling with ToastrService
       (error: any) => {
         console.log(error);
+        // If orders has items, empty it because the previous orders is not related to this result
+        this.orders = [];
+
         const statusText = error.statusText;
         // If error.error is array
         if (typeof error.error === 'object' && error.error instanceof Array) {
