@@ -277,7 +277,7 @@
               formControlName="confirmPassword"
               id="password-confirm"
               name="password-confirmation"
-              placeholder="Password"
+              placeholder="Password ('password' word is not allowed)"
               required
               type="password"
             />
@@ -292,7 +292,7 @@
                 class="text-danger"
                 *ngIf="registrationForm.errors?.misMatch"
               >
-                Passwords does not match
+                Password does not match
               </span>
             </span>
           </div>

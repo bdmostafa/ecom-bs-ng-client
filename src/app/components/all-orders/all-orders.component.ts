@@ -18,7 +18,7 @@ export class AllOrdersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Load user orders if he/she has any orders
+    // Load all orders from the backend
     this.orderService.getAllOrders().then(
       (orders: IOrderResponse[]) => {
         console.log(orders);

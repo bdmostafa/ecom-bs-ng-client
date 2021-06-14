@@ -12,6 +12,6 @@ export function matchPasswordValidator(control: AbstractControl): { [key: string
     const confirmPassword = control.get('confirmPassword');
 
     if (password.pristine || confirmPassword.pristine) return null;
-    console.log(password.value,confirmPassword.value, password.value != confirmPassword.value)
+    console.log(password.value,confirmPassword.value, password.value !== confirmPassword.value)
     return password && confirmPassword && password.value !== confirmPassword.value ? { 'misMatch': true } : null;
 }

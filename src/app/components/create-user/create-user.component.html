@@ -1,2 +1,143 @@
-<!-- TODO -->
-<p>create-user works!</p>
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Create Product</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item">
+            <a [routerLink]="['/admin/dashboard']">Home</a>
+          </li>
+          <li class="breadcrumb-item active">Create Product</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <!-- Reactive model form starts -->
+          <form
+            (ngSubmit)="createUser()"
+            [formGroup]="userForm"
+            id="quickForm"
+            novalidate="novalidate"
+          >
+            <div class="card-body">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  formControlName="name"
+                  class="form-control"
+                  id="name"
+                  placeholder="Enter name"
+                  required
+                />
+                <span *ngIf="name.invalid && name.touched">
+                  <span class="text-danger" *ngIf="name.errors?.required">
+                    Name is required
+                  </span>
+                  <span class="text-danger" *ngIf="name.errors?.minlength">
+                    Name must be 4 length at least
+                  </span>
+                </span>
+              </div>
+              <div class="form-group">
+                <label for="email">email</label>
+                <input
+                  type="text"
+                  name="email"
+                  formControlName="email"
+                  class="form-control"
+                  id="email"
+                  placeholder="Enter email"
+                  required
+                />
+                <span *ngIf="email.invalid && email.touched">
+                  <span class="text-danger" *ngIf="email.errors?.required">
+                    Email is required
+                  </span>
+                  <span class="text-danger" *ngIf="email.errors?.email">
+                    Enter a valid email address
+                  </span>
+                </span>
+              </div>
+              <div class="form-group">
+                <label for="password">password</label>
+                <input
+                  type="password"
+                  name="password"
+                  formControlName="password"
+                  class="form-control"
+                  id="password"
+                  placeholder="Enter password (only 'password' word is not allowed)"
+                  required
+                />
+                <span *ngIf="password.invalid && password.touched">
+                  <span class="text-danger" *ngIf="password.errors?.required">
+                    Password is required
+                  </span>
+                  <span
+                    class="text-danger"
+                    *ngIf="password.errors?.forbiddenPassword"
+                  >
+                    '{{ password.errors?.forbiddenPassword.value }}' word is not
+                    allowed as a password <br />
+                  </span>
+                  <span class="text-danger" *ngIf="password.errors?.pattern">
+                    Password should have minimum 6 characters, at least 1
+                    uppercase letter, 1 lowercase letter and 1 number
+                  </span>
+                </span>
+              </div>
+              <div class="form-group">
+                <label for="confirmPassword">confirmPassword</label>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  formControlName="confirmPassword"
+                  class="form-control"
+                  id="confirmPassword"
+                  placeholder="Confirm Password"
+                  required
+                />
+                <span
+                  *ngIf="confirmPassword.touched"
+                >
+                  <span
+                    class="text-danger"
+                    *ngIf="confirmPassword.invalid && confirmPassword.errors?.required"
+                  >
+                    Confirm Password is required
+                  </span>
+                  <span class="text-danger" *ngIf="userForm.errors?.misMatch">
+                    Password does not match
+                  </span>
+                  <!-- TODO misMatch validation not works properly -->
+                  <!-- {{ userForm.errors | json }} -->
+                </span>
+                {{ userForm.errors | json }}
+                invalid === {{confirmPassword.invalid}}
+                touched === {{confirmPassword.touched}}
+              </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="form-group ml-3">
+              <button type="submit" class="btn btn-primary">Create User</button>
+            </div>
+          </form>
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>

@@ -39,6 +39,7 @@ export class RegisterComponent implements OnInit {
         ],
         confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
       },
+      // perform the validation in a common ancestor control: the FormGroup
       { validator: matchPasswordValidator }
     );
   }

@@ -59,7 +59,7 @@
                       <span>{{ user.createdAt | date }}</span>
                     </td>
                     <td>
-                      <span>{{ user.role | titlecase }}</span>
+                      <span>{{ user.role !== 'superAdmin' ? (user.role | titlecase) : 'Super Admin' }}</span>
                     </td>
                     <td>
                       <span> 
