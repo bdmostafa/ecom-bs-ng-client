@@ -31,7 +31,7 @@ export class CreateUserComponent implements OnInit {
           Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$'),
         ],
       ],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required]],
     },
     // perform the validation in a common ancestor control: the FormGroup
     { validator: matchPasswordValidator });

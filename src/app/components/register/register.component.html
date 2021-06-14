@@ -245,7 +245,7 @@
               formControlName="password"
               id="password"
               name="password"
-              placeholder="Password"
+              placeholder="Password ('password' word is not allowed)"
               required
               type="password"
             />
@@ -258,7 +258,7 @@
                 *ngIf="password.errors?.forbiddenPassword"
               >
                 '{{ password.errors?.forbiddenPassword.value }}' is not allowed
-                as a password
+                as a password <br />
               </span>
               <span class="text-danger" *ngIf="password.errors?.pattern">
                 Password should have minimum 6 characters, at least 1 uppercase
@@ -275,16 +275,16 @@
             <input
               class="form-control w-75"
               formControlName="confirmPassword"
-              id="password-confirm"
-              name="password-confirmation"
-              placeholder="Password ('password' word is not allowed)"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirm Password"
               required
               type="password"
             />
-            <span *ngIf="confirmPassword.invalid && confirmPassword.touched">
+            <span *ngIf="confirmPassword.touched">
               <span
                 class="text-danger"
-                *ngIf="confirmPassword.errors?.required"
+                *ngIf="confirmPassword.invalid && confirmPassword.errors?.required"
               >
                 Confirm Password is required
               </span>
