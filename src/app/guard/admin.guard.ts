@@ -45,19 +45,23 @@ export class AdminGuard implements CanActivate, CanActivateChild {
     | boolean
     | UrlTree {
       
+      // TODO admin guard for child components 
     if (this.userService.auth) {
-      this.userService.userData$.subscribe((user: IUserResponse) => {
-        console.log(user, childRoute, state);
-        if (user?.role === 'admin' || user?.role === 'superAdmin') {
-          return true;
-        }
-      });
+     
     }
-
+    this.userService.userData$.subscribe((user: IUserResponse) => {
+      console.log(user, childRoute, state);
+      if (user?.role === 'admin' || user?.role === 'superAdmin') {
+        console.log("admin in guard")
+        return true;
+      }
+    });
     this.router.navigate(['/users/login'], {
       queryParams: { returnUrl: state.url },
     });
+    console.log('admin guard fails ========')
     return false;
+    
   }
 }
 

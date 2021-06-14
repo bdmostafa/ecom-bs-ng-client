@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ICartServer } from 'src/app/models/cart.model';
 import { CartService } from 'src/app/services/cart.service';
@@ -15,21 +15,19 @@ export class HeaderComponent implements OnInit {
   cartTotal: number;
   products;
   selectedCategory: string;
-  authState: boolean;
+  @Input() authState: boolean;
 
   constructor(
     public cartService: CartService,
     private productService: ProductService,
     private router: Router,
-    private userService: UserService
+    
   ) {}
 
   ngOnInit(): void {
     this.productService
       .getProducts()
       .subscribe((products) => (this.products = products));
-
-    this.userService.authState$.subscribe((auth) => (this.authState = auth));
 
     this.cartService.cartTotal$.subscribe(
       (cTotal) => (this.cartTotal = cTotal)

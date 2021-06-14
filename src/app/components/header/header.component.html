@@ -24,8 +24,7 @@
         </li>
         <li>
           <a routerLink="/admin/dashboard"
-            ><i class="fas fa-tachometer-alt"></i>
-            Dashboard</a
+            ><i class="fas fa-tachometer-alt"></i> Dashboard</a
           >
         </li>
         <li>
@@ -34,7 +33,6 @@
             {{ authState === false ? "LOGIN" : "My Account" }}</a
           >
         </li>
-        
       </ul>
     </div>
   </div>
@@ -49,7 +47,7 @@
         <!-- LOGO -->
         <div class="col-md-3">
           <div class="header-logo">
-            <a href="#" class="logo">
+            <a [routerLink]="['/']" class="logo">
               <img width="200" src="/assets/img/logo.png" alt="" />
             </a>
           </div>
@@ -116,10 +114,7 @@
                 </div>
               </a>
               <div aria-labelledby="dropdown-status" class="cart-dropdown">
-                <div
-                  class="cart-list"
-                  *ngIf="cartInfo.data[0].numInCart !== 0"
-                >
+                <div class="cart-list" *ngIf="cartInfo.data[0].numInCart !== 0">
                   <div
                     class="product-widget"
                     *ngFor="let cart of cartInfo.data; let idx = index"
@@ -203,6 +198,7 @@
           <a [routerLink]="['/']" routerLinkActive="router-link-active">Home</a>
         </li>
         <li><a href="#">Hot Deals</a></li>
+        <!-- TODO Categories link to be added later -->
         <li><a href="#">Categories</a></li>
         <li><a href="#">Contact Us</a></li>
         <li><a href="#">Blog</a></li>

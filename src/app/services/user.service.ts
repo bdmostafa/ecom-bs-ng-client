@@ -25,7 +25,8 @@ export class UserService {
     private http: HttpClient,
     private toastr: ToastrService,
   ) {
-    authService.authState.subscribe((user: SocialUser) => {
+    authService.authState.subscribe((user: SocialUser | ILoginUserResponse) => {
+      console.log("=====================", user)
       if (user != null) {
         this.auth = true;
         this.authState$.next(this.auth);

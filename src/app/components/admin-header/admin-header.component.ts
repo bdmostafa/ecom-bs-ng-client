@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { SocialUser } from 'angularx-social-login';
+import { map } from 'rxjs/operators';
+import { ILoginUserResponse, UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-admin-header',
@@ -6,8 +9,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-header.component.css']
 })
 export class AdminHeaderComponent implements OnInit {
+  @Input() user: any;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
   }

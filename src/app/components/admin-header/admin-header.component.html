@@ -1,1 +1,5 @@
-<h2 class="text-center">Welcome to Dashboard</h2>
+<h2 class="text-center pt-5">
+  Hi,
+  <strong> {{ user?.name ? (user?.name | titlecase) : "Guest" }}! </strong>
+  Welcome to Dashboard
+</h2>

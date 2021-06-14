@@ -43,9 +43,10 @@ export class UserComponent implements OnInit {
         this.myUser = data;
       });
 
-    // if (this.myUser.role === 'admin' || this.myUser.role === 'superAdmin') {
-    //   this.router.navigate(['/admin/dashboard']);
-    // }
+    if (this.myUser.role === 'admin' || this.myUser.role === 'superAdmin') {
+      // this.router.navigateByUrl('/admin/dashboard');
+      this.router.navigate(['/admin/dashboard']);
+    }
 
     // Load user orders if he/she has any orders
     this.orderService.getMyOrders().then((orders: IOrderResponse[]) => {

@@ -75,7 +75,7 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminLayoutComponent,
-    // canActivate: [UserGuard],
+    canActivate: [AdminGuard],
     // canActivateChild: [AdminGuard],
     children: [
       {

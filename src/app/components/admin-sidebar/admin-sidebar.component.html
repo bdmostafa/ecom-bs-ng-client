@@ -1,143 +1,147 @@
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a [routerLink]="['/']" class="brand-link">
-      <img src="../../../assets/img/logo.png" alt="ecom-bs" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Ecom BS Dashboard</span>
-    </a>
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a
+    [routerLink]="['/']"
+    class="brand-link d-flex align-items-center justify-content-center"
+  >
+    <img
+      src="../../../assets/img/logo.png"
+      alt="ecom-bs"
+      class="brand-image img-circle elevation-3"
+      style="opacity: 0.8"
+    />
+    <span class="brand-text text-light font-weight-bold"
+      >Ecom BS Dashboard</span
+    >
+  </a>
 
-    <!-- Sidebar -->
-    <div class="sidebar" style="overflow-y: initial;">
-      <!-- Sidebar user (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="../../assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <!-- TODO loggedin admin name should be here -->
-          <a [routerLink]="['/users/me']"  class="d-block">Admin Name</a>
-        </div>
+  <!-- Sidebar -->
+  <div class="sidebar" style="overflow-y: initial">
+    <!-- Sidebar user (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <img
+          [src]="
+            user?.image
+              ? user.image
+              : '../../assets/dist/img/user2-160x160.jpg'
+          "
+          class="img-circle elevation-2"
+          alt="user.name"
+        />
       </div>
+      <div class="info">
+        <a [routerLink]="['/users/me']" class="d-block">
+          <strong
+            >{{ user?.name ? (user.name | titlecase) : "Guest" }}
+          </strong>
+        </a>
+      </div>
+    </div>
 
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul
+        class="nav nav-pills nav-sidebar flex-column"
+        data-widget="treeview"
+        role="menu"
+        data-accordion="false"
+      >
+        <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-          <!-- Products Section -->
-          <h4 class="nav-heading">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
-            Products
-          </h4>
-          <hr />
-          <li class="nav-item">
-            <a [routerLink]="['/admin/dashboard']" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>All Products</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/admin/products-by-category']"   class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Products By Category</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/admin/create-product']"   class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Create Product</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/admin/generate-products']"   class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Generate Products From 3rd Party
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          <br />
+        <!-- Products Section -->
+        <h4 class="nav-heading">
+          <i class="nav-icon fas fa-tachometer-alt"></i>
+          Products
+        </h4>
+        <hr />
+        <li class="nav-item">
+          <a [routerLink]="['/admin/dashboard']" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>All Products</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/admin/products-by-category']" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Products By Category</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/admin/create-product']" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Create Product</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/admin/generate-products']" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>
+              Generate Products From 3rd Party
+              <span class="right badge badge-danger">New</span>
+            </p>
+          </a>
+        </li>
+        <br />
 
-          <!-- Orders Section -->
-          <h4 class="nav-heading">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
-            Orders
-          </h4>
-          <hr />
-          <li class="nav-item">
-            <a [routerLink]="['/admin/all-orders']"  class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>All Orders</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/admin/orders/order-by-id']"   class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Order By Id</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/admin/pending-orders']"   class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Pending Orders</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/admin/order-by-date']"   class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Orders By Date</p>
-            </a>
-          </li>
-          <br />
+        <!-- Orders Section -->
+        <h4 class="nav-heading">
+          <i class="nav-icon fas fa-tachometer-alt"></i>
+          Orders
+        </h4>
+        <hr />
+        <li class="nav-item">
+          <a [routerLink]="['/admin/all-orders']" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>All Orders</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/admin/orders/order-by-id']" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Order By Id</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/admin/pending-orders']" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Pending Orders</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/admin/order-by-date']" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Orders By Date</p>
+          </a>
+        </li>
+        <br />
 
-          <!-- Users Section -->
-          <h4 class="nav-heading">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
-            Users
-          </h4>
-          <hr />
-          <li class="nav-item">
-            <a [routerLink]="['/admin/all-users']"  class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>All Users</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/admin/create-user']"   class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Create User</p>
-            </a>
-          </li>
-          <!-- <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Orders
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              
-            </ul>
-          </li>
-
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Users
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              
-            </ul>
-          </li> -->
-          
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
+        <!-- Users Section -->
+        <h4 class="nav-heading">
+          <i class="nav-icon fas fa-tachometer-alt"></i>
+          Users
+        </h4>
+        <hr />
+        <li class="nav-item">
+          <a [routerLink]="['/admin/all-users']" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>All Users</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/admin/create-user']" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Create User</p>
+          </a>
+        </li>
+      </ul>
+      <button [disabled]="!user?.name" (click)="logout()" class="btn btn-secondary btn-lg w-100 mt-5">
+        Logout
+      </button>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>
