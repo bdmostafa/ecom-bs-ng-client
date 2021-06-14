@@ -137,4 +137,8 @@ export class ProductComponent implements OnInit, AfterViewInit {
   selectProduct(id: String) {
     this.router.navigate(['/products', id]).then();
   }
+
+  notifyEmpty(product?: string) {
+    alert(`Oops! The product ${product} is out of stock now. Please stay updated with us.`)
+  }
 }

@@ -34,4 +34,8 @@ export class HomeComponent implements OnInit {
   addToCart(id: string) {
     this.cartService.addToCart(id);
   }
+
+  notifyEmpty(product: string) {
+    alert(`Oops! The product ${product} is out of stock now. Please stay updated with us.`)
+  }
 }
