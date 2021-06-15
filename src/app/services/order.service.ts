@@ -14,19 +14,19 @@ export class OrderService {
 
   getOrderById(orderId: string) {
     return this.http
-      .get<IOrderResponse>(this.SERVER_URL + '/orders/' + orderId)
+      .get<IOrderResponse>(this.SERVER_URL + '/orders/' + orderId, {withCredentials: true})
       .toPromise();
   }
 
   getMyOrders() {
     return this.http
-      .get<IOrderResponse[]>(this.SERVER_URL + '/orders/user/my-orders')
+      .get<IOrderResponse[]>(this.SERVER_URL + '/orders/user/my-orders', {withCredentials: true})
       .toPromise();
   }
 
   getAllOrders() {
     return this.http
-      .get<IOrderResponse[]>(this.SERVER_URL + '/orders')
+      .get<IOrderResponse[]>(this.SERVER_URL + '/orders', {withCredentials: true})
       .toPromise();
   }
 
@@ -35,19 +35,19 @@ export class OrderService {
     return this.http
       .patch<IOrderResponse>(this.SERVER_URL + '/orders/update/' + orderId, {
         status,
-      })
+      }, {withCredentials: true})
       .toPromise();
   }
 
   getOrdersByDate(date: string) {
     return this.http
-    .get<IOrderResponse[]>(this.SERVER_URL + '/orders/orders-by-date/' + date)
+    .get<IOrderResponse[]>(this.SERVER_URL + '/orders/orders-by-date/' + date, {withCredentials: true})
     .toPromise();
   }
 
   getPendingOrders() {
     return this.http
-      .get<IOrderResponse[]>(this.SERVER_URL + '/orders/pending-orders')
+      .get<IOrderResponse[]>(this.SERVER_URL + '/orders/pending-orders', {withCredentials: true})
       .toPromise();
   }
 }

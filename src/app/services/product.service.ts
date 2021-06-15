@@ -32,12 +32,12 @@ export class ProductService {
   // Create product by form data
   createProduct(formData: any): Observable<IProductServer> {
     console.log(formData);
-    return this.http.post<IProductServer>(`${this.SERVER_URL}/products/create`, formData);
+    return this.http.post<IProductServer>(`${this.SERVER_URL}/products/create`, formData, {withCredentials: true});
   }
 
   // Generate products from third party API
   generateProductsByThirdParty() {
-    return this.http.get<IProductServer[]>(`${this.SERVER_URL}/products/generate-products`);
+    return this.http.get<IProductServer[]>(`${this.SERVER_URL}/products/generate-products`, {withCredentials: true});
   }
 
   updateProduct() {

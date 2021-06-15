@@ -50,7 +50,7 @@ export class UserService {
   //  Login User with Email and Password
   loginUser(email: string, password: string) {
     this.http
-      .post(`${this.SERVER_URL}/users/login`, { email, password })
+      .post(`${this.SERVER_URL}/users/login`, { email, password }, {withCredentials: true})
       .subscribe((data: ILoginUserResponse) => {
         if (data.msg === 'Successfully LoggedIn') {
           this.auth = true;
@@ -104,7 +104,7 @@ export class UserService {
 
   getAllUsers() {
     return this.http
-      .get<IUsersResponse[]>(this.SERVER_URL + '/users')
+      .get<IUsersResponse[]>(this.SERVER_URL + '/users', {withCredentials: true})
       .toPromise();
   }
 
