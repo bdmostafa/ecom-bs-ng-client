@@ -1,5 +1,5 @@
 <div class="container user-profile">
-  <h2 class="text-center mb-3">Welcome {{ myUser.name }} </h2>
+  <h2 class="text-center mb-3">Welcome {{ myUser.name }}</h2>
   <form novalidate>
     <div class="row">
       <div class="col-md-4">
@@ -18,7 +18,7 @@
         </div>
         <div class="profile-work">
           <h4>PROFILE INFO</h4>
-
+          <!-- TODO user id to be gotten from backend -->
           <p><strong>User Id: </strong>{{ myUser.id || myUser.userId }}</p>
 
           <p><strong>Name: </strong> {{ myUser.name || myUser.username }}</p>
@@ -35,10 +35,7 @@
             {{ myUser?.profession || "Your Profession" }}
           </p>
         </div>
-        <button
-          (click)="logout()"
-          class="btn btn-secondary btn-lg"
-        >
+        <button (click)="logout()" class="btn btn-secondary btn-lg">
           Logout
         </button>
       </div>
@@ -58,7 +55,7 @@
           <tbody>
             <ng-container *ngFor="let order of userOrderData; let idx = index">
               <tr>
-                <td>{{ idx + 1 }} </td>
+                <td>{{ idx + 1 }}</td>
               </tr>
               <tr *ngFor="let u of order.productOrdered; let idx = index">
                 <td></td>
@@ -123,7 +120,6 @@
                 </td>
               </tr>
             </ng-container>
-            
           </tbody>
           <tr class="border-0">
             <td></td>

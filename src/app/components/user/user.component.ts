@@ -43,17 +43,12 @@ export class UserComponent implements OnInit {
         this.myUser = data;
       });
 
-    if (this.myUser.role === 'admin' || this.myUser.role === 'superAdmin') {
-      // this.router.navigateByUrl('/admin/dashboard');
-      this.router.navigate(['/admin/dashboard']);
-    }
-
     // Load user orders if he/she has any orders
     this.orderService.getMyOrders().then((orders: IOrderResponse[]) => {
       console.log(orders);
       this.userOrderData$.next(orders);
       this.userOrderData = orders;
-    })
+    });
   }
 
   logout() {
@@ -64,15 +59,13 @@ export class UserComponent implements OnInit {
   calculateTotal() {
     let total: number = 0;
     if (this.userOrderData.length > 0) {
-      this.userOrderData.forEach(orders => {
+      this.userOrderData.forEach((orders) => {
         orders.productOrdered.forEach((products: any) => {
           const subTotal = products.product.price * products.quantity;
           total = total + subTotal;
-        })
-      })
+        });
+      });
       return total;
-    }
-    else return total;
+    } else return total;
   }
-
 }

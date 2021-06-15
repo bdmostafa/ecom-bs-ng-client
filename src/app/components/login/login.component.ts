@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
     this.userService.signInWithGoogle();
   }
 
-  onSubmit(form: NgForm) {
+  processLogin(form: NgForm) {
     console.log(form)
     const email = this.user.email;
     const password = this.user.password;

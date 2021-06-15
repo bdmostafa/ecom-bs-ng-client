@@ -13,7 +13,7 @@
         <form
           novalidate
           #loginForm="ngForm"
-          (ngSubmit)="loginForm.form.valid && onSubmit(loginForm)"
+          (ngSubmit)="loginForm.form.valid && processLogin(loginForm)"
         >
           <!-- {{ loginForm.value | json }}
           {{ loginForm.form | json }} -->

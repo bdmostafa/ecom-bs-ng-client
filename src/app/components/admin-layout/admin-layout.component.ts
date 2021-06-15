@@ -38,11 +38,13 @@ export class AdminLayoutComponent implements OnInit {
         if (data?.role === 'admin' || data?.role === 'superAdmin') {
           this.myUser = data;
           console.log('admin');
-        } else if (data?.role === 'user') {
+        } 
+        // Although user role never come here because of adminGuard auth, 
+        // it handles in else if block for severe security purpose
+        else if (data?.role === 'user') {
           this.router.navigate(['users/me']).then(() => {
-            // TODO toastr does not works --- need to fix later
             // Info notification with ToastrService
-            this.toastr.info(
+            this.toastr.warning(
               'Oops...! As an user you are not allowed to enter Dashboard. Please logout and again login as an Admin',
               'Dashboard Access Info',
               {
