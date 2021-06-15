@@ -108,8 +108,10 @@ export class UserService {
       .toPromise();
   }
 
-  deleteUser() {
-    // TODO
+  deleteUser(userId: string) {
+    return this.http
+      .delete<IUsersResponse>(this.SERVER_URL + `/users/delete/${userId}`, {withCredentials: true} )
+      .toPromise();
   }
 }
 

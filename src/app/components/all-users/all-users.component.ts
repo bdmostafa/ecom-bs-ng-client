@@ -1,16 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { IUsersResponse, UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-all-users',
   templateUrl: './all-users.component.html',
-  styleUrls: ['./all-users.component.css']
+  styleUrls: ['./all-users.component.css'],
 })
 export class AllUsersComponent implements OnInit {
   users: IUsersResponse[];
 
-  constructor(private toastr: ToastrService, private userService: UserService) { }
+  constructor(
+    private toastr: ToastrService,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     // Load all users from backend
@@ -54,4 +59,42 @@ export class AllUsersComponent implements OnInit {
     );
   }
 
+  deleteUser(userId: string) {
+    this.userService.deleteUser(userId).then(
+      (user: IUsersResponse) => {
+        // Success notification with ToastrService
+        this.toastr.success(`The user ${user.name} is deleted successfully`, 'User Deletion', {
+          progressBar: true,
+          positionClass: 'toast-top-right',
+          progressAnimation: 'increasing',
+          timeOut: 3000,
+        });
+        this.router.navigateByUrl('admin/all-users');
+      },
+      // Error handling with ToastrService
+      (error: any) => {
+        console.log(error);
+        const statusText = error.statusText;
+        // If error.error is array
+        if (typeof error.error === 'object' && error.error instanceof Array) {
+          error.error.forEach((element) => {
+            this.toastr.error(element.msg, statusText, {
+              progressBar: true,
+              positionClass: 'toast-top-right',
+              progressAnimation: 'increasing',
+              timeOut: 3000,
+            });
+          });
+        } else {
+          // When error.error is not an array
+          this.toastr.error(error.error, error.statusText, {
+            progressBar: true,
+            positionClass: 'toast-top-right',
+            progressAnimation: 'increasing',
+            timeOut: 3000,
+          });
+        }
+      }
+    );
+  }
 }

@@ -313,7 +313,7 @@ export class CartService {
           });
           console.log(this.cartInfoClient.productInfo, cartInfo);
           this.http
-            .post(this.SERVER_URL + '/orders/create', cartInfo)
+            .post(this.SERVER_URL + '/orders/create', cartInfo, {withCredentials: true})
             .subscribe((orderData: IOrderResponse) => {
               console.log('orderData', orderData);
               this.orderService.getOrderById(orderData._id).then((order) => {
