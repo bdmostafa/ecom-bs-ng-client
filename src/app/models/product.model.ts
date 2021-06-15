@@ -1,4 +1,4 @@
-export interface IProductServer {
+export interface IProduct {
     _id: string;
     title: string;
     category: string;
@@ -13,5 +13,5 @@ export interface IProductServer {
   
   export interface ServerResponse {
     count: number;
-    products: IProductServer[];
+    products: IProduct[];
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { IProductServer } from 'src/app/models/product.model';
+import { IProduct } from 'src/app/models/product.model';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -12,7 +12,7 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class CategoryComponent implements OnInit {
   category: string;
-  categoryProducts: IProductServer[] = [];
+  categoryProducts: IProduct[] = [];
 
   constructor(
     private productService: ProductService,

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ICartInfo } from 'src/app/services/cart.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,12 @@ export class OrderService {
   getOrderById(orderId: string) {
     return this.http
       .get<IOrderResponse>(this.SERVER_URL + '/orders/' + orderId, {withCredentials: true})
+      .toPromise();
+  }
+
+  createOrder(cartInfo: ICartInfo[]) {
+    return this.http
+      .post<IOrderResponse>(this.SERVER_URL + '/orders/create', cartInfo, {withCredentials: true})
       .toPromise();
   }
 

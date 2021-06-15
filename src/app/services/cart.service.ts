@@ -1,3 +1,4 @@
+import { IOrderResponse } from 'src/app/services/order.service';
 import { ICartPublic, ICartServer } from './../models/cart.model';
 import { OrderService } from './order.service';
 import { HttpClient } from '@angular/common/http';
@@ -6,7 +7,7 @@ import { ProductService } from './product.service';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
 import { NavigationExtras, Router } from '@angular/router';
-import { IProductServer } from '../models/product.model';
+import { IProduct } from '../models/product.model';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -68,7 +69,7 @@ export class CartService {
       this.cartInfoClient.productInfo.forEach((prod) => {
         this.productService
           .getProduct(prod._id)
-          .subscribe((actualProductInfo: IProductServer) => {
+          .subscribe((actualProductInfo: IProduct) => {
             if (this.cartInfoServer.data[0].numInCart === 0) {
               this.cartInfoServer.data[0].numInCart = prod.inCart;
               this.cartInfoServer.data[0].product = actualProductInfo;
@@ -302,7 +303,7 @@ export class CartService {
           this.resetCartInfoServer();
 
           // Create an array object according to backend data request requirement
-          const cartInfo = [];
+          const cartInfo: ICartInfo[] = [];
           this.cartInfoClient.productInfo.map((c) => {
             const product = c._id;
             const quantity = c.inCart;
@@ -312,13 +313,12 @@ export class CartService {
             });
           });
           console.log(this.cartInfoClient.productInfo, cartInfo);
-          this.http
-            .post(this.SERVER_URL + '/orders/create', cartInfo, {withCredentials: true})
-            .subscribe((orderData: IOrderResponse) => {
+          this.orderService.createOrder(cartInfo).then((orderData: IOrderResponse) => {
               console.log('orderData', orderData);
-              this.orderService.getOrderById(orderData._id).then((order) => {
+              this.orderService.getOrderById(orderData._id).then((order: IOrderResponse) => {
                 console.log('order', order);
-                if (orderData.success) {
+                if (orderData?.success) {
+                  console.log('order success')
                   // To pass additional information
                   const navigationExtras: NavigationExtras = {
                     state: {
@@ -347,6 +347,8 @@ export class CartService {
                         JSON.stringify(this.cartInfoClient)
                       );
                     });
+                } else {
+                  console.log('order not success')
                 }
               });
             });
@@ -407,17 +409,7 @@ export class CartService {
   }
 }
 
-interface IOrderResponse {
-  _id: string;
-  customer: string;
-  date: string;
-  status: string;
-  success: boolean;
-  message: string;
-  productOrdered: [
-    {
-      product: string;
-      quantity: number;
-    }
-  ];
+export interface ICartInfo {
+  product: string;
+  quantity: number;
 }

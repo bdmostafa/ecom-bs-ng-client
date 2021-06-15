@@ -1,10 +1,10 @@
-import { IProductServer } from './product.model';
+import { IProduct } from './product.model';
 
 export interface ICartServer {
   total: number;
   data: [
     {
-      product: IProductServer;
+      product: IProduct;
       numInCart: number;
     }
   ];

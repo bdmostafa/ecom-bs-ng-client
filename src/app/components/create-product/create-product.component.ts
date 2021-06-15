@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { IProductServer } from 'src/app/models/product.model';
+import { IProduct } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -63,7 +63,7 @@ export class CreateProductComponent implements OnInit {
 
     // @ts-ignore
     this.productService.createProduct({ ...this.productForm.value }).subscribe(
-      (response: IProductServer) => {
+      (response: IProduct) => {
         console.log(response);
 
         // Success notification with ToastrService

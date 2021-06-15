@@ -2,7 +2,7 @@ import { ServerResponse } from './../../models/product.model';
 import { Router } from '@angular/router';
 import { ProductService } from './../../services/product.service';
 import { Component, OnInit } from '@angular/core';
-import { IProductServer } from 'src/app/models/product.model';
+import { IProduct } from 'src/app/models/product.model';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { CartService } from 'src/app/services/cart.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  products: IProductServer[] = [];
+  products: IProduct[] = [];
 
   constructor(
     private productService: ProductService,
@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe((product: IProductServer[]) => {
+    this.productService.getProducts().subscribe((product: IProduct[]) => {
       console.log(product);
       this.products = product;
       console.log(this.products);
