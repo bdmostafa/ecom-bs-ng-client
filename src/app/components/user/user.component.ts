@@ -58,7 +58,7 @@ export class UserComponent implements OnInit {
   // Calculate total price of loggedInUser orders
   calculateTotal() {
     let total: number = 0;
-    if (this.userOrderData.length > 0) {
+    if (this.userOrderData?.length > 0) {
       this.userOrderData.forEach((orders) => {
         orders.productOrdered.forEach((products: any) => {
           const subTotal = products.product.price * products.quantity;

@@ -36,8 +36,8 @@ export class UserService {
   }
 
   // Register user with name, email and password
-  registerUser(formData: any): Observable<IRegisterUserResponse> {
-    const { name, email, password, confirmPassword} = formData;
+  registerUser(formData: ILoginUser): Observable<IRegisterUserResponse> {
+    const { name, email, password, confirmPassword } = formData;
     console.log(formData);
     return this.http.post<IRegisterUserResponse>(`${this.SERVER_URL}/users/create`, {
       name,
@@ -96,10 +96,56 @@ export class UserService {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 
-  logout() {
-    this.authService.signOut();
-    this.auth = false;
-    this.authState$.next(this.auth);
+  logout(): void {
+    // TODO social login/logout
+    // this.authService.signOut();
+    this.http
+      .post<ILogoutResponse>(`${this.SERVER_URL}/users/logout`, {}, {withCredentials: true})
+      .subscribe((data: ILogoutResponse) => {
+        console.log(data);
+        if (data.msg) {
+          // Update authState observable
+          this.auth = false;
+          this.authState$.next(this.auth);
+  
+           // Success notification with ToastrService
+           this.toastr.success(
+            "You have been logged out Successfully",
+            "Logout Success",
+            {
+              progressBar: true,
+              positionClass: 'toast-top-right',
+              progressAnimation: 'increasing',
+              timeOut: 3000,
+            }
+          );
+        }        
+      }, 
+      (error) => {
+        console.log(error)
+        const statusText = error.statusText;
+        // If error.error is array
+        if (typeof error.error === 'object' && error.error instanceof Array) {
+          error.error.forEach((element) => {
+            this.toastr.error(element.msg, statusText, {
+              progressBar: true,
+              positionClass: 'toast-top-right',
+              progressAnimation: 'increasing',
+              timeOut: 3000,
+            });
+          });
+        } else {
+          // When error.error is not an array
+          this.toastr.error(error.error, error.statusText, {
+            progressBar: true,
+            positionClass: 'toast-top-right',
+            progressAnimation: 'increasing',
+            timeOut: 3000,
+          });
+        }
+      }
+      );
+      console.log(this.authState$)  
   }
 
   getAllUsers() {
@@ -132,4 +178,16 @@ export interface IUsersResponse {
   email: string;
   name: string;
   role: string;
+}
+
+
+export interface ILogoutResponse {
+  msg: string;
+}
+
+export interface ILoginUser {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 }
