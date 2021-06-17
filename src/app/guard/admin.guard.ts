@@ -16,11 +16,11 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root',
 })
 export class AdminGuard implements CanActivate, CanActivateChild {
-  auth: boolean;
+  private isLoggedIn: boolean = false;
   user: IUserResponse;
 
   constructor(private userService: UserService, private router: Router, private toastr: ToastrService) {
-    this.auth = userService.auth;
+    userService.isLoggedIn.subscribe(value => this.isLoggedIn = value);
     userService.userData$.subscribe((user: IUserResponse) => {
       this.user = user;
     });
@@ -36,7 +36,7 @@ export class AdminGuard implements CanActivate, CanActivateChild {
     | UrlTree {
     console.log(state.url);
 
-    if (this.userService.auth) {
+    if (this.isLoggedIn) {
       return true;
     }
 
@@ -56,7 +56,7 @@ export class AdminGuard implements CanActivate, CanActivateChild {
     | UrlTree {
     console.log(this.user, childRoute, state);
 
-    if (this.userService.auth) {
+    if (this.isLoggedIn) {
       if (this.user?.role === 'admin' || this.user?.role === 'superAdmin') {
         console.log('canActivateChild -> true ====');
         return true;

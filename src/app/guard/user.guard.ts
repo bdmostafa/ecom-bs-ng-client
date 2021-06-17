@@ -13,7 +13,11 @@ import { UserService } from '../services/user.service';
   providedIn: 'root',
 })
 export class UserGuard implements CanActivate {
-  constructor(private userService: UserService, private router: Router) {}
+  private isLoggedIn: boolean = false;
+  
+  constructor(private userService: UserService, private router: Router) {
+    userService.isLoggedIn.subscribe(value => this.isLoggedIn = value);
+  }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -23,10 +27,10 @@ export class UserGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log(this.userService.auth, state, route);
+    
     this.userService.userData$.subscribe(user => console.log(user));
 
-    if (this.userService.auth) {
+    if (this.isLoggedIn) {
       return true;
     }
 

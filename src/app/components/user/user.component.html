@@ -5,10 +5,7 @@
       <div class="col-md-4">
         <div class="profile-img">
           <img
-            [src]="
-              myUser?.photoUrl ||
-              'https://banner2.cleanpng.com/20180505/upw/kisspng-computer-icons-avatar-businessperson-interior-desi-corporae-5aee195c6d1683.4671087315255535004468.jpg'
-            "
+            [src]="'https://banner2.cleanpng.com/20180505/upw/kisspng-computer-icons-avatar-businessperson-interior-desi-corporae-5aee195c6d1683.4671087315255535004468.jpg'"
             alt="{{ myUser?.name }}"
           />
           <div class="file btn btn-lg btn-primary">
@@ -19,20 +16,20 @@
         <div class="profile-work">
           <h4>PROFILE INFO</h4>
           <!-- TODO user id to be gotten from backend -->
-          <p><strong>User Id: </strong>{{ myUser.id || myUser.userId }}</p>
+          <p><strong>User Id: </strong></p>
 
-          <p><strong>Name: </strong> {{ myUser.name || myUser.username }}</p>
+          <p><strong>Name: </strong> {{ myUser.name  }}</p>
 
           <p><strong>Email: </strong> {{ myUser.email }}</p>
 
           <p>
             <strong>Phone: </strong>
-            {{ myUser?.phone || 880 - 111 - 222 - 333 }}
+            {{ 880 - 111 - 222 - 333 }}
           </p>
 
           <p>
             <strong>Profession: </strong>
-            {{ myUser?.profession || "Your Profession" }}
+            {{ "Your Profession" }}
           </p>
         </div>
         <button (click)="logout()" class="btn btn-secondary btn-lg">

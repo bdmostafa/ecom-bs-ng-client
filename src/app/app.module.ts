@@ -45,6 +45,7 @@ import { PendingOrdersComponent } from './components/pending-orders/pending-orde
 import { OrdersByDateComponent } from './components/orders-by-date/orders-by-date.component';
 import { AllUsersComponent } from './components/all-users/all-users.component';
 import { CreateUserComponent } from './components/create-user/create-user.component';
+import { CookieService } from 'ngx-cookie-service';
 
 // const config = new AuthServiceConfig([
 //   {
@@ -122,6 +123,7 @@ import { CreateUserComponent } from './components/create-user/create-user.compon
         ],
       } as SocialAuthServiceConfig,
     },
+    CookieService,
   ],
   bootstrap: [AppComponent],
 })

@@ -13,7 +13,7 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit {
-  myUser: any;
+  myUser: ILoginUserResponse | SocialUser;
   userOrderData: IOrderResponse[];
 
   constructor(
