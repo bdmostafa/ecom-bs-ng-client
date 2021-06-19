@@ -1,6 +1,6 @@
 import { IStatusInfo } from './../all-orders/all-orders.component';
 import { Component, OnInit } from '@angular/core';
-import { IOrderResponse, OrderService } from 'src/app/services/order.service';
+import { IOrder, IOrderResponse, OrderService } from 'src/app/services/order.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl, FormGroup } from '@angular/forms';
 
@@ -10,7 +10,7 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./order-by-id.component.css'],
 })
 export class OrderByIdComponent implements OnInit {
-  order: IOrderResponse;
+  order: IOrder;
   statusList = ['Pending', 'Approved', 'On going', 'Delivered'];
   statusData: IStatusInfo;
   status: string;
@@ -20,7 +20,6 @@ export class OrderByIdComponent implements OnInit {
   });
 
   constructor(
-    private toastr: ToastrService,
     private orderService: OrderService
   ) {}
 
@@ -38,41 +37,9 @@ export class OrderByIdComponent implements OnInit {
 
     // Load order by Id
     this.orderService.getOrderById(this.fetchOrderForm.value.orderId).then(
-      (order: IOrderResponse) => {
-        console.log(order);
-        this.order = order;
-
-        // Success notification with ToastrService
-        this.toastr.success(`The order ${order._id} is loaded successfully`, 'Fetch Order By Id', {
-          progressBar: true,
-          positionClass: 'toast-top-right',
-          progressAnimation: 'increasing',
-          timeOut: 3000,
-        });
-      },
-      // Error handling with ToastrService
-      (error: any) => {
-        console.log(error);
-        const statusText = error.statusText;
-        // If error.error is array
-        if (typeof error.error === 'object' && error.error instanceof Array) {
-          error.error.forEach((element) => {
-            this.toastr.error(element.msg, statusText, {
-              progressBar: true,
-              positionClass: 'toast-top-right',
-              progressAnimation: 'increasing',
-              timeOut: 3000,
-            });
-          });
-        } else {
-          // When error.error is not an array
-          this.toastr.error(error.message, error.statusText, {
-            progressBar: true,
-            positionClass: 'toast-top-right',
-            progressAnimation: 'increasing',
-            timeOut: 3000,
-          });
-        }
+      (orderData: IOrderResponse) => {
+        console.log(orderData.order);
+        this.order = orderData.order;
       }
     );
   }
@@ -84,38 +51,8 @@ export class OrderByIdComponent implements OnInit {
 
     this.orderService.updateOrderStatus(id, status).then(
       (order: IOrderResponse) => {
-        if (order?.status) {
-          // Success notification with ToastrService
-          this.toastr.success('All orders loaded successfully', 'All Orders', {
-            progressBar: true,
-            positionClass: 'toast-top-right',
-            progressAnimation: 'increasing',
-            timeOut: 3000,
-          });
-        }
-      },
-      // Error handling with ToastrService
-      (error: any) => {
-        console.log(error);
-        const statusText = error.statusText;
-        // If error.error is array
-        if (typeof error.error === 'object' && error.error instanceof Array) {
-          error.error.forEach((element) => {
-            this.toastr.error(element.msg, statusText, {
-              progressBar: true,
-              positionClass: 'toast-top-right',
-              progressAnimation: 'increasing',
-              timeOut: 3000,
-            });
-          });
-        } else {
-          // When error.error is not an array
-          this.toastr.error(error.message, error.statusText, {
-            progressBar: true,
-            positionClass: 'toast-top-right',
-            progressAnimation: 'increasing',
-            timeOut: 3000,
-          });
+        if (order?.success) {
+          console.log(order)
         }
       }
     );

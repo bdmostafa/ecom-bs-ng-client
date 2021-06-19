@@ -65,7 +65,7 @@ export class UserService {
       )
       .subscribe(
         (data: ILoginUserResponse) => {
-          if (data.msg === 'Successfully LoggedIn') {
+          if (data.success) {
             this.authState$.next(true);
             this.userData$.next(data);
 
@@ -74,28 +74,6 @@ export class UserService {
             localStorage.setItem('loginStatus', '1');
             localStorage.setItem('userData', JSON.stringify(data));
           }
-
-          // Success notification with ToastrService
-          this.toastr.success(
-            'You have logged in Successfully',
-            'Login Success',
-            {
-              progressBar: true,
-              positionClass: 'toast-top-right',
-              progressAnimation: 'increasing',
-              timeOut: 3000,
-            }
-          );
-        },
-        (error) => {
-          console.log(error);
-          // Error handling with ToastrService
-          this.toastr.error(error.error, error.statusText, {
-            progressBar: true,
-            positionClass: 'toast-top-right',
-            progressAnimation: 'increasing',
-            timeOut: 3000,
-          });
         }
       );
     // console.log(this.authState$);
@@ -124,7 +102,7 @@ export class UserService {
       .subscribe(
         (data: ILogoutResponse) => {
           console.log(data);
-          if (data.msg) {
+          if (data.success) {
             // Update authState observable
             this.authState$.next(false);
             this.userData$.next(null);
@@ -134,49 +112,15 @@ export class UserService {
             localStorage.setItem('loginStatus', '0');
             localStorage.removeItem('userData');
 
-            // Success notification with ToastrService
-            this.toastr.success(
-              'You have been logged out Successfully',
-              'Logout Success',
-              {
-                progressBar: true,
-                positionClass: 'toast-top-right',
-                progressAnimation: 'increasing',
-                timeOut: 3000,
-              }
-            );
-          }
-        },
-        (error) => {
-          console.log(error);
-          const statusText = error.statusText;
-          // If error.error is array
-          if (typeof error.error === 'object' && error.error instanceof Array) {
-            error.error.forEach((element) => {
-              this.toastr.error(element.msg, statusText, {
-                progressBar: true,
-                positionClass: 'toast-top-right',
-                progressAnimation: 'increasing',
-                timeOut: 3000,
-              });
-            });
-          } else {
-            // When error.error is not an array
-            this.toastr.error(error.error, error.statusText, {
-              progressBar: true,
-              positionClass: 'toast-top-right',
-              progressAnimation: 'increasing',
-              timeOut: 3000,
-            });
           }
         }
       );
-    console.log(this.authState$);
+    // console.log(this.authState$);
   }
 
   getAllUsers() {
     return this.http
-      .get<IUsersResponse[]>(this.SERVER_URL + '/users', {
+      .get<IUsersResponse>(this.SERVER_URL + '/users', {
         withCredentials: true,
       })
       .toPromise();
@@ -184,7 +128,7 @@ export class UserService {
 
   deleteUser(userId: string) {
     return this.http
-      .delete<IUsersResponse>(this.SERVER_URL + `/users/delete/${userId}`, {
+      .delete(this.SERVER_URL + `/users/delete/${userId}`, {
         withCredentials: true,
       })
       .toPromise();
@@ -236,7 +180,10 @@ export class UserService {
 
 export interface ILoginUserResponse {
   email: string;
-  msg: string;
+  success: {
+    title: string;
+    message: string;
+  };
   name: string;
   role: string;
 }
@@ -244,8 +191,12 @@ export interface IRegisterUserResponse {
   email: string;
   name: string;
   role: string;
+  success: {
+    "title": string;
+    "message": string;
+  }
 }
-export interface IUsersResponse {
+export interface IUserResponse {
   _id: string;
   createdAt: string;
   email: string;
@@ -253,8 +204,19 @@ export interface IUsersResponse {
   role: string;
 }
 
+export interface IUsersResponse {
+  users: IUserResponse[],
+  success: {
+    title: string;
+    message: string;
+  }
+}
+
 export interface ILogoutResponse {
-  msg: string;
+  success: {
+    title: string;
+    message: string;
+  };
 }
 
 export interface ILoginUser {

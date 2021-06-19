@@ -69,16 +69,16 @@
                       <td class="w-25">
                         <span
                           ><img
-                            [src]="p.product.image"
+                            [src]="p.product?.image"
                             class="w-25 rounded img-thumbnail"
                           />
                         </span>
                       </td>
                       <td>
-                        <span>{{ p.product.title.slice(0, 25) }} </span>
+                        <span>{{ p.product?.title.slice(0, 25) }} </span>
                       </td>
                       <td>
-                        <span>{{ p.product.price | currency: "USD" }} </span>
+                        <span>{{ p.product?.price | currency: "USD" }} </span>
                       </td>
                       <td>
                         <span>{{ p.quantity }} </span>

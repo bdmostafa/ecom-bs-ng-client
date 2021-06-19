@@ -1,6 +1,6 @@
 import { ServerResponse } from './../../models/product.model';
 import { Router } from '@angular/router';
-import { ProductService } from './../../services/product.service';
+import { IProductsResponse, ProductService } from './../../services/product.service';
 import { Component, OnInit } from '@angular/core';
 import { IProduct } from 'src/app/models/product.model';
 import { CartService } from 'src/app/services/cart.service';
@@ -20,9 +20,8 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe((product: IProduct[]) => {
-      console.log(product);
-      this.products = product;
+    this.productService.getProducts().subscribe((prodData: IProductsResponse) => {
+      this.products = prodData.products;
       console.log(this.products);
     });
   }

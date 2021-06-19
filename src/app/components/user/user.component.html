@@ -1,5 +1,5 @@
 <div class="container user-profile">
-  <h2 class="text-center mb-3">Welcome {{ myUser.name }}</h2>
+  <h2 class="text-center mb-3">Welcome {{ myUser?.name }}</h2>
   <form novalidate>
     <div class="row">
       <div class="col-md-4">
@@ -18,9 +18,9 @@
           <!-- TODO user id to be gotten from backend -->
           <p><strong>User Id: </strong></p>
 
-          <p><strong>Name: </strong> {{ myUser.name  }}</p>
+          <p><strong>Name: </strong> {{ myUser?.name  }}</p>
 
-          <p><strong>Email: </strong> {{ myUser.email }}</p>
+          <p><strong>Email: </strong> {{ myUser?.email }}</p>
 
           <p>
             <strong>Phone: </strong>
@@ -54,12 +54,12 @@
               <tr>
                 <td>{{ idx + 1 }}</td>
               </tr>
-              <tr *ngFor="let u of order.productOrdered; let idx = index">
+              <tr *ngFor="let u of order?.productOrdered; let idx = index">
                 <td></td>
                 <td class="d-flex align-items-center justify-content-around">
                   <img
-                    [src]="u.product?.image"
-                    alt="{{ u.product?.title }}"
+                    [src]="u?.product?.image"
+                    alt="{{ u?.product?.title }}"
                     height="60"
                     class="order-1"
                   />
@@ -74,7 +74,7 @@
                       mt-4
                     "
                   >
-                    {{ u.product?.title | uppercase }}
+                    {{ u?.product?.title | uppercase }}
                   </p>
                 </td>
 
@@ -87,7 +87,7 @@
                       mt-4
                     "
                   >
-                    {{ u.product?.price | currency: "USD" }}
+                    {{ u?.product?.price | currency: "USD" }}
                   </p>
                 </td>
 
@@ -100,7 +100,7 @@
                       mt-4
                     "
                   >
-                    {{ u.quantity }}
+                    {{ u?.quantity }}
                   </p>
                 </td>
                 <td>
@@ -112,7 +112,7 @@
                       mt-4
                     "
                   >
-                    {{ u.quantity * u.product?.price | currency: "USD" }}
+                    {{ u?.quantity * u?.product?.price | currency: "USD" }}
                   </p>
                 </td>
               </tr>

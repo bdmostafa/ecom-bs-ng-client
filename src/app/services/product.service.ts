@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { IProduct } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +12,8 @@ export class ProductService {
   constructor(private http: HttpClient) {}
 
   // Load all products from server
-  getProducts(): Observable<IProduct[]> {
-    return this.http.get<IProduct[]>(`${this.SERVER_URL}/products`);
+  getProducts(): Observable<IProductsResponse> {
+    return this.http.get<IProductsResponse>(`${this.SERVER_URL}/products`);
   }
 
   /* GET SINGLE PRODUCT FROM BACKEND*/
@@ -47,4 +46,26 @@ export class ProductService {
   deleteProduct() {
     // TODO
   }
+}
+
+export interface IProduct {
+  _id: string;
+  title: string;
+  category: string;
+  description: string;
+  price: number;
+  image: string;
+  quantity: number;
+  createdAt: string;
+  updatedAt: string;
+  images: string;
+}
+
+export interface IProductsResponse {
+  products: IProduct[];
+  success: {
+    message: string;
+    title: string;
+  }
+
 }

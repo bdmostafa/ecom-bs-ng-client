@@ -1,4 +1,4 @@
-import { IOrderResponse } from './../../services/order.service';
+import { IOrder, IOrderResponse, IOrdersResponse } from './../../services/order.service';
 import { SocialUser, SocialAuthService } from 'angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { ILoginUserResponse, UserService } from 'src/app/services/user.service';
@@ -14,7 +14,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class UserComponent implements OnInit {
   myUser: ILoginUserResponse | SocialUser;
-  userOrderData: IOrderResponse[];
+  userOrderData: IOrder[];
 
   constructor(
     private authService: SocialAuthService,
@@ -23,7 +23,7 @@ export class UserComponent implements OnInit {
     private orderService: OrderService
   ) {}
 
-  userOrderData$ = new BehaviorSubject<IOrderResponse[]>(null);
+  userOrderData$ = new BehaviorSubject<IOrder[]>(null);
 
   ngOnInit(): void {
     this.userService.userData$
@@ -44,10 +44,11 @@ export class UserComponent implements OnInit {
       });
 
     // Load user orders if he/she has any orders
-    this.orderService.getMyOrders().then((orders: IOrderResponse[]) => {
-      console.log(orders);
-      this.userOrderData$.next(orders);
-      this.userOrderData = orders;
+    this.orderService.getMyOrders().then((ordersData: IOrdersResponse) => {
+      // console.log(ordersData.orders);
+      this.userOrderData$.next(ordersData.orders);
+      this.userOrderData = ordersData.orders;
+      console.log(this.userOrderData);
     });
   }
 
@@ -61,8 +62,9 @@ export class UserComponent implements OnInit {
     if (this.userOrderData?.length > 0) {
       this.userOrderData.forEach((orders) => {
         orders.productOrdered.forEach((products: any) => {
-          const subTotal = products.product.price * products.quantity;
-          total = total + subTotal;
+          const subTotal: number = products?.product?.price * products?.quantity;
+          total = Number(total + subTotal);
+          console.log(total);
         });
       });
       return total;

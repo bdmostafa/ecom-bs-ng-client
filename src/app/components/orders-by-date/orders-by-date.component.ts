@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { IOrderResponse, OrderService } from 'src/app/services/order.service';
+import { IOrder, IOrderResponse, IOrdersResponse, OrderService } from 'src/app/services/order.service';
 import { IStatusInfo } from '../all-orders/all-orders.component';
 
 @Component({
@@ -10,7 +10,7 @@ import { IStatusInfo } from '../all-orders/all-orders.component';
   styleUrls: ['./orders-by-date.component.css'],
 })
 export class OrdersByDateComponent implements OnInit {
-  orders: IOrderResponse[];
+  orders: IOrder[];
   statusList = ['Pending', 'Approved', 'On going', 'Delivered'];
   statusData: IStatusInfo;
   status: string;
@@ -38,52 +38,13 @@ export class OrdersByDateComponent implements OnInit {
 
     // Load orders if he/she has any orders
     this.orderService.getOrdersByDate(this.fetchOrdersForm.value.date).then(
-      (orders: IOrderResponse[]) => {
-        console.log(orders);
+      (ordersData: IOrdersResponse) => {
+        console.log(ordersData);
 
-        if (orders.length > 0) {
-          this.orders = orders;
+        if (ordersData.orders.length > 0) {
+          this.orders = ordersData.orders;
         } else {
           this.orders = [];
-        }
-
-        // Success notification with ToastrService
-        this.toastr.success(
-          `The orders of ${this.fetchOrdersForm.value.date} is loaded successfully`,
-          'Orders By Date',
-          {
-            progressBar: true,
-            positionClass: 'toast-top-right',
-            progressAnimation: 'increasing',
-            timeOut: 3000,
-          }
-        );
-      },
-      // Error handling with ToastrService
-      (error: any) => {
-        console.log(error);
-        // If orders has items, empty it because the previous orders is not related to this result
-        this.orders = [];
-
-        const statusText = error.statusText;
-        // If error.error is array
-        if (typeof error.error === 'object' && error.error instanceof Array) {
-          error.error.forEach((element) => {
-            this.toastr.error(element.msg, statusText, {
-              progressBar: true,
-              positionClass: 'toast-top-right',
-              progressAnimation: 'increasing',
-              timeOut: 3000,
-            });
-          });
-        } else {
-          // When error.error is not an array
-          this.toastr.error(error.error, error.statusText, {
-            progressBar: true,
-            positionClass: 'toast-top-right',
-            progressAnimation: 'increasing',
-            timeOut: 3000,
-          });
         }
       }
     );
@@ -96,38 +57,8 @@ export class OrdersByDateComponent implements OnInit {
 
     this.orderService.updateOrderStatus(id, status).then(
       (order: IOrderResponse) => {
-        if (order?.status) {
-          // Success notification with ToastrService
-          this.toastr.success('All orders loaded successfully', 'All Orders', {
-            progressBar: true,
-            positionClass: 'toast-top-right',
-            progressAnimation: 'increasing',
-            timeOut: 3000,
-          });
-        }
-      },
-      // Error handling with ToastrService
-      (error: any) => {
-        console.log(error);
-        const statusText = error.statusText;
-        // If error.error is array
-        if (typeof error.error === 'object' && error.error instanceof Array) {
-          error.error.forEach((element) => {
-            this.toastr.error(element.msg, statusText, {
-              progressBar: true,
-              positionClass: 'toast-top-right',
-              progressAnimation: 'increasing',
-              timeOut: 3000,
-            });
-          });
-        } else {
-          // When error.error is not an array
-          this.toastr.error(error.message, error.statusText, {
-            progressBar: true,
-            positionClass: 'toast-top-right',
-            progressAnimation: 'increasing',
-            timeOut: 3000,
-          });
+        if (order?.success) {
+          // 
         }
       }
     );

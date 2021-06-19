@@ -27,20 +27,20 @@ export class OrderService {
 
   getMyOrders() {
     return this.http
-      .get<IOrderResponse[]>(this.SERVER_URL + '/orders/user/my-orders', {withCredentials: true})
+      .get<IOrdersResponse>(this.SERVER_URL + '/orders/user/my-orders', {withCredentials: true})
       .toPromise();
   }
 
   getAllOrders() {
     return this.http
-      .get<IOrderResponse[]>(this.SERVER_URL + '/orders', {withCredentials: true})
+      .get<IOrdersResponse>(this.SERVER_URL + '/orders', {withCredentials: true})
       .toPromise();
   }
 
   updateOrderStatus(orderId: string, status: string) {
     console.log(orderId, status)
     return this.http
-      .patch<IOrderResponse>(this.SERVER_URL + '/orders/update/' + orderId, {
+      .put<IOrderResponse>(this.SERVER_URL + '/orders/update/' + orderId, {
         status,
       }, {withCredentials: true})
       .toPromise();
@@ -48,18 +48,18 @@ export class OrderService {
 
   getOrdersByDate(date: string) {
     return this.http
-    .get<IOrderResponse[]>(this.SERVER_URL + '/orders/orders-by-date/' + date, {withCredentials: true})
+    .get<IOrdersResponse>(this.SERVER_URL + '/orders/orders-by-date/' + date, {withCredentials: true})
     .toPromise();
   }
 
   getPendingOrders() {
     return this.http
-      .get<IOrderResponse[]>(this.SERVER_URL + '/orders/pending-orders', {withCredentials: true})
+      .get<IOrdersResponse>(this.SERVER_URL + '/orders/pending-orders', {withCredentials: true})
       .toPromise();
   }
 }
 
-export interface IOrderResponse {
+export interface IOrder {
   _id: string;
   productOrdered: [
     {
@@ -78,6 +78,21 @@ export interface IOrderResponse {
     }
   ];
   date: string;
+}
+
+export interface IOrdersResponse {
+  orders: IOrder[],
+  success: {
+    title: string;
+    message: string;
+  };
+}
+export interface IOrderResponse {
+  order: IOrder,
+  success: {
+    title: string;
+    message: string;
+  };
 }
 
 interface IProductResponse {

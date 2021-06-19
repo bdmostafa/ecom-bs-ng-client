@@ -87,43 +87,7 @@ export class RegisterComponent implements OnInit {
       (response: IRegisterUserResponse) => {
         console.log(response);
 
-        // Error handling with ToastrService
-        this.toastr.success(
-          'You have been registered successfully',
-          'Registration Success',
-          {
-            progressBar: true,
-            positionClass: 'toast-top-right',
-            progressAnimation: 'increasing',
-            timeOut: 3000,
-          }
-        );
-
         this.router.navigateByUrl('/users/login');
-      },
-      // Error handling with ToastrService
-      (error: any) => {
-        console.log(error);
-        const statusText = error.statusText;
-        // If error.error is array
-        if (typeof error.error === 'object' && error.error instanceof Array) {
-          error.error.forEach((element) => {
-            this.toastr.error(element.msg, statusText, {
-              progressBar: true,
-              positionClass: 'toast-top-right',
-              progressAnimation: 'increasing',
-              timeOut: 3000,
-            });
-          });
-        } else {
-          // When error.error is not an array
-          this.toastr.error(error.error, error.statusText, {
-            progressBar: true,
-            positionClass: 'toast-top-right',
-            progressAnimation: 'increasing',
-            timeOut: 3000,
-          });
-        }
       }
     );
 

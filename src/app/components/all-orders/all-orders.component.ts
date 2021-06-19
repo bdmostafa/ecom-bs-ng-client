@@ -1,6 +1,6 @@
-import { IOrderResponse, OrderService } from './../../services/order.service';
+import { IOrder, IOrderResponse, IOrdersResponse, OrderService } from './../../services/order.service';
 import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-orders',
@@ -8,101 +8,33 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./all-orders.component.css'],
 })
 export class AllOrdersComponent implements OnInit {
-  orders: IOrderResponse[];
+  orders: IOrder[];
   statusList = ['Pending', 'Approved', 'On going', 'Delivered'];
   statusData: IStatusInfo;
 
-  constructor(
-    private toastr: ToastrService,
-    private orderService: OrderService
-  ) {}
+  constructor(private router: Router, private orderService: OrderService) {}
 
   ngOnInit(): void {
     // Load all orders from the backend
-    this.orderService.getAllOrders().then(
-      (orders: IOrderResponse[]) => {
-        console.log(orders);
-        this.orders = orders;
-
-        // Success notification with ToastrService
-        this.toastr.success('All orders loaded successfully', 'All Orders', {
-          progressBar: true,
-          positionClass: 'toast-top-right',
-          progressAnimation: 'increasing',
-          timeOut: 3000,
-        });
-      },
-      // Error handling with ToastrService
-      (error: any) => {
-        console.log(error);
-        const statusText = error.statusText;
-        // If error.error is array
-        if (typeof error.error === 'object' && error.error instanceof Array) {
-          error.error.forEach((element) => {
-            this.toastr.error(element.msg, statusText, {
-              progressBar: true,
-              positionClass: 'toast-top-right',
-              progressAnimation: 'increasing',
-              timeOut: 3000,
-            });
-          });
-        } else {
-          // When error.error is not an array
-          this.toastr.error(error.error, error.statusText, {
-            progressBar: true,
-            positionClass: 'toast-top-right',
-            progressAnimation: 'increasing',
-            timeOut: 3000,
-          });
-        }
-      }
-    );
+    this.orderService.getAllOrders().then((ordersData: IOrdersResponse) => {
+      console.log(ordersData.orders);
+      this.orders = ordersData.orders;
+    });
   }
 
   // TODO status change functionality
   updateStatus(id: string, status: string) {
-    this.statusData = {id, status};
+    this.statusData = { id, status };
     console.log(this.statusData);
-    
-    this.orderService.updateOrderStatus(id, status).then(
-      (order: IOrderResponse) => {
-        if (order?.status) {
-          // Success notification with ToastrService
-          this.toastr.success('All orders loaded successfully', 'All Orders', {
-            progressBar: true,
-            positionClass: 'toast-top-right',
-            progressAnimation: 'increasing',
-            timeOut: 3000,
-          });
-        }
-      },
-      // Error handling with ToastrService
-      (error: any) => {
-        console.log(error);
-        const statusText = error.statusText;
-        // If error.error is array
-        if (typeof error.error === 'object' && error.error instanceof Array) {
-          error.error.forEach((element) => {
-            this.toastr.error(element.msg, statusText, {
-              progressBar: true,
-              positionClass: 'toast-top-right',
-              progressAnimation: 'increasing',
-              timeOut: 3000,
-            });
-          });
-        } else {
-          // When error.error is not an array
-          this.toastr.error(error.message, error.statusText, {
-            progressBar: true,
-            positionClass: 'toast-top-right',
-            progressAnimation: 'increasing',
-            timeOut: 3000,
-          });
-        }
-      }
-    );
-  }
 
+    this.orderService
+      .updateOrderStatus(id, status)
+      .then((order: IOrderResponse) => {
+        if (order.success) {
+          this.router.navigateByUrl('/admin/all-orders');
+        }
+      });
+  }
 }
 
 export interface IStatusInfo {

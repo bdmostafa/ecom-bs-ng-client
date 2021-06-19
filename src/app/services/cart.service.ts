@@ -315,7 +315,7 @@ export class CartService {
           console.log(this.cartInfoClient.productInfo, cartInfo);
           this.orderService.createOrder(cartInfo).then((orderData: IOrderResponse) => {
               console.log('orderData', orderData);
-              this.orderService.getOrderById(orderData._id).then((order: IOrderResponse) => {
+              this.orderService.getOrderById(orderData.order._id).then((order: IOrderResponse) => {
                 console.log('order', order);
                 if (orderData?.success) {
                   console.log('order success')

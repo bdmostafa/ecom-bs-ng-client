@@ -1,3 +1,4 @@
+import { ToastrInterceptor } from './_helpers/toastr.interceptor';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -11,7 +12,7 @@ import { ProductComponent } from './components/product/product.component';
 import { ThankyouComponent } from './components/thankyou/thankyou.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
@@ -46,6 +47,7 @@ import { OrdersByDateComponent } from './components/orders-by-date/orders-by-dat
 import { AllUsersComponent } from './components/all-users/all-users.component';
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import { CookieService } from 'ngx-cookie-service';
+import { JwtInterceptor } from './_helpers/jwt.interceptor';
 
 // const config = new AuthServiceConfig([
 //   {
@@ -124,6 +126,16 @@ import { CookieService } from 'ngx-cookie-service';
       } as SocialAuthServiceConfig,
     },
     CookieService,
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: JwtInterceptor,
+    //   multi: true
+    // },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ToastrInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
 })
