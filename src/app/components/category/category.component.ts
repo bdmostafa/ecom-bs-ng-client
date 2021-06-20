@@ -3,7 +3,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { IProduct } from 'src/app/models/product.model';
 import { CartService } from 'src/app/services/cart.service';
-import { ProductService } from 'src/app/services/product.service';
+import { IProductsResponse, ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-category',
@@ -33,8 +33,8 @@ export class CategoryComponent implements OnInit {
       this.category = category;
 
       // Load related products matching the current product's category
-      this.productService.getProductsByCategory(category).subscribe((products) => {
-        this.categoryProducts = products;
+      this.productService.getProductsByCategory(category).subscribe((prodData: IProductsResponse) => {
+        this.categoryProducts = prodData.products;
         console.log(this.categoryProducts)
       });
 

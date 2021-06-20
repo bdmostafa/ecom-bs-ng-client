@@ -149,21 +149,21 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let cart of cartInfo.data; let idx = index">
+              <tr *ngFor="let cart of cartInfo?.data; let idx = index">
                 <td class="border-0">
                   <p class="mt-0">
-                    {{ cart.product.title | uppercase }}
+                    {{ cart?.product?.title | uppercase }}
                   </p>
                 </td>
                 <td class="border-0">
                   <p class="mt-0">
-                    {{ cart.numInCart }} *
-                    {{ cart.product.price | currency: "USD" }}
+                    {{ cart?.numInCart }} *
+                    {{ cart?.product?.price | currency: "USD" }}
                   </p>
                 </td>
                 <td class="border-0">
                   <p class="mt-0">
-                    {{ cartService.calculateSubTotal(idx) | currency: "USD" }}
+                    {{ cartService?.calculateSubTotal(idx) | currency: "USD" }}
                   </p>
                 </td>
               </tr>

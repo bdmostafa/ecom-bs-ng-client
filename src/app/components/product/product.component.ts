@@ -1,3 +1,4 @@
+import { IProduct, IProductResponse, IProductsResponse } from './../../services/product.service';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
@@ -12,9 +13,9 @@ declare let $: any;
 })
 export class ProductComponent implements OnInit, AfterViewInit {
   id: string;
-  product;
+  product: IProduct;
   thumbImages: any[] = [];
-  categoryProducts;
+  categoryProducts: IProduct[];
 
   @ViewChild('quantity') quantityInput;
 
@@ -30,28 +31,28 @@ export class ProductComponent implements OnInit, AfterViewInit {
       .pipe(
         map((param: ParamMap) => {
           // @ts-ignore
-          return param.params.id;
+          return param.params.productId;
         })
       )
       .subscribe((prodId) => {
         this.id = prodId;
 
-        this.productService.getProduct(this.id).subscribe((prod) => {
+        this.productService.getProduct(this.id).subscribe((prodData: IProductResponse) => {
           // Load related products matching the current product's category
-          this.productService.getProductsByCategory(prod.category).subscribe((products) => {
-            this.categoryProducts = products;
+          this.productService.getProductsByCategory(prodData.product.category).subscribe((prodData: IProductsResponse) => {
+            this.categoryProducts = prodData.products;
             console.log(this.categoryProducts)
           });
 
           // Assign the current product details
-          this.product = prod;
+          this.product = prodData.product;
           console.log(this.product);
 
-          if (prod.images !== null) {
-            this.thumbImages = prod.images.split(';');
+          if (prodData.product.images !== null) {
+            this.thumbImages = prodData.product.images.split(';');
+          } else {
+            this.thumbImages = prodData.product.image.split(';');
           }
-
-          
         });
       });
 

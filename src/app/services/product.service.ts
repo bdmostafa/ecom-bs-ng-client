@@ -17,26 +17,26 @@ export class ProductService {
   }
 
   /* GET SINGLE PRODUCT FROM BACKEND*/
-  getProduct(id: string): Observable<IProduct> {
-    return this.http.get<IProduct>(this.SERVER_URL + '/products/' + id);
+  getProduct(id: string): Observable<IProductResponse> {
+    return this.http.get<IProductResponse>(this.SERVER_URL + '/products/' + id);
   }
 
   /*GET PRODUCTS FROM ONE CATEGORY */
-  getProductsByCategory(categoryName: string): Observable<IProduct[]> {
-    return this.http.get<IProduct[]>(
+  getProductsByCategory(categoryName: string): Observable<IProductsResponse> {
+    return this.http.get<IProductsResponse>(
       this.SERVER_URL + '/products/category/' + categoryName
     );
   }
 
   // Create product by form data
-  createProduct(formData: IProduct): Observable<IProduct> {
+  createProduct(formData: IProduct): Observable<IProductResponse> {
     console.log(formData);
-    return this.http.post<IProduct>(`${this.SERVER_URL}/products/create`, formData, {withCredentials: true});
+    return this.http.post<IProductResponse>(`${this.SERVER_URL}/products/create`, formData, {withCredentials: true});
   }
 
   // Generate products from third party API
   generateProductsByThirdParty() {
-    return this.http.get<IProduct[]>(`${this.SERVER_URL}/products/generate-products`, {withCredentials: true});
+    return this.http.get<IProductsResponse>(`${this.SERVER_URL}/products/generate-products`, {withCredentials: true});
   }
 
   updateProduct() {
@@ -67,5 +67,11 @@ export interface IProductsResponse {
     message: string;
     title: string;
   }
-
+}
+export interface IProductResponse {
+  product: IProduct;
+  success: {
+    message: string;
+    title: string;
+  }
 }

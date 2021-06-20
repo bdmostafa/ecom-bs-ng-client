@@ -3,11 +3,11 @@ import { ICartPublic, ICartServer } from './../models/cart.model';
 import { OrderService } from './order.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ProductService } from './product.service';
+import { IProductResponse, ProductService, IProduct } from './product.service';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
 import { NavigationExtras, Router } from '@angular/router';
-import { IProduct } from '../models/product.model';
+// import { IProduct } from '../models/product.model';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -69,10 +69,10 @@ export class CartService {
       this.cartInfoClient.productInfo.forEach((prod) => {
         this.productService
           .getProduct(prod._id)
-          .subscribe((actualProductInfo: IProduct) => {
+          .subscribe((actualProductInfo: IProductResponse) => {
             if (this.cartInfoServer.data[0].numInCart === 0) {
               this.cartInfoServer.data[0].numInCart = prod.inCart;
-              this.cartInfoServer.data[0].product = actualProductInfo;
+              this.cartInfoServer.data[0].product = actualProductInfo.product;
               // Calculate total price
               this.calculateTotal();
               // Update cartInfoClient and local storage
@@ -82,7 +82,7 @@ export class CartService {
               // If cartInfoServer already has some entry in it
               this.cartInfoServer.data.push({
                 numInCart: prod.inCart,
-                product: actualProductInfo,
+                product: actualProductInfo.product,
               });
               // Calculate total price
               this.calculateTotal();
@@ -99,7 +99,8 @@ export class CartService {
   }
 
   addToCart(id: string, qty?: number) {
-    this.productService.getProduct(id).subscribe((product) => {
+    this.productService.getProduct(id).subscribe((prodData: IProductResponse) => {
+      const { product } = prodData;
       // 1. If the cart is empty
       if (this.cartInfoServer.data[0].product === undefined) {
         console.log('1');
@@ -322,7 +323,7 @@ export class CartService {
                   // To pass additional information
                   const navigationExtras: NavigationExtras = {
                     state: {
-                      order,
+                      order: order.order,
                       totalPrice: this.cartInfoClient.total,
                     },
                   };
@@ -378,7 +379,7 @@ export class CartService {
 
     const prod = this.cartInfoServer.data[idx];
 
-    subTotal = prod.product.price * prod.numInCart;
+    subTotal = prod?.product?.price * prod?.numInCart;
 
     return subTotal;
   }

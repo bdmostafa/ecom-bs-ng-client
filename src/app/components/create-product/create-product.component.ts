@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { IProduct } from 'src/app/models/product.model';
-import { ProductService } from 'src/app/services/product.service';
+import { IProductResponse, ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-create-product',
@@ -63,8 +63,8 @@ export class CreateProductComponent implements OnInit {
 
     // @ts-ignore
     this.productService.createProduct({ ...this.productForm.value }).subscribe(
-      (response: IProduct) => {
-        console.log(response);
+      (response: IProductResponse) => {
+        console.log(response.product);
 
         this.router.navigateByUrl('/admin/dashboard');
       }
