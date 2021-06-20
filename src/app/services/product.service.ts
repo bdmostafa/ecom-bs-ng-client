@@ -31,12 +31,17 @@ export class ProductService {
   // Create product by form data
   createProduct(formData: IProduct): Observable<IProductResponse> {
     console.log(formData);
-    return this.http.post<IProductResponse>(`${this.SERVER_URL}/products/create`, formData, {withCredentials: true});
+    return this.http.post<IProductResponse>(
+      `${this.SERVER_URL}/products/create`,
+      formData
+    );
   }
 
   // Generate products from third party API
   generateProductsByThirdParty() {
-    return this.http.get<IProductsResponse>(`${this.SERVER_URL}/products/generate-products`, {withCredentials: true});
+    return this.http.get<IProductsResponse>(
+      `${this.SERVER_URL}/products/generate-products`
+    );
   }
 
   updateProduct() {
@@ -66,12 +71,12 @@ export interface IProductsResponse {
   success: {
     message: string;
     title: string;
-  }
+  };
 }
 export interface IProductResponse {
   product: IProduct;
   success: {
     message: string;
     title: string;
-  }
+  };
 }

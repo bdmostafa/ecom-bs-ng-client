@@ -15,46 +15,46 @@ export class OrderService {
 
   getOrderById(orderId: string) {
     return this.http
-      .get<IOrderResponse>(this.SERVER_URL + '/orders/' + orderId, {withCredentials: true})
+      .get<IOrderResponse>(this.SERVER_URL + '/orders/' + orderId)
       .toPromise();
   }
 
   createOrder(cartInfo: ICartInfo[]) {
     return this.http
-      .post<IOrderResponse>(this.SERVER_URL + '/orders/create', cartInfo, {withCredentials: true})
+      .post<IOrderResponse>(this.SERVER_URL + '/orders/create', cartInfo)
       .toPromise();
   }
 
   getMyOrders() {
     return this.http
-      .get<IOrdersResponse>(this.SERVER_URL + '/orders/user/my-orders', {withCredentials: true})
+      .get<IOrdersResponse>(this.SERVER_URL + '/orders/user/my-orders')
       .toPromise();
   }
 
   getAllOrders() {
     return this.http
-      .get<IOrdersResponse>(this.SERVER_URL + '/orders', {withCredentials: true})
+      .get<IOrdersResponse>(this.SERVER_URL + '/orders')
       .toPromise();
   }
 
   updateOrderStatus(orderId: string, status: string) {
-    console.log(orderId, status)
+    console.log(orderId, status);
     return this.http
       .put<IOrderResponse>(this.SERVER_URL + '/orders/update/' + orderId, {
         status,
-      }, {withCredentials: true})
+      })
       .toPromise();
   }
 
   getOrdersByDate(date: string) {
     return this.http
-    .get<IOrdersResponse>(this.SERVER_URL + '/orders/orders-by-date/' + date, {withCredentials: true})
-    .toPromise();
+      .get<IOrdersResponse>(this.SERVER_URL + '/orders/orders-by-date/' + date)
+      .toPromise();
   }
 
   getPendingOrders() {
     return this.http
-      .get<IOrdersResponse>(this.SERVER_URL + '/orders/pending-orders', {withCredentials: true})
+      .get<IOrdersResponse>(this.SERVER_URL + '/orders/pending-orders')
       .toPromise();
   }
 }
@@ -81,14 +81,14 @@ export interface IOrder {
 }
 
 export interface IOrdersResponse {
-  orders: IOrder[],
+  orders: IOrder[];
   success: {
     title: string;
     message: string;
   };
 }
 export interface IOrderResponse {
-  order: IOrder,
+  order: IOrder;
   success: {
     title: string;
     message: string;

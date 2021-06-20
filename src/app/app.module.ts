@@ -47,6 +47,8 @@ import { OrdersByDateComponent } from './components/orders-by-date/orders-by-dat
 import { AllUsersComponent } from './components/all-users/all-users.component';
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import { CookieService } from 'ngx-cookie-service';
+import { RestInterceptor } from './_helpers/rest.interceptor';
+import { JwtInterceptor } from './_helpers/jwt.interceptor';
 
 // const config = new AuthServiceConfig([
 //   {
@@ -128,6 +130,16 @@ import { CookieService } from 'ngx-cookie-service';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ToastrInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RestInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
       multi: true
     }
   ],

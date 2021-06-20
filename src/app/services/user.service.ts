@@ -58,24 +58,18 @@ export class UserService {
   //  Login User with Email and Password
   loginUser(email: string, password: string) {
     this.http
-      .post(
-        `${this.SERVER_URL}/users/login`,
-        { email, password },
-        { withCredentials: true }
-      )
-      .subscribe(
-        (data: ILoginUserResponse) => {
-          if (data.success) {
-            this.authState$.next(true);
-            this.userData$.next(data);
+      .post(`${this.SERVER_URL}/users/login`, { email, password })
+      .subscribe((data: ILoginUserResponse) => {
+        if (data.success) {
+          this.authState$.next(true);
+          this.userData$.next(data);
 
-            const jwt: string = this.cookies.get('auth');
-            localStorage.setItem('jwt', jwt);
-            localStorage.setItem('loginStatus', '1');
-            localStorage.setItem('userData', JSON.stringify(data));
-          }
+          const jwt: string = this.cookies.get('auth');
+          localStorage.setItem('jwt', jwt);
+          localStorage.setItem('loginStatus', '1');
+          localStorage.setItem('userData', JSON.stringify(data));
         }
-      );
+      });
     // console.log(this.authState$);
     // console.log(this.userData$);
   }
@@ -94,43 +88,32 @@ export class UserService {
     // TODO social login/logout
     // this.authService.signOut();
     this.http
-      .post<ILogoutResponse>(
-        `${this.SERVER_URL}/users/logout`,
-        {},
-        { withCredentials: true }
-      )
-      .subscribe(
-        (data: ILogoutResponse) => {
-          console.log(data);
-          if (data.success) {
-            // Update authState observable
-            this.authState$.next(false);
-            this.userData$.next(null);
+      .post<ILogoutResponse>(`${this.SERVER_URL}/users/logout`, {})
+      .subscribe((data: ILogoutResponse) => {
+        console.log(data);
+        if (data.success) {
+          // Update authState observable
+          this.authState$.next(false);
+          this.userData$.next(null);
 
-            // Remove saved jwt cookie from local
-            localStorage.removeItem('jwt');
-            localStorage.setItem('loginStatus', '0');
-            localStorage.removeItem('userData');
-
-          }
+          // Remove saved jwt cookie from local
+          localStorage.removeItem('jwt');
+          localStorage.setItem('loginStatus', '0');
+          localStorage.removeItem('userData');
         }
-      );
+      });
     // console.log(this.authState$);
   }
 
   getAllUsers() {
     return this.http
-      .get<IUsersResponse>(this.SERVER_URL + '/users', {
-        withCredentials: true,
-      })
+      .get<IUsersResponse>(this.SERVER_URL + '/users')
       .toPromise();
   }
 
   deleteUser(userId: string) {
     return this.http
-      .delete(this.SERVER_URL + `/users/delete/${userId}`, {
-        withCredentials: true,
-      })
+      .delete(this.SERVER_URL + `/users/delete/${userId}`)
       .toPromise();
   }
 
@@ -192,9 +175,9 @@ export interface IRegisterUserResponse {
   name: string;
   role: string;
   success: {
-    "title": string;
-    "message": string;
-  }
+    title: string;
+    message: string;
+  };
 }
 export interface IUserResponse {
   _id: string;
@@ -205,11 +188,11 @@ export interface IUserResponse {
 }
 
 export interface IUsersResponse {
-  users: IUserResponse[],
+  users: IUserResponse[];
   success: {
     title: string;
     message: string;
-  }
+  };
 }
 
 export interface ILogoutResponse {
