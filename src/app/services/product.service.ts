@@ -44,8 +44,10 @@ export class ProductService {
     );
   }
 
-  updateProduct() {
-    // TODO
+  updateProduct(productId: string, productInfo: IProductInput) {
+    return this.http
+    .put<IProductResponse>(this.SERVER_URL + `/products/update/${productId}`, productInfo)
+    .toPromise();
   }
 
   deleteProduct(productId: string) {
@@ -66,6 +68,14 @@ export interface IProduct {
   createdAt: string;
   updatedAt: string;
   images: string;
+}
+export interface IProductInput {
+  title: string;
+  category: string;
+  description: string;
+  price: number;
+  image: string;
+  quantity: number;
 }
 
 export interface IProductsResponse {

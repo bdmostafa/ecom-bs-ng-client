@@ -49,6 +49,7 @@ import { CreateUserComponent } from './components/create-user/create-user.compon
 import { CookieService } from 'ngx-cookie-service';
 import { RestInterceptor } from './_helpers/rest.interceptor';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { AllProductsComponent } from './components/admin-dashboard/all-products/all-products.component';
 
 // const config = new AuthServiceConfig([
 //   {
@@ -94,6 +95,7 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
     OrdersByDateComponent,
     AllUsersComponent,
     CreateUserComponent,
+    AllProductsComponent,
   ],
   imports: [
     BrowserModule,
