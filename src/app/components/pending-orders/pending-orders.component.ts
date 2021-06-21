@@ -46,13 +46,25 @@ export class PendingOrdersComponent implements OnInit {
     this.statusData = { id, status };
     console.log(this.statusData);
 
-    this.orderService
-      .updateOrderStatus(id, status)
-      .then((order: IOrderResponse) => {
-        if (order.success) {
-          this.router.navigateByUrl('/admin/pending-orders');
-        }
-      });
+    // Add spinner
+    this.spinner.show().then((c) => {
+      this.orderService
+        .updateOrderStatus(id, status)
+        .then((order: IOrderResponse) => {
+          if (order.success) {
+            // Hide spinner
+            setTimeout(() => {
+              this.spinner.hide().then();
+            }, 1000);
+
+            this.router
+              .navigateByUrl('/', { skipLocationChange: true })
+              .then(() => {
+                this.router.navigate(['/admin/pending-orders']);
+              });
+          }
+        });
+    });
   }
 
 }

@@ -1,6 +1,12 @@
-import { IOrder, IOrderResponse, IOrdersResponse, OrderService } from './../../services/order.service';
+import {
+  IOrder,
+  IOrderResponse,
+  IOrdersResponse,
+  OrderService,
+} from './../../services/order.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-all-orders',
@@ -12,7 +18,11 @@ export class AllOrdersComponent implements OnInit {
   statusList = ['Pending', 'Approved', 'On going', 'Delivered'];
   statusData: IStatusInfo;
 
-  constructor(private router: Router, private orderService: OrderService) {}
+  constructor(
+    private router: Router,
+    private orderService: OrderService,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit(): void {
     // Load all orders from the backend
@@ -26,13 +36,25 @@ export class AllOrdersComponent implements OnInit {
     this.statusData = { id, status };
     console.log(this.statusData);
 
-    this.orderService
-      .updateOrderStatus(id, status)
-      .then((order: IOrderResponse) => {
-        if (order.success) {
-          this.router.getCurrentNavigation();
-        }
-      });
+    // Add spinner
+    this.spinner.show().then((c) => {
+      this.orderService
+        .updateOrderStatus(id, status)
+        .then((order: IOrderResponse) => {
+          if (order.success) {
+            // Hide spinner
+            setTimeout(() => {
+              this.spinner.hide().then();
+            }, 1000);
+
+            this.router
+              .navigateByUrl('/', { skipLocationChange: true })
+              .then(() => {
+                this.router.navigate(['/admin/all-orders']);
+              });
+          }
+        });
+    });
   }
 }
 
