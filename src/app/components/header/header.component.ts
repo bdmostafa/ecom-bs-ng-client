@@ -1,8 +1,9 @@
+import { IProduct } from './../../services/product.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ICartServer } from 'src/app/models/cart.model';
 import { CartService } from 'src/app/services/cart.service';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService, IProductsResponse } from 'src/app/services/product.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -13,9 +14,9 @@ import { UserService } from 'src/app/services/user.service';
 export class HeaderComponent implements OnInit {
   cartInfo: ICartServer;
   cartTotal: number;
-  products;
+  products: IProduct[];
   selectedCategory: string;
-  @Input() authState: boolean;
+  @Input('authState') authState: boolean;
 
   constructor(
     public cartService: CartService,
@@ -27,7 +28,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.productService
       .getProducts()
-      .subscribe((products) => (this.products = products));
+      .subscribe((prodData: IProductsResponse) => (this.products = prodData.products));
 
     this.cartService.cartTotal$.subscribe(
       (cTotal) => (this.cartTotal = cTotal)

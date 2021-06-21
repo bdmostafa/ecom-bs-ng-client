@@ -22,7 +22,6 @@ export class AllOrdersComponent implements OnInit {
     });
   }
 
-  // TODO status change functionality
   updateStatus(id: string, status: string) {
     this.statusData = { id, status };
     console.log(this.statusData);
@@ -31,7 +30,7 @@ export class AllOrdersComponent implements OnInit {
       .updateOrderStatus(id, status)
       .then((order: IOrderResponse) => {
         if (order.success) {
-          this.router.navigateByUrl('/admin/all-orders');
+          this.router.getCurrentNavigation();
         }
       });
   }

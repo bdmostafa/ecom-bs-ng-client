@@ -56,32 +56,32 @@
                     <span>{{ idx + 1 }}</span>
                   </td>
                   <td>
-                    <span>{{ order._id }}</span>
+                    <span>{{ order?._id }}</span>
                   </td>
                   <td>
                     <span>{{ order?.customer?.name }}</span>
                   </td>
                   <td>
-                    <tr *ngFor="let p of order.productOrdered; let idx = index">
+                    <tr *ngFor="let p of order?.productOrdered; let idx = index">
                       <td>
                         <span>{{ idx + 1 }} </span>
                       </td>
                       <td class="w-25">
                         <span
                           ><img
-                            [src]="p.product.image"
+                            [src]="p?.product?.image"
                             class="w-25 rounded img-thumbnail"
                           />
                         </span>
                       </td>
                       <td>
-                        <span>{{ p.product.title.slice(0, 25) }} </span>
+                        <span>{{ p?.product?.title.slice(0, 25) }} </span>
                       </td>
                       <td>
-                        <span>{{ p.product.price | currency: 'USD' }} </span>
+                        <span>{{ p?.product?.price | currency: 'USD' }} </span>
                       </td>
                       <td>
-                        <span>{{ p.quantity }} </span>
+                        <span>{{ p?.quantity }} </span>
                       </td>
                     </tr>
                   </td>
@@ -93,37 +93,20 @@
                   </td>
                   <td>
                     <span>
-                      <!-- TODO Status change functionality -->
-                      <!-- <div ngbDropdown class="d-inline-block" >
-                        <button
-                          class="btn btn-outline-primary"
-                          id="dropdownBasic1"
-                          ngbDropdownToggle
-                        >
-                          {{ order.status | titlecase }}
-                        </button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                          <button ngbDropdownItem>Pending</button>
-                          <button ngbDropdownItem>Approved</button>
-                          <button ngbDropdownItem>Delivered</button>
-                        </div>
-                      </div> -->
-                    
-                    <select
-                          class="form-control"
-                          name="status"
-                          (change)="updateStatus(order._id, $event.target.value)"
-                          [(ngModel)]="status"
-                          required
-                        >
-                          <option [value]="status" *ngFor="let status of statusList">
+                      <select
+                        #selectStatus
+                        (change)="updateStatus(order._id, selectStatus.value)"
+                      >
+                        <option value="Select Status" hidden>
+                          Select Status
+                        </option>
+                        <ng-container *ngFor="let status of statusList">
+                          <option value="{{ status }}" [ngValue]="status">
                             {{ status }}
-                            <!-- <ng-container *ngFor="let s of statusData">
-                              {{ s.id === order._id ? s.status : order.status }}
-                            </ng-container> -->
                           </option>
-                        </select>
-                      </span>
+                        </ng-container>
+                      </select>
+                    </span>
                   </td>
                 </tr>
               </table>

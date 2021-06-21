@@ -1,11 +1,15 @@
 import { IOrder, IOrdersResponse } from './../../services/order.service';
-import { Component, OnInit } from '@angular/core';
 import {
-  IOrderResponse,
-  OrderService,
-} from 'src/app/services/order.service';
+  Component,
+  ElementRef,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
+import { IOrderResponse, OrderService } from 'src/app/services/order.service';
 import { IStatusInfo } from '../all-orders/all-orders.component';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-pending-orders',
@@ -17,17 +21,27 @@ export class PendingOrdersComponent implements OnInit {
   statusList = ['Pending', 'Approved', 'On going', 'Delivered'];
   statusData: IStatusInfo;
 
-  constructor(private orderService: OrderService, private router: Router) {}
+  constructor(
+    private orderService: OrderService,
+    private router: Router,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit(): void {
-    // Load user orders if he/she has any orders
-    this.orderService.getPendingOrders().then((ordersData: IOrdersResponse) => {
-      console.log(ordersData.orders);
-      this.orders = ordersData.orders;
+    this.spinner.show().then((c) => {
+      // Load user orders if he/she has any orders
+      this.orderService
+        .getPendingOrders()
+        .then((ordersData: IOrdersResponse) => {
+          console.log(ordersData.orders);
+          this.orders = ordersData.orders;
+          setTimeout(() => {
+            this.spinner.hide().then();
+          }, 1000);
+        });
     });
   }
 
-  // TODO status change functionality
   updateStatus(id: string, status: string) {
     this.statusData = { id, status };
     console.log(this.statusData);
@@ -40,4 +54,5 @@ export class PendingOrdersComponent implements OnInit {
         }
       });
   }
+
 }

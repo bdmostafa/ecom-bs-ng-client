@@ -1,3 +1,14 @@
+<!-- ngx spinner -->
+<ngx-spinner
+  bdColor="rgba(151,149,149,0.4)"
+  size="large"
+  color="orange"
+  type="ball-clip-rotate-pulse"
+  fullScreen="true"
+>
+  <p style="font-size: 20px; color: black">Pending Orders...</p>
+</ngx-spinner>
+
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <div class="container-fluid">
@@ -24,7 +35,7 @@
     <div class="row">
       <div class="col-12">
         <!-- Editable table -->
-        <div class="card">
+        <div *ngIf="orders?.length" class="card">
           <div class="card-body">
             <div id="table" class="table-editable">
               <table
@@ -93,38 +104,18 @@
                   </td>
                   <td>
                     <span>
-                      <!-- TODO Status change functionality -->
-                      <!-- <div ngbDropdown class="d-inline-block" >
-                          <button
-                            class="btn btn-outline-primary"
-                            id="dropdownBasic1"
-                            ngbDropdownToggle
-                          >
-                            {{ order.status | titlecase }}
-                          </button>
-                          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <button ngbDropdownItem>Pending</button>
-                            <button ngbDropdownItem>Approved</button>
-                            <button ngbDropdownItem>Delivered</button>
-                          </div>
-                        </div> -->
-
                       <select
-                        class="form-control"
-                        name="status"
-                        (change)="updateStatus(order._id, $event.target.value)"
-                        [(ngModel)]="status"
-                        required
+                        #selectStatus
+                        (change)="updateStatus(order._id, selectStatus.value)"
                       >
-                        <option
-                          [value]="status"
-                          *ngFor="let status of statusList"
-                        >
-                          {{ status }}
-                          <!-- <ng-container *ngFor="let s of statusData">
-                                {{ s.id === order._id ? s.status : order.status }}
-                              </ng-container> -->
+                        <option value="Select Status" hidden>
+                          Select Status
                         </option>
+                        <ng-container *ngFor="let status of statusList">
+                          <option value="{{ status }}" [ngValue]="status">
+                            {{ status }}
+                          </option>
+                        </ng-container>
                       </select>
                     </span>
                   </td>
@@ -134,6 +125,11 @@
           </div>
         </div>
         <!-- Editable table -->
+        <!-- Empty Message start -->
+        <div class="empty-section" *ngIf="!orders?.length">
+          <h2>Pending orders are empty now.</h2>
+        </div>
+        <!-- Empty Message end -->
       </div>
       <!-- /.col -->
     </div>

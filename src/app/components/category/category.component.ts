@@ -29,7 +29,7 @@ export class CategoryComponent implements OnInit {
         return param.params.categoryName;
       })
     )
-    .subscribe((category) => {
+    .subscribe((category: string) => {
       this.category = category;
 
       // Load related products matching the current product's category
