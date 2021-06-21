@@ -48,8 +48,10 @@ export class ProductService {
     // TODO
   }
 
-  deleteProduct() {
-    // TODO
+  deleteProduct(productId: string) {
+    return this.http
+      .delete<IProductResponse>(this.SERVER_URL + `/products/delete/${productId}`)
+      .toPromise();
   }
 }
 

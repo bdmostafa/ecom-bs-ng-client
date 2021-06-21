@@ -113,7 +113,7 @@ export class UserService {
 
   deleteUser(userId: string) {
     return this.http
-      .delete(this.SERVER_URL + `/users/delete/${userId}`)
+      .delete<IUserResponse>(this.SERVER_URL + `/users/delete/${userId}`)
       .toPromise();
   }
 

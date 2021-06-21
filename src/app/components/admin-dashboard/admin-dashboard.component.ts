@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IProduct } from 'src/app/models/product.model';
-import { IProductsResponse, ProductService } from 'src/app/services/product.service';
+import { IProductResponse, IProductsResponse, ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -21,4 +21,16 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
+  deleteProduct(productId: string) {
+    this.productService.deleteProduct(productId).then(
+      (data: IProductResponse) => {
+        if (data.success) 
+        this.router
+        .navigateByUrl('/', { skipLocationChange: true })
+        .then(() => {
+          this.router.navigate(['/admin/dashboard']);
+        });
+      }
+    );
+  }
 }

@@ -1,321 +1,330 @@
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1>All Products</h1>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item">
-              <a [routerLink]="['/admin/dashboard']">Home</a>
-            </li>
-            <li class="breadcrumb-item active">All Products</li>
-          </ol>
-        </div>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>All Products</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item">
+            <a [routerLink]="['/admin/dashboard']">Home</a>
+          </li>
+          <li class="breadcrumb-item active">All Products</li>
+        </ol>
       </div>
     </div>
-    <!-- /.container-fluid -->
-  </section>
+  </div>
+  <!-- /.container-fluid -->
+</section>
 
-  <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <!-- /.card -->
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <!-- /.card -->
 
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">DataTable with default features</h3>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-              <div
-                id="example1_wrapper"
-                class="dataTables_wrapper dt-bootstrap4"
-              >
-                <div class="row">
-                  <div class="col-sm-12 col-md-6">
-                    <div class="dt-buttons btn-group flex-wrap">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">DataTable with default features</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <div class="dt-buttons btn-group flex-wrap">
+                    <button
+                      class="btn btn-secondary buttons-copy buttons-html5"
+                      tabindex="0"
+                      aria-controls="example1"
+                      type="button"
+                    >
+                      <span>Copy</span>
+                    </button>
+                    <button
+                      class="btn btn-secondary buttons-csv buttons-html5"
+                      tabindex="0"
+                      aria-controls="example1"
+                      type="button"
+                    >
+                      <span>CSV</span>
+                    </button>
+                    <button
+                      class="btn btn-secondary buttons-print"
+                      tabindex="0"
+                      aria-controls="example1"
+                      type="button"
+                    >
+                      <span>Print</span>
+                    </button>
+                    <div class="btn-group">
                       <button
-                        class="btn btn-secondary buttons-copy buttons-html5"
+                        class="
+                          btn btn-secondary
+                          buttons-collection
+                          dropdown-toggle
+                          buttons-colvis
+                        "
                         tabindex="0"
                         aria-controls="example1"
                         type="button"
+                        aria-haspopup="true"
+                        aria-expanded="false"
                       >
-                        <span>Copy</span>
+                        <span>Column visibility</span>
                       </button>
-                      <button
-                        class="btn btn-secondary buttons-csv buttons-html5"
-                        tabindex="0"
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div id="example1_filter" class="dataTables_filter">
+                    <label
+                      >Search:<input
+                        type="search"
+                        class="form-control form-control-sm"
+                        placeholder=""
                         aria-controls="example1"
-                        type="button"
-                      >
-                        <span>CSV</span>
-                      </button>
-                      <button
-                        class="btn btn-secondary buttons-print"
-                        tabindex="0"
-                        aria-controls="example1"
-                        type="button"
-                      >
-                        <span>Print</span>
-                      </button>
-                      <div class="btn-group">
-                        <button
-                          class="
-                            btn btn-secondary
-                            buttons-collection
-                            dropdown-toggle
-                            buttons-colvis
-                          "
+                    /></label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <table
+                    id="example1"
+                    class="
+                      table table-bordered table-striped
+                      dataTable
+                      dtr-inline
+                    "
+                    role="grid"
+                    aria-describedby="example1_info"
+                  >
+                    <thead>
+                      <tr role="row">
+                        <th
+                          class="sorting sorting_asc"
                           tabindex="0"
                           aria-controls="example1"
-                          type="button"
-                          aria-haspopup="true"
-                          aria-expanded="false"
+                          rowspan="1"
+                          colspan="1"
+                          aria-sort="ascending"
+                          aria-label="Rendering engine: activate to sort column descending"
                         >
-                          <span>Column visibility</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-12 col-md-6">
-                    <div id="example1_filter" class="dataTables_filter">
-                      <label
-                        >Search:<input
-                          type="search"
-                          class="form-control form-control-sm"
-                          placeholder=""
+                          Image
+                        </th>
+                        <th
+                          class="sorting"
+                          tabindex="0"
                           aria-controls="example1"
-                      /></label>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-12">
-                    <table
-                      id="example1"
-                      class="
-                        table table-bordered table-striped
-                        dataTable
-                        dtr-inline
-                      "
-                      role="grid"
-                      aria-describedby="example1_info"
-                    >
-                      <thead>
-                        <tr role="row">
-                          <th
-                            class="sorting sorting_asc"
-                            tabindex="0"
-                            aria-controls="example1"
-                            rowspan="1"
-                            colspan="1"
-                            aria-sort="ascending"
-                            aria-label="Rendering engine: activate to sort column descending"
-                          >
-                            Image
-                          </th>
-                          <th
-                            class="sorting"
-                            tabindex="0"
-                            aria-controls="example1"
-                            rowspan="1"
-                            colspan="1"
-                            aria-label="Browser: activate to sort column ascending"
-                          >
-                            Title
-                          </th>
-                          <th
-                            class="sorting"
-                            tabindex="0"
-                            aria-controls="example1"
-                            rowspan="1"
-                            colspan="1"
-                            aria-label="Platform(s): activate to sort column ascending"
-                          >
-                            Description
-                          </th>
-                          <th
-                            class="sorting"
-                            tabindex="0"
-                            aria-controls="example1"
-                            rowspan="1"
-                            colspan="1"
-                            aria-label="Platform(s): activate to sort column ascending"
-                          >
-                            Category
-                          </th>
-                          <th
-                            class="sorting"
-                            tabindex="0"
-                            aria-controls="example1"
-                            rowspan="1"
-                            colspan="1"
-                            aria-label="Engine version: activate to sort column ascending"
-                          >
-                            Price
-                          </th>
-                          <th
-                            class="sorting"
-                            tabindex="0"
-                            aria-controls="example1"
-                            rowspan="1"
-                            colspan="1"
-                            aria-label="CSS grade: activate to sort column ascending"
-                          >
-                            Quantity
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <ng-container
-                          *ngFor="let product of products; let idx = index"
+                          rowspan="1"
+                          colspan="1"
+                          aria-label="Browser: activate to sort column ascending"
                         >
-                          <tr [class]="idx % 2 === 0 ? 'even' : 'odd'">
-                            <td class="dtr-control sorting_1" tabindex="0">
-                              <img [src]="product.image" class="w-25" />
-                            </td>
-                            <td>{{ product.title }}</td>
-                            <td>{{ product.description.substr(0, 150) }}</td>
-                            <td>{{ product.category }}</td>
-                            <td>{{ product.price | currency: "USD" }}</td>
-                            <td>{{ product.quantity }}</td>
-                          </tr>
-                        </ng-container>
-                        <tr class="even">
-                          <td class="dtr-control sorting_1" tabindex="0">
-                            Gecko
+                          Title
+                        </th>
+                        <th
+                          class="sorting"
+                          tabindex="0"
+                          aria-controls="example1"
+                          rowspan="1"
+                          colspan="1"
+                          aria-label="Platform(s): activate to sort column ascending"
+                        >
+                          Description
+                        </th>
+                        <th
+                          class="sorting"
+                          tabindex="0"
+                          aria-controls="example1"
+                          rowspan="1"
+                          colspan="1"
+                          aria-label="Platform(s): activate to sort column ascending"
+                        >
+                          Category
+                        </th>
+                        <th
+                          class="sorting"
+                          tabindex="0"
+                          aria-controls="example1"
+                          rowspan="1"
+                          colspan="1"
+                          aria-label="Engine version: activate to sort column ascending"
+                        >
+                          Price
+                        </th>
+                        <th
+                          class="sorting"
+                          tabindex="0"
+                          aria-controls="example1"
+                          rowspan="1"
+                          colspan="1"
+                          aria-label="CSS grade: activate to sort column ascending"
+                        >
+                          Quantity
+                        </th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container
+                        *ngFor="let product of products; let idx = index"
+                      >
+                        <tr [class]="idx % 2 === 0 ? 'even' : 'odd'">
+                          <td
+                            class="dtr-control sorting_1"
+                            tabindex="0"
+                            width="100"
+                          >
+                            <img [src]="product?.image" class="w-25" />
                           </td>
-                          <td>Firefox 1.5</td>
-                          <td>Win 98+ / OSX.2+</td>
-                          <td>1.8</td>
-                          <td>A</td>
+                          <td>{{ product?.title }}</td>
+                          <td>{{ product?.description.substr(0, 150) }}</td>
+                          <td>{{ product?.category }}</td>
+                          <td>{{ product?.price | currency: "USD" }}</td>
+                          <td>{{ product?.quantity }}</td>
+                          <td>
+                            <span class="d-flex">
+                              <button
+                                (click)="deleteProduct(product._id)"
+                                class="btn btn-primary mr-3"
+                              >
+                                Delete
+                              </button>
+                              <button
+                                (click)="updateProduct(product._id)"
+                                class="btn btn-primary"
+                              >
+                                Update
+                              </button>
+                            </span>
+                          </td>
                         </tr>
-                      </tbody>
-                    </table>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-5">
+                  <div
+                    class="dataTables_info"
+                    id="example1_info"
+                    role="status"
+                    aria-live="polite"
+                  >
+                    Showing 1 to 10 of 57 entries
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-sm-12 col-md-5">
-                    <div
-                      class="dataTables_info"
-                      id="example1_info"
-                      role="status"
-                      aria-live="polite"
-                    >
-                      Showing 1 to 10 of 57 entries
-                    </div>
-                  </div>
-                  <div class="col-sm-12 col-md-7">
-                    <div
-                      class="dataTables_paginate paging_simple_numbers"
-                      id="example1_paginate"
-                    >
-                      <ul class="pagination">
-                        <li
-                          class="paginate_button page-item previous disabled"
-                          id="example1_previous"
+                <div class="col-sm-12 col-md-7">
+                  <div
+                    class="dataTables_paginate paging_simple_numbers"
+                    id="example1_paginate"
+                  >
+                    <ul class="pagination">
+                      <li
+                        class="paginate_button page-item previous disabled"
+                        id="example1_previous"
+                      >
+                        <a
+                          href="#"
+                          aria-controls="example1"
+                          data-dt-idx="0"
+                          tabindex="0"
+                          class="page-link"
+                          >Previous</a
                         >
-                          <a
-                            href="#"
-                            aria-controls="example1"
-                            data-dt-idx="0"
-                            tabindex="0"
-                            class="page-link"
-                            >Previous</a
-                          >
-                        </li>
-                        <li class="paginate_button page-item active">
-                          <a
-                            href="#"
-                            aria-controls="example1"
-                            data-dt-idx="1"
-                            tabindex="0"
-                            class="page-link"
-                            >1</a
-                          >
-                        </li>
-                        <li class="paginate_button page-item">
-                          <a
-                            href="#"
-                            aria-controls="example1"
-                            data-dt-idx="2"
-                            tabindex="0"
-                            class="page-link"
-                            >2</a
-                          >
-                        </li>
-                        <li class="paginate_button page-item">
-                          <a
-                            href="#"
-                            aria-controls="example1"
-                            data-dt-idx="3"
-                            tabindex="0"
-                            class="page-link"
-                            >3</a
-                          >
-                        </li>
-                        <li class="paginate_button page-item">
-                          <a
-                            href="#"
-                            aria-controls="example1"
-                            data-dt-idx="4"
-                            tabindex="0"
-                            class="page-link"
-                            >4</a
-                          >
-                        </li>
-                        <li class="paginate_button page-item">
-                          <a
-                            href="#"
-                            aria-controls="example1"
-                            data-dt-idx="5"
-                            tabindex="0"
-                            class="page-link"
-                            >5</a
-                          >
-                        </li>
-                        <li class="paginate_button page-item">
-                          <a
-                            href="#"
-                            aria-controls="example1"
-                            data-dt-idx="6"
-                            tabindex="0"
-                            class="page-link"
-                            >6</a
-                          >
-                        </li>
-                        <li
-                          class="paginate_button page-item next"
-                          id="example1_next"
+                      </li>
+                      <li class="paginate_button page-item active">
+                        <a
+                          href="#"
+                          aria-controls="example1"
+                          data-dt-idx="1"
+                          tabindex="0"
+                          class="page-link"
+                          >1</a
                         >
-                          <a
-                            href="#"
-                            aria-controls="example1"
-                            data-dt-idx="7"
-                            tabindex="0"
-                            class="page-link"
-                            >Next</a
-                          >
-                        </li>
-                      </ul>
-                    </div>
+                      </li>
+                      <li class="paginate_button page-item">
+                        <a
+                          href="#"
+                          aria-controls="example1"
+                          data-dt-idx="2"
+                          tabindex="0"
+                          class="page-link"
+                          >2</a
+                        >
+                      </li>
+                      <li class="paginate_button page-item">
+                        <a
+                          href="#"
+                          aria-controls="example1"
+                          data-dt-idx="3"
+                          tabindex="0"
+                          class="page-link"
+                          >3</a
+                        >
+                      </li>
+                      <li class="paginate_button page-item">
+                        <a
+                          href="#"
+                          aria-controls="example1"
+                          data-dt-idx="4"
+                          tabindex="0"
+                          class="page-link"
+                          >4</a
+                        >
+                      </li>
+                      <li class="paginate_button page-item">
+                        <a
+                          href="#"
+                          aria-controls="example1"
+                          data-dt-idx="5"
+                          tabindex="0"
+                          class="page-link"
+                          >5</a
+                        >
+                      </li>
+                      <li class="paginate_button page-item">
+                        <a
+                          href="#"
+                          aria-controls="example1"
+                          data-dt-idx="6"
+                          tabindex="0"
+                          class="page-link"
+                          >6</a
+                        >
+                      </li>
+                      <li
+                        class="paginate_button page-item next"
+                        id="example1_next"
+                      >
+                        <a
+                          href="#"
+                          aria-controls="example1"
+                          data-dt-idx="7"
+                          tabindex="0"
+                          class="page-link"
+                          >Next</a
+                        >
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
             </div>
-            <!-- /.card-body -->
           </div>
-
-          <!-- /.card -->
+          <!-- /.card-body -->
         </div>
-        <!-- /.col -->
+
+        <!-- /.card -->
       </div>
-      <!-- /.row -->
+      <!-- /.col -->
     </div>
-    <!-- /.container-fluid -->
-  </section>
-  <!-- /.content -->
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
