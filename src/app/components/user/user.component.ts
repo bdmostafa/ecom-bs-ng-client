@@ -1,7 +1,7 @@
 import { IOrder, IOrderResponse, IOrdersResponse } from './../../services/order.service';
 import { SocialUser, SocialAuthService } from 'angularx-social-login';
 import { Component, OnInit } from '@angular/core';
-import { ILoginUserResponse, UserService } from 'src/app/services/user.service';
+import { IUser, IUserResponse, UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { OrderService } from 'src/app/services/order.service';
@@ -13,7 +13,7 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit {
-  myUser: ILoginUserResponse | SocialUser;
+  myUser: IUser;
   userOrderData: IOrder[];
 
   constructor(
@@ -28,7 +28,7 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.userService.userData$
       .pipe(
-        map((user: SocialUser | ILoginUserResponse) => {
+        map((user: SocialUser | IUser) => {
           if (user instanceof SocialUser) {
             return {
               ...user,
@@ -39,7 +39,7 @@ export class UserComponent implements OnInit {
           }
         })
       )
-      .subscribe((data: ILoginUserResponse | SocialUser) => {
+      .subscribe((data: IUser) => {
         this.myUser = data;
       });
 
@@ -50,6 +50,8 @@ export class UserComponent implements OnInit {
       this.userOrderData = ordersData.orders;
       console.log(this.userOrderData);
     });
+
+    console.log(this.myUser)
   }
 
   logout() {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
-  IRegisterUserResponse,
+  IUserResponse,
   UserService,
 } from 'src/app/services/user.service';
 import {
@@ -67,7 +67,7 @@ export class CreateUserComponent implements OnInit {
 
     this.userService
       .registerUser({ ...this.userForm.value })
-      .subscribe((response: IRegisterUserResponse) => {
+      .subscribe((response: IUserResponse) => {
         console.log(response);
 
         this.router.navigateByUrl('/admin/all-users');

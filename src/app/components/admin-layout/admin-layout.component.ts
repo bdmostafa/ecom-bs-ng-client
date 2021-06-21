@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { SocialUser } from 'angularx-social-login';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
-import { ILoginUserResponse, UserService } from 'src/app/services/user.service';
+import { IUser, UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -11,7 +11,7 @@ import { ILoginUserResponse, UserService } from 'src/app/services/user.service';
   styleUrls: ['./admin-layout.component.css'],
 })
 export class AdminLayoutComponent implements OnInit {
-  myUser: any = {};
+  myUser: IUser;
 
   constructor(
     private userService: UserService,
@@ -22,7 +22,7 @@ export class AdminLayoutComponent implements OnInit {
   ngOnInit(): void {
     this.userService.userData$
       .pipe(
-        map((user: SocialUser | ILoginUserResponse) => {
+        map((user: SocialUser | IUser) => {
           if (user instanceof SocialUser) {
             return {
               ...user,
@@ -33,7 +33,7 @@ export class AdminLayoutComponent implements OnInit {
           }
         })
       )
-      .subscribe((data: ILoginUserResponse | SocialUser | any) => {
+      .subscribe((data: IUser | SocialUser | any) => {
         console.log(data);
         if (data?.role === 'admin' || data?.role === 'superAdmin') {
           this.myUser = data;

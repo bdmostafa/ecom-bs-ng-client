@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IUserResponse, IUsersResponse, UserService } from 'src/app/services/user.service';
+import { IUser, IUserResponse, IUsersResponse, UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-all-users',
@@ -8,7 +8,7 @@ import { IUserResponse, IUsersResponse, UserService } from 'src/app/services/use
   styleUrls: ['./all-users.component.css'],
 })
 export class AllUsersComponent implements OnInit {
-  users: IUserResponse[];
+  users: IUser[];
 
   constructor(
     private userService: UserService,
@@ -27,8 +27,10 @@ export class AllUsersComponent implements OnInit {
 
   deleteUser(userId: string) {
     this.userService.deleteUser(userId).then(
-      () => {
-        this.router.navigateByUrl('admin/all-users');
+      (user: IUserResponse) => {
+        if (user) {
+          this.router.navigateByUrl('admin/all-users');
+        }  
       }
     );
   }

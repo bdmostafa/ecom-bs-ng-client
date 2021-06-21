@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
-import { IRegisterUserResponse, UserService } from 'src/app/services/user.service';
+import { IUserResponse, UserService } from 'src/app/services/user.service';
 import {
   forbiddenPassValidator,
   matchPasswordValidator,
@@ -84,7 +84,7 @@ export class RegisterComponent implements OnInit {
 
     // @ts-ignore
     this.userService.registerUser({ ...this.registrationForm.value }).subscribe(
-      (response: IRegisterUserResponse) => {
+      (response: IUserResponse) => {
         console.log(response);
 
         this.router.navigateByUrl('/users/login');

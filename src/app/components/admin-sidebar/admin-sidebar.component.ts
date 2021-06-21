@@ -1,4 +1,4 @@
-import { ILoginUserResponse, UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/user.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { SocialUser } from 'angularx-social-login';
 import { map } from 'rxjs/operators';

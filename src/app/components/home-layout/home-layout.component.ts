@@ -1,6 +1,6 @@
 import { SocialUser } from 'angularx-social-login';
 import { Component, OnInit } from '@angular/core';
-import { ILoginUserResponse, UserService } from 'src/app/services/user.service';
+import { IUser, UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-home-layout',
@@ -9,7 +9,7 @@ import { ILoginUserResponse, UserService } from 'src/app/services/user.service';
 })
 export class HomeLayoutComponent implements OnInit {
   authStatus: boolean;
-  user: ILoginUserResponse | SocialUser;
+  user: IUser | SocialUser;
 
   constructor(private userService: UserService) {}
 

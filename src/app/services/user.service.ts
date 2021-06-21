@@ -17,10 +17,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class UserService {
   private SERVER_URL = environment.SERVER_URL;
-  private user;
 
   authState$ = new BehaviorSubject<boolean>(this.checkLoginStatus());
-  userData$ = new BehaviorSubject<SocialUser | ILoginUserResponse>(
+  userData$ = new BehaviorSubject<SocialUser | IUser>(
     JSON.parse(localStorage.getItem('userData'))
   );
 
@@ -30,7 +29,7 @@ export class UserService {
     private toastr: ToastrService,
     private cookies: CookieService
   ) {
-    authService.authState.subscribe((user: SocialUser | ILoginUserResponse) => {
+    authService.authState.subscribe((user: SocialUser | IUser) => {
       console.log('Social User=====================', user);
       if (user != null) {
         this.authState$.next(true);
@@ -41,10 +40,10 @@ export class UserService {
   }
 
   // Register user with name, email and password
-  registerUser(formData: ILoginUser): Observable<IRegisterUserResponse> {
+  registerUser(formData: ILoginInput): Observable<IUserResponse> {
     const { name, email, password, confirmPassword } = formData;
     console.log(formData);
-    return this.http.post<IRegisterUserResponse>(
+    return this.http.post<IUserResponse>(
       `${this.SERVER_URL}/users/create`,
       {
         name,
@@ -59,15 +58,15 @@ export class UserService {
   loginUser(email: string, password: string) {
     this.http
       .post(`${this.SERVER_URL}/users/login`, { email, password })
-      .subscribe((data: ILoginUserResponse) => {
+      .subscribe((data: IUserResponse) => {
         if (data.success) {
           this.authState$.next(true);
-          this.userData$.next(data);
+          this.userData$.next(data.user);
 
           const jwt: string = this.cookies.get('auth');
           localStorage.setItem('jwt', jwt);
           localStorage.setItem('loginStatus', '1');
-          localStorage.setItem('userData', JSON.stringify(data));
+          localStorage.setItem('userData', JSON.stringify(data.user));
         }
       });
     // console.log(this.authState$);
@@ -161,34 +160,39 @@ export class UserService {
   }
 }
 
-export interface ILoginUserResponse {
-  email: string;
-  success: {
-    title: string;
-    message: string;
-  };
-  name: string;
-  role: string;
-}
-export interface IRegisterUserResponse {
+export interface IUser {
+  _id: string;
   email: string;
   name: string;
   role: string;
-  success: {
-    title: string;
-    message: string;
-  };
+  createdAt: string;
 }
 export interface IUserResponse {
-  _id: string;
-  createdAt: string;
-  email: string;
-  name: string;
-  role: string;
+  user: IUser;
+  success: {
+    title: string;
+    message: string;
+  };
 }
+// export interface IRegisterUserResponse {
+//   email: string;
+//   name: string;
+//   role: string;
+//   success: {
+//     title: string;
+//     message: string;
+//   };
+// }
+// export interface IUserResponse {
+//   _id: string;
+//   createdAt: string;
+//   email: string;
+//   name: string;
+//   role: string;
+// }
 
 export interface IUsersResponse {
-  users: IUserResponse[];
+  users: IUser[];
   success: {
     title: string;
     message: string;
@@ -202,7 +206,7 @@ export interface ILogoutResponse {
   };
 }
 
-export interface ILoginUser {
+export interface ILoginInput {
   name: string;
   email: string;
   password: string;

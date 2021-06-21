@@ -1,4 +1,4 @@
-import { ILoginUserResponse, IRegisterUserResponse } from './../services/user.service';
+import { IUser, IUserResponse } from './../services/user.service';
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
@@ -17,12 +17,14 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AdminGuard implements CanActivate, CanActivateChild {
   private isLoggedIn: boolean = false;
-  user: ILoginUserResponse;
+  user: IUser;
 
   constructor(private userService: UserService, private router: Router, private toastr: ToastrService) {
     userService.isLoggedIn.subscribe(value => this.isLoggedIn = value);
-    userService.userData$.subscribe((user: ILoginUserResponse) => {
-      this.user = user;
+    userService.userData$.subscribe((user: IUser) => {
+      if (user != null) {
+        this.user = user;
+      }
     });
   }
 
