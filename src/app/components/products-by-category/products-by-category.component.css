@@ -1,0 +1,16 @@
+.select-category-area {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-bottom: 20px;
+    margin-top: -10px;
+}
+
+.select-category {
+    padding: 0px 15px;
+    background: #FFF;
+    border: 1px solid #E4E7ED;
+    height: 30px;
+    margin-left: 10px;
+}
+
