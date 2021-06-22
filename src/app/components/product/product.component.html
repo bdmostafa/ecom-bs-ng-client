@@ -6,10 +6,10 @@
     <div class="row">
       <div class="col-md-12">
         <ul class="breadcrumb-tree">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">All Categories</a></li>
+          <li><a [routerLink]="['/']" >Home</a></li>
+          <li><a [routerLink]="['/']" >All Categories</a></li>
           <li>
-            <a href="#">{{ product?.category }}</a>
+            <a [routerLink]="['/products/category/' + product?.category]" >{{ product?.category }}</a>
           </li>
           <li class="active">{{ product?.title }}</li>
         </ul>

@@ -24,17 +24,7 @@ export class ToastrInterceptor implements HttpInterceptor {
         console.log(evt);
         if (evt instanceof HttpResponse) {
           if (evt.body && evt.body.success) {
-            // Success notification with ToastrService
-            this.toastr.success(
-              evt.body.success.message,
-              evt.body.success.title,
-              {
-                progressBar: true,
-                positionClass: 'toast-top-right',
-                progressAnimation: 'increasing',
-                timeOut: 3000,
-              }
-            );
+            this.displaySuccessToastr(evt);
           }
         }
       }),
@@ -77,5 +67,24 @@ export class ToastrInterceptor implements HttpInterceptor {
         return of(error);
       })
     );
+  }
+
+  displaySuccessToastr(evt: any) {
+    // To avoid unnecessary notifications
+    switch (evt.body.success.title) {
+      case 'Product Detail':
+        break;
+      case 'All Products':
+        break;
+      default:
+        // Success notification with ToastrService
+        this.toastr.success(evt.body.success.message, evt.body.success.title, {
+          progressBar: true,
+          positionClass: 'toast-top-right',
+          progressAnimation: 'increasing',
+          timeOut: 3000,
+        });
+        break;
+    }
   }
 }
