@@ -41,4 +41,18 @@ export class CategoryComponent implements OnInit {
     });
   }
 
+  selectProduct(id: String) {
+    this.router.navigate(['/products', id]).then();
+  }
+
+  addToCart(id: string) {
+    this.cartService.addToCart(id);
+  }
+
+  notifyEmpty(product: string) {
+    alert(
+      `Oops! The product ${product} is out of stock now. Please stay updated with us.`
+    );
+  }
+
 }

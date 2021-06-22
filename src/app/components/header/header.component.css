@@ -1,3 +1,7 @@
 .dropdown-toggle:hover {
     color: #D10024
 }
+
+.disabled {
+    cursor: not-allowed;
+}

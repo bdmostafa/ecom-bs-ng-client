@@ -22,7 +22,11 @@
             >Categories</a
           >
         </li>
-        <li><a href="#">Hot Deals</a></li>
+        <li>
+          <a [routerLink]="['/']" routerLinkActive="router-link-active"
+            >Hot Deals</a
+          >
+        </li>
         <li>
           <a
             [routerLink]="['/contact-us']"
@@ -45,7 +49,10 @@
 <!-- /NAVIGATION -->
 
 <app-products *ngIf="isProduct" [products]="products"></app-products>
-<app-category-products *ngIf="isCategory" [products]="products"></app-category-products>
+<app-category-products
+  *ngIf="isCategory"
+  [products]="products"
+></app-category-products>
 
 <!-- NEWSLETTER -->
 <div id="newsletter" class="section">

@@ -37,11 +37,12 @@ export class HeaderComponent implements OnInit {
     this.cartService.cartInfo$.subscribe((cInfo) => (this.cartInfo = cInfo));
   }
 
-  selectCategory(category: String) {
-    this.router.navigate(['/products/category', category]).then();
+  searchCat() {
+    this.router.navigate(['/products/category', this.selectedCategory]).then();
   }
 
-  selectedCat() {
-    console.log(this.selectedCategory);
+  selectedCat(category: string) {
+    console.log(category);
+    this.selectedCategory = category
   }
 }

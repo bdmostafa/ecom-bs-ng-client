@@ -58,9 +58,8 @@
         <div class="col-md-6">
           <div class="header-search">
             <form>
-              <!-- <select class="input-select" [(ngModel)]="selectedCategory" (change)="selectedCat()"> -->
-              <select class="input-select" (change)="selectedCat()">
-                <option value="">All Categories</option>
+              <select class="input-select" #selectedCategory (change)="selectedCat(selectedCategory.value)">
+                <option value="" hidden>All Categories</option>
                 <option
                   *ngFor="let product of products | uniqueFilter: 'category'"
                   [ngValue]="product.category"
@@ -68,12 +67,13 @@
                   {{ product.category }}
                 </option>
               </select>
-              <input class="input" placeholder="Search here" />
+              <input class="input" placeholder="Select Category" />
               <button
+                [class.disabled]="selectedCategory == null"
                 class="search-btn pb-0"
-                (click)="selectCategory(this.selectedCategory)"
+                (click)="searchCat()"
               >
-                Search
+                Select
               </button>
 
               <!-- TODO Filtering products and selected category page routing -->
