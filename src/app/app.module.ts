@@ -50,6 +50,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { RestInterceptor } from './_helpers/rest.interceptor';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { AllProductsComponent } from './components/admin-dashboard/all-products/all-products.component';
+import { ProductsComponent } from './components/home/products/products.component';
+import { CategoryProductsComponent } from './components/home/category-products/category-products.component';
 
 // const config = new AuthServiceConfig([
 //   {
@@ -96,6 +98,8 @@ import { AllProductsComponent } from './components/admin-dashboard/all-products/
     AllUsersComponent,
     CreateUserComponent,
     AllProductsComponent,
+    ProductsComponent,
+    CategoryProductsComponent,
   ],
   imports: [
     BrowserModule,
