@@ -5,3 +5,7 @@
 .disabled {
     cursor: not-allowed;
 }
+
+.bdt {
+    color: green;
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import {
   IProduct,
   IProductInput,
@@ -17,14 +18,14 @@ import {
 export class ProductsByCategoryComponent implements OnInit {
   products: IProduct[] = [];
   productForm: FormGroup;
-  selectedCategory: string;
   catSelectedProducts: IProduct[] = [];
   product;
 
   constructor(
     private productService: ProductService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private spinner: NgxSpinnerService
   ) {
     this.productForm = fb.group({
       _id: ['', [Validators.required]],
@@ -108,8 +109,7 @@ export class ProductsByCategoryComponent implements OnInit {
     this.productService
       .updateProduct(this._id.value, formData)
       .then((data: IProductResponse) => {
-        if (data.success)
-          window.location.reload();
+        if (data.success) window.location.reload();
       });
 
     this.productForm.reset();
@@ -118,12 +118,25 @@ export class ProductsByCategoryComponent implements OnInit {
   searchCategory(category: string) {
     this.catSelectedProducts = [];
 
-    this.products.map(product => {
-      if (product.category === category) {
-        this.catSelectedProducts.push(product)
-      }
-    })
-    console.log(this.catSelectedProducts)
+    // this.products.map(product => {
+    //   if (product.category === category) {
+    //     this.catSelectedProducts.push(product)
+    //   }
+    // })
+
+    // Add spinner
+    this.spinner.show().then(() => {
+      // Hide spinner
+      setTimeout(() => {
+        this.catSelectedProducts = category
+          ? this.products.filter((product) => {
+              return product.category === category;
+            })
+          : [];
+        this.spinner.hide().then();
+      }, 1000);
+    });
+
+    console.log(this.catSelectedProducts);
   }
-  
 }
