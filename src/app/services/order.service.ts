@@ -8,7 +8,6 @@ import { ICartInfo } from 'src/app/services/cart.service';
   providedIn: 'root',
 })
 export class OrderService {
-  private products: IProductResponse[] = [];
   private SERVER_URL = environment.SERVER_URL;
 
   constructor(private http: HttpClient) {}
@@ -93,13 +92,4 @@ export interface IOrderResponse {
     title: string;
     message: string;
   };
-}
-
-interface IProductResponse {
-  _id: string;
-  title: string;
-  description: string;
-  price: string;
-  quantityOrdered: number;
-  image: string;
 }

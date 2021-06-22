@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
+  IUserInput,
   IUserResponse,
   UserService,
 } from 'src/app/services/user.service';
@@ -46,6 +47,7 @@ export class CreateUserComponent implements OnInit {
   get name() {
     return this.userForm.get('name');
   }
+
   get email() {
     return this.userForm.get('email');
   }
@@ -65,8 +67,18 @@ export class CreateUserComponent implements OnInit {
       return;
     }
 
+    let formData: IUserInput;
+
+    formData = {
+      name: this.name.value,
+      email: this.email.value,
+      role: 'user',
+      password: this.password.value,
+      confirmPassword: this.confirmPassword.value,
+    }
+
     this.userService
-      .registerUser({ ...this.userForm.value })
+      .registerUser(formData)
       .subscribe((response: IUserResponse) => {
         console.log(response);
 

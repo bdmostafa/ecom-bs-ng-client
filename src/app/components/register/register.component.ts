@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
-import { IUserResponse, UserService } from 'src/app/services/user.service';
+import { IUserInput, IUserResponse, UserService } from 'src/app/services/user.service';
 import {
   forbiddenPassValidator,
   matchPasswordValidator,
@@ -17,6 +17,7 @@ import {
 export class RegisterComponent implements OnInit {
   registrationForm: FormGroup;
   comparePassword: boolean;
+  formData: IUserInput;
 
   constructor(
     private fb: FormBuilder,
@@ -51,6 +52,7 @@ export class RegisterComponent implements OnInit {
   get name() {
     return this.registrationForm.get('name');
   }
+
   get email() {
     return this.registrationForm.get('email');
   }
@@ -82,8 +84,16 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
+    this.formData = {
+      name: this.name.value,
+      email: this.email.value,
+      role: 'user',
+      password: this.password.value,
+      confirmPassword: this.confirmPassword.value,
+    }
+
     // @ts-ignore
-    this.userService.registerUser({ ...this.registrationForm.value }).subscribe(
+    this.userService.registerUser(this.formData).subscribe(
       (response: IUserResponse) => {
         console.log(response);
 

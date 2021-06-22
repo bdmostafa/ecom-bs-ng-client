@@ -99,98 +99,29 @@ export class CartService {
   }
 
   addToCart(id: string, qty?: number) {
-    this.productService.getProduct(id).subscribe((prodData: IProductResponse) => {
-      const { product } = prodData;
-      // 1. If the cart is empty
-      if (this.cartInfoServer.data[0].product === undefined) {
-        console.log('1');
-        this.cartInfoServer.data[0].product = product;
-        this.cartInfoServer.data[0].numInCart = qty !== undefined ? qty : 1;
+    this.productService
+      .getProduct(id)
+      .subscribe((prodData: IProductResponse) => {
+        const { product } = prodData;
+        // 1. If the cart is empty
+        if (this.cartInfoServer.data[0].product === undefined) {
+          // console.log('1');
+          this.cartInfoServer.data[0].product = product;
+          this.cartInfoServer.data[0].numInCart = qty !== undefined ? qty : 1;
 
-        // Calculate total price
-        this.calculateTotal();
-
-        this.cartInfoClient.productInfo[0].inCart =
-          this.cartInfoServer.data[0].numInCart;
-        this.cartInfoClient.productInfo[0]._id = product._id;
-
-        // Update cartInfoClient and local storage
-        this.cartInfoClient.total = this.cartInfoServer.total;
-        localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
-
-        // Emits the current value to new subscribers
-        this.cartInfo$.next({ ...this.cartInfoServer });
-
-        // Success Toastr
-        this.toastr.success(
-          `${product.title} is added to the cart successfully!`,
-          'Add To Cart',
-          {
-            progressBar: true,
-            positionClass: 'toast-top-right',
-            progressAnimation: 'increasing',
-            timeOut: 2000,
-          }
-        );
-      }
-      // 2. If the cart has items
-      else {
-        console.log(this.cartInfoServer);
-        // idx = -1 or a positive value
-        let idx = this.cartInfoServer.data.findIndex(
-          (p) => p.product._id === product._id
-        );
-        console.log('2', idx);
-        //    2.a. If that item is already in the cart, update qty
-        //    idx -> positive value
-        if (idx !== -1) {
-          console.log('2a');
-          if (qty !== undefined && qty <= product.quantity) {
-            this.cartInfoServer.data[idx].numInCart =
-              this.cartInfoServer.data[idx].numInCart < product.quantity
-                ? qty
-                : product.quantity;
-          } else {
-            this.cartInfoServer.data[idx].numInCart < product.quantity
-              ? this.cartInfoServer.data[idx].numInCart++
-              : product.quantity;
-          }
-
-          this.cartInfoClient.productInfo[idx].inCart =
-            this.cartInfoServer.data[idx].numInCart;
-          // console.log(this.cartInfoServer.data[idx], product.quantity)
           // Calculate total price
           this.calculateTotal();
+
+          this.cartInfoClient.productInfo[0].inCart =
+            this.cartInfoServer.data[0].numInCart;
+          this.cartInfoClient.productInfo[0]._id = product._id;
 
           // Update cartInfoClient and local storage
           this.cartInfoClient.total = this.cartInfoServer.total;
           localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
 
-          // Info Toastr
-          this.toastr.info(
-            `${product.title} quantity is updated to the cart successfully!`,
-            'Update Product Quantity',
-            {
-              progressBar: true,
-              positionClass: 'toast-top-right',
-              progressAnimation: 'increasing',
-              timeOut: 1000,
-            }
-          );
-        } // END OF IF
-
-        //   2.b. If that item is not in the cart (idx is -1)
-        else {
-          console.log('2b');
-          this.cartInfoServer.data.push({
-            numInCart: 1,
-            product: product,
-          });
-
-          this.cartInfoClient.productInfo.push({
-            inCart: 1,
-            _id: product._id,
-          });
+          // Emits the current value to new subscribers
+          this.cartInfo$.next({ ...this.cartInfoServer });
 
           // Success Toastr
           this.toastr.success(
@@ -203,21 +134,92 @@ export class CartService {
               timeOut: 2000,
             }
           );
+        }
+        // 2. If the cart has items
+        else {
+          console.log(this.cartInfoServer);
+          // idx = -1 or a positive value
+          let idx = this.cartInfoServer.data.findIndex(
+            (p) => p.product._id === product._id
+          );
+          // console.log('2', idx);
+          //    2.a. If that item is already in the cart, update qty
+          //    idx -> positive value
+          if (idx !== -1) {
+            // console.log('2a');
+            if (qty !== undefined && qty <= product.quantity) {
+              this.cartInfoServer.data[idx].numInCart =
+                this.cartInfoServer.data[idx].numInCart < product.quantity
+                  ? qty
+                  : product.quantity;
+            } else {
+              this.cartInfoServer.data[idx].numInCart < product.quantity
+                ? this.cartInfoServer.data[idx].numInCart++
+                : product.quantity;
+            }
 
-          // Calculate total price
-          this.calculateTotal();
+            this.cartInfoClient.productInfo[idx].inCart =
+              this.cartInfoServer.data[idx].numInCart;
+            // console.log(this.cartInfoServer.data[idx], product.quantity)
+            // Calculate total price
+            this.calculateTotal();
 
-          // Update cartInfoClient and local storage
-          this.cartInfoClient.total = this.cartInfoServer.total;
-          localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
+            // Update cartInfoClient and local storage
+            this.cartInfoClient.total = this.cartInfoServer.total;
+            localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
 
-          // Emits the current value to new subscribers
-          this.cartInfo$.next({ ...this.cartInfoServer });
-        } // END OF ELSE
-      }
-      // console.log(this.cartInfoServer);
-      console.log(this.cartTotal$, this.cartInfo$);
-    });
+            // Info Toastr
+            this.toastr.info(
+              `${product.title} quantity is updated to the cart successfully!`,
+              'Update Product Quantity',
+              {
+                progressBar: true,
+                positionClass: 'toast-top-right',
+                progressAnimation: 'increasing',
+                timeOut: 1000,
+              }
+            );
+          } // END OF IF
+
+          //   2.b. If that item is not in the cart (idx is -1)
+          else {
+            console.log('2b');
+            this.cartInfoServer.data.push({
+              numInCart: 1,
+              product: product,
+            });
+
+            this.cartInfoClient.productInfo.push({
+              inCart: 1,
+              _id: product._id,
+            });
+
+            // Success Toastr
+            this.toastr.success(
+              `${product.title} is added to the cart successfully!`,
+              'Add To Cart',
+              {
+                progressBar: true,
+                positionClass: 'toast-top-right',
+                progressAnimation: 'increasing',
+                timeOut: 2000,
+              }
+            );
+
+            // Calculate total price
+            this.calculateTotal();
+
+            // Update cartInfoClient and local storage
+            this.cartInfoClient.total = this.cartInfoServer.total;
+            localStorage.setItem('cart', JSON.stringify(this.cartInfoClient));
+
+            // Emits the current value to new subscribers
+            this.cartInfo$.next({ ...this.cartInfoServer });
+          } // END OF ELSE
+        }
+        // console.log(this.cartInfoServer);
+        console.log(this.cartTotal$, this.cartInfo$);
+      });
   }
 
   updateCart(idx: number, increase: boolean) {
@@ -314,44 +316,48 @@ export class CartService {
             });
           });
           console.log(this.cartInfoClient.productInfo, cartInfo);
-          this.orderService.createOrder(cartInfo).then((orderData: IOrderResponse) => {
-              console.log('orderData', orderData);
-              this.orderService.getOrderById(orderData.order._id).then((order: IOrderResponse) => {
-                console.log('order', order);
-                if (orderData?.success) {
-                  console.log('order success')
-                  // To pass additional information
-                  const navigationExtras: NavigationExtras = {
-                    state: {
-                      order: order.order,
-                      totalPrice: this.cartInfoClient.total,
-                    },
-                  };
+          this.orderService
+            .createOrder(cartInfo)
+            .then((orderData: IOrderResponse) => {
+              // console.log('orderData', orderData);
+              this.orderService
+                .getOrderById(orderData.order._id)
+                .then((order: IOrderResponse) => {
+                  // console.log('order', order);
+                  if (orderData?.success) {
+                    // console.log('order success')
+                    // To pass additional information
+                    const navigationExtras: NavigationExtras = {
+                      state: {
+                        order: order.order,
+                        totalPrice: this.cartInfoClient.total,
+                      },
+                    };
 
-                  // Hide spinner
-                  this.spinner.hide().then();
+                    // Hide spinner
+                    this.spinner.hide().then();
 
-                  this.router
-                    .navigate(['/thankyou'], navigationExtras)
-                    .then((p) => {
-                      console.log(p);
-                      // Reset cartInfoClient, cartTotal
-                      this.cartInfoClient = {
-                        total: 0,
-                        productInfo: [{ inCart: 0, _id: '' }],
-                      };
-                      this.cartTotal$.next(0);
+                    this.router
+                      .navigate(['/thankyou'], navigationExtras)
+                      .then((p) => {
+                        // console.log(p);
+                        // Reset cartInfoClient, cartTotal
+                        this.cartInfoClient = {
+                          total: 0,
+                          productInfo: [{ inCart: 0, _id: '' }],
+                        };
+                        this.cartTotal$.next(0);
 
-                      // Update local storage
-                      localStorage.setItem(
-                        'cart',
-                        JSON.stringify(this.cartInfoClient)
-                      );
-                    });
-                } else {
-                  console.log('order not success')
-                }
-              });
+                        // Update local storage
+                        localStorage.setItem(
+                          'cart',
+                          JSON.stringify(this.cartInfoClient)
+                        );
+                      });
+                  } else {
+                    console.log('order not success');
+                  }
+                });
             });
         }
         // If res.success is false

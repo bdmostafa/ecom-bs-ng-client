@@ -30,7 +30,7 @@ export class UserService {
     private cookies: CookieService
   ) {
     authService.authState.subscribe((user: SocialUser | IUser) => {
-      console.log('Social User=====================', user);
+      // console.log('Social User=====================', user);
       if (user != null) {
         this.authState$.next(true);
         this.userData$.next(user);
@@ -40,17 +40,12 @@ export class UserService {
   }
 
   // Register user with name, email and password
-  registerUser(formData: ILoginInput): Observable<IUserResponse> {
-    const { name, email, password, confirmPassword } = formData;
-    console.log(formData);
+  registerUser(userFormData: IUserInput): Observable<IUserResponse> {
+    const { name, email, password, confirmPassword } = userFormData;
+    // console.log(userFormData);
     return this.http.post<IUserResponse>(
       `${this.SERVER_URL}/users/create`,
-      {
-        name,
-        email,
-        password,
-        confirmPassword,
-      }
+      userFormData
     );
   }
 
@@ -89,7 +84,7 @@ export class UserService {
     this.http
       .post<ILogoutResponse>(`${this.SERVER_URL}/users/logout`, {})
       .subscribe((data: ILogoutResponse) => {
-        console.log(data);
+        // console.log(data);
         if (data.success) {
           // Update authState observable
           this.authState$.next(false);
@@ -113,6 +108,12 @@ export class UserService {
   deleteUser(userId: string) {
     return this.http
       .delete<IUserResponse>(this.SERVER_URL + `/users/delete/${userId}`)
+      .toPromise();
+  }
+
+  updateUser(userId: string, userInfo: IUserInput) {
+    return this.http
+      .put<IUserResponse>(this.SERVER_URL + `/users/update/${userId}`, userInfo)
       .toPromise();
   }
 
@@ -147,8 +148,8 @@ export class UserService {
         return true;
       }
 
-      console.log('NEW DATE ' + new Date().valueOf());
-      console.log('Token DATE ' + tokenExpDate.valueOf());
+      // console.log('NEW DATE ' + new Date().valueOf());
+      // console.log('Token DATE ' + tokenExpDate.valueOf());
 
       return false;
     }
@@ -174,22 +175,6 @@ export interface IUserResponse {
     message: string;
   };
 }
-// export interface IRegisterUserResponse {
-//   email: string;
-//   name: string;
-//   role: string;
-//   success: {
-//     title: string;
-//     message: string;
-//   };
-// }
-// export interface IUserResponse {
-//   _id: string;
-//   createdAt: string;
-//   email: string;
-//   name: string;
-//   role: string;
-// }
 
 export interface IUsersResponse {
   users: IUser[];
@@ -206,9 +191,10 @@ export interface ILogoutResponse {
   };
 }
 
-export interface ILoginInput {
+export interface IUserInput {
   name: string;
   email: string;
+  role: string;
   password: string;
   confirmPassword: string;
 }

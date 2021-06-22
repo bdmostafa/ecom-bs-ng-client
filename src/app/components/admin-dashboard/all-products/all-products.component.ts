@@ -116,5 +116,7 @@ export class AllProductsComponent implements OnInit {
           //   });
           window.location.reload();
       });
+
+    this.productForm.reset();
   }
 }

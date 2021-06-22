@@ -30,7 +30,7 @@ export class ProductService {
 
   // Create product by form data
   createProduct(formData: IProduct): Observable<IProductResponse> {
-    console.log(formData);
+    // console.log(formData);
     return this.http.post<IProductResponse>(
       `${this.SERVER_URL}/products/create`,
       formData
