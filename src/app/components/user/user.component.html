@@ -1,5 +1,5 @@
 <div class="container user-profile">
-  <h2 class="text-center mb-3">Welcome {{ myUser?.name }}</h2>
+  <h2 class="text-center mb-3">Hi {{ myUser?.name }}, Welcome to your profile page</h2>
   <form novalidate>
     <div class="row">
       <div class="col-md-4">
@@ -34,12 +34,211 @@
             {{ "Your Profession" }}
           </p>
         </div>
-        <button (click)="logout()" class="btn btn-secondary btn-lg">
-          Logout
-        </button>
+        <span class="d-flex">
+          <button
+            class="btn btn-secondary btn-lg mr-2"
+            data-toggle="modal"
+            data-target="#updateFormModal"
+          >
+            Update
+          </button>
+
+          <!-- Update User Modal Form -->
+          <div
+            class="modal fade"
+            id="updateFormModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Update User
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="card card-body">
+                    <div class="pl-3 pr-3 card-primary">
+                      <!-- Reactive Model Form -->
+                      <form
+                        (ngSubmit)="updateUser()"
+                        [formGroup]="userForm"
+                        class="form-horizontal"
+                        novalidate
+                      >
+                        <div class="input-group form-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="fas fa-user"></i>
+                            </span>
+                          </div>
+                          <input
+                            class="form-control w-75"
+                            formControlName="name"
+                            id="name"
+                            name="name"
+                            placeholder="John"
+                            required
+                            type="text"
+                          />
+                          <span
+                            class="text-danger"
+                            *ngIf="
+                              name.invalid &&
+                              name.touched &&
+                              name.errors?.required
+                            "
+                          >
+                            Name is required
+                          </span>
+                        </div>
+                        <div class="input-group form-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="fas fa-envelope"></i>
+                            </span>
+                          </div>
+                          <input
+                            class="form-control w-75"
+                            formControlName="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            required
+                            type="text"
+                          />
+                          <span *ngIf="email.invalid && email.touched">
+                            <span
+                              class="text-danger"
+                              *ngIf="email.errors?.required"
+                            >
+                              Email is required
+                            </span>
+                            <span
+                              class="text-danger"
+                              *ngIf="email.errors?.email"
+                            >
+                              Enter a valid email address
+                            </span>
+                          </span>
+                        </div>
+
+                        <div class="input-group form-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="fas fa-key"></i>
+                            </span>
+                          </div>
+                          <input
+                            class="form-control w-75"
+                            formControlName="password"
+                            id="password"
+                            name="password"
+                            placeholder="Password ('password' word is not allowed)"
+                            required
+                            type="password"
+                          />
+                          <span *ngIf="password.invalid && password.touched">
+                            <span
+                              class="text-danger"
+                              *ngIf="password.errors?.required"
+                            >
+                              Password is required
+                            </span>
+                            <span
+                              class="text-danger"
+                              *ngIf="password.errors?.forbiddenPassword"
+                            >
+                              '{{ password.errors?.forbiddenPassword.value }}'
+                              is not allowed as a password <br />
+                            </span>
+                            <span
+                              class="text-danger"
+                              *ngIf="password.errors?.pattern"
+                            >
+                              Password should have minimum 6 characters, at
+                              least 1 uppercase letter, 1 lowercase letter and 1
+                              number
+                            </span>
+                          </span>
+                        </div>
+                        <div class="input-group form-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="fas fa-key"></i>
+                            </span>
+                          </div>
+                          <input
+                            class="form-control w-75"
+                            formControlName="confirmPassword"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            placeholder="Confirm Password"
+                            required
+                            type="password"
+                          />
+                          <span *ngIf="confirmPassword.touched">
+                            <span
+                              class="text-danger"
+                              *ngIf="
+                                confirmPassword.invalid &&
+                                confirmPassword.errors?.required
+                              "
+                            >
+                              Confirm Password is required
+                            </span>
+                            <span
+                              class="text-danger"
+                              *ngIf="userForm.errors?.misMatch"
+                            >
+                              Password does not match
+                            </span>
+                          </span>
+                        </div>
+
+                        <div class="form-group modal-footer form-group">
+                          <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                          >
+                            <i class="far fa-window-close"></i> Close
+                          </button>
+                          <button
+                            [disabled]="userForm.invalid && userForm.touched"
+                            class="btn btn-secondary"
+                            type="submit"
+                          >
+                            <i class="fas fa-edit"></i> Update
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button (click)="logout()" class="btn btn-secondary btn-lg">
+            Logout
+          </button>
+        </span>
       </div>
       <div class="col-md-8">
-        <table class="table">
+        <!-- When Orders are available -->
+        <table *ngIf="userOrderData?.length > 0" class="table">
           <thead class="table-dark">
             <tr class="text-center">
               <th>#Order Qty</th>
@@ -132,6 +331,14 @@
             <td></td>
           </tr>
         </table>
+
+        <!-- When Orders are empty -->
+        <div *ngIf="userOrderData?.length <= 0" class="text-center mt-4">
+          <h2>Oops... Your order is empty now.</h2>
+          <button [routerLink]="['/']" class="btn btn-primary btn-lg">
+            Go To Shop page
+          </button>
+        </div>
       </div>
     </div>
   </form>

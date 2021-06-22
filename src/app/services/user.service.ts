@@ -11,6 +11,7 @@ import {
 } from 'angularx-social-login';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -26,8 +27,8 @@ export class UserService {
   constructor(
     private authService: SocialAuthService,
     private http: HttpClient,
-    private toastr: ToastrService,
-    private cookies: CookieService
+    private cookies: CookieService,
+    private router: Router
   ) {
     authService.authState.subscribe((user: SocialUser | IUser) => {
       // console.log('Social User=====================', user);
@@ -94,6 +95,8 @@ export class UserService {
           localStorage.removeItem('jwt');
           localStorage.setItem('loginStatus', '0');
           localStorage.removeItem('userData');
+
+          this.router.navigateByUrl('/users/login');
         }
       });
     // console.log(this.authState$);
@@ -114,6 +117,12 @@ export class UserService {
   updateUser(userId: string, userInfo: IUserInput) {
     return this.http
       .put<IUserResponse>(this.SERVER_URL + `/users/update/${userId}`, userInfo)
+      .toPromise();
+  }
+
+  updateLoggedInUser(userInfo: ILoggedInUserInput) {
+    return this.http
+      .put<IUserResponse>(this.SERVER_URL + `/users/update/me`, userInfo)
       .toPromise();
   }
 
@@ -195,6 +204,12 @@ export interface IUserInput {
   name: string;
   email: string;
   role: string;
+  password: string;
+  confirmPassword: string;
+}
+export interface ILoggedInUserInput {
+  name: string;
+  email: string;
   password: string;
   confirmPassword: string;
 }

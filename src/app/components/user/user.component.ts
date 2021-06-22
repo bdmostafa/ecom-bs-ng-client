@@ -1,11 +1,14 @@
+import { ILoggedInUserInput } from './../../services/user.service';
 import { IOrder, IOrderResponse, IOrdersResponse } from './../../services/order.service';
 import { SocialUser, SocialAuthService } from 'angularx-social-login';
 import { Component, OnInit } from '@angular/core';
-import { IUser, IUserResponse, UserService } from 'src/app/services/user.service';
+import { IUser, IUserInput, IUserResponse, UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { OrderService } from 'src/app/services/order.service';
 import { BehaviorSubject } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { forbiddenPassValidator, matchPasswordValidator } from 'src/app/validators/password.validator';
 
 @Component({
   selector: 'app-user',
@@ -15,15 +18,52 @@ import { BehaviorSubject } from 'rxjs';
 export class UserComponent implements OnInit {
   myUser: IUser;
   userOrderData: IOrder[];
+  userForm: FormGroup;
+  user: any;
 
   constructor(
     private authService: SocialAuthService,
     private userService: UserService,
     private router: Router,
-    private orderService: OrderService
-  ) {}
+    private orderService: OrderService,
+    private fb: FormBuilder
+  ) {
+    this.userForm = fb.group(
+      {
+        name: ['', [Validators.required, Validators.minLength(4)]],
+        email: ['', [Validators.required, Validators.email]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(6),
+            forbiddenPassValidator(/^password$/i),
+            Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$'),
+          ],
+        ],
+        confirmPassword: ['', [Validators.required]],
+      },
+      // perform the validation in a common ancestor control: the FormGroup
+      { validator: matchPasswordValidator }
+    );
+  }
 
   userOrderData$ = new BehaviorSubject<IOrder[]>(null);
+
+  get name() {
+    return this.userForm.get('name');
+  }
+
+  get email() {
+    return this.userForm.get('email');
+  }
+
+  get password() {
+    return this.userForm.get('password');
+  }
+  get confirmPassword() {
+    return this.userForm.get('confirmPassword');
+  }
 
   ngOnInit(): void {
     this.userService.userData$
@@ -52,6 +92,33 @@ export class UserComponent implements OnInit {
     });
 
     console.log(this.myUser)
+
+    // patchValue is used for auto-fill data in the update user form 
+    this.userForm.patchValue(this.myUser)
+  }
+
+  updateUser() {
+    if (this.userForm.invalid) {
+      return;
+    }
+
+    let formData: ILoggedInUserInput;
+
+    formData = {
+      name: this.name.value,
+      email: this.email.value,
+      password: this.password.value,
+      confirmPassword: this.confirmPassword.value,
+    };
+
+    console.log(formData);
+    this.userService
+      .updateLoggedInUser(formData)
+      .then((data: IUserResponse) => {
+        if (data.success) window.location.reload();
+      });
+
+    this.userForm.reset();
   }
 
   logout() {
