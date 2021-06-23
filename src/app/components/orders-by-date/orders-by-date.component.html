@@ -1,3 +1,14 @@
+<!-- ngx spinner -->
+<ngx-spinner
+  bdColor="rgba(151,149,149,0.4)"
+  size="large"
+  color="orange"
+  type="ball-clip-rotate-pulse"
+  fullScreen="true"
+>
+  <p style="font-size: 20px; color: black">Orders of {{ date.value }} ...</p>
+</ngx-spinner>
+
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
@@ -70,7 +81,7 @@
       <div class="row">
         <div class="col-12">
           <!-- Editable table -->
-          <div class="card">
+          <div *ngIf="orders?.length" class="card">
             <div class="card-body">
               <div id="table" class="table-editable">
                 <table
@@ -177,6 +188,14 @@
             </div>
           </div>
           <!-- Editable table -->
+          <!-- Empty Message start -->
+        <div class="empty-section" *ngIf="!orders?.length && isFetchOrders">
+          <h2>Orders of {{ date.value }} are empty now.</h2>
+        </div>
+        <div class="empty-section" *ngIf="!isFetchOrders">
+          <h2>Please input a valid date format <strong> (yyyy-MM-dd) </strong>  to fetch the orders of the date</h2>
+        </div>
+        <!-- Empty Message end -->
         </div>
         <!-- /.col -->
       </div>

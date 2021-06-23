@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { IOrder, IOrderResponse, IOrdersResponse, OrderService } from 'src/app/services/order.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import {
+  IOrder,
+  IOrderResponse,
+  IOrdersResponse,
+  OrderService,
+} from 'src/app/services/order.service';
 import { IStatusInfo } from '../all-orders/all-orders.component';
 
 @Component({
@@ -14,13 +19,14 @@ export class OrdersByDateComponent implements OnInit {
   statusList = ['Pending', 'Approved', 'On going', 'Delivered'];
   statusData: IStatusInfo;
   status: string;
+  isFetchOrders: boolean = false;
 
   fetchOrdersForm = new FormGroup({
     date: new FormControl(''),
   });
 
   constructor(
-    private toastr: ToastrService,
+    private spinner: NgxSpinnerService,
     private orderService: OrderService
   ) {}
 
@@ -32,22 +38,34 @@ export class OrdersByDateComponent implements OnInit {
 
   fetchOrders() {
     console.log(this.fetchOrdersForm);
-    if (this.fetchOrdersForm.invalid) {
-      return;
-    }
-
-    // Load orders if he/she has any orders
-    this.orderService.getOrdersByDate(this.fetchOrdersForm.value.date).then(
-      (ordersData: IOrdersResponse) => {
-        console.log(ordersData);
-
-        if (ordersData.orders.length > 0) {
-          this.orders = ordersData.orders;
-        } else {
-          this.orders = [];
+    // Add spinner
+    this.spinner.show().then((c) => {
+      setTimeout(() => {
+        if (this.fetchOrdersForm.invalid) {
+          this.isFetchOrders = false;
+          this.spinner.hide().then();
+          return;
         }
-      }
-    );
+
+        // Load orders by date if the date has any orders
+        this.orderService
+          .getOrdersByDate(this.fetchOrdersForm.value.date)
+          .then((ordersData: IOrdersResponse) => {
+            this.isFetchOrders = true;
+            if (ordersData?.orders?.length > 0) {
+              this.orders = ordersData.orders;
+            } else {
+              this.orders = [];
+            }
+
+            if (ordersData === undefined) this.isFetchOrders = false;
+          });
+        // Hide spinner after 1 second either success response or error response is happened
+        this.spinner.hide().then();
+      }, 1000);
+    });
+
+    // this.fetchOrdersForm.reset();
   }
 
   // TODO status change functionality
@@ -55,12 +73,12 @@ export class OrdersByDateComponent implements OnInit {
     this.statusData = { id, status };
     console.log(this.statusData);
 
-    this.orderService.updateOrderStatus(id, status).then(
-      (order: IOrderResponse) => {
+    this.orderService
+      .updateOrderStatus(id, status)
+      .then((order: IOrderResponse) => {
         if (order?.success) {
-          // 
+          //
         }
-      }
-    );
+      });
   }
 }

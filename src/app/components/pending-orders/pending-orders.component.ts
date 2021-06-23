@@ -34,8 +34,9 @@ export class PendingOrdersComponent implements OnInit {
         .getPendingOrders()
         .then((ordersData: IOrdersResponse) => {
           console.log(ordersData.orders);
-          this.orders = ordersData.orders;
+          
           setTimeout(() => {
+            this.orders = ordersData.orders;
             this.spinner.hide().then();
           }, 1000);
         });

@@ -5,3 +5,10 @@
     margin-bottom: 20px;
     margin-top: -10px;
 }
+
+.empty-section {
+    display: flex;
+    justify-content: center;
+    min-height: 25vh;
+    align-items: center;
+}
