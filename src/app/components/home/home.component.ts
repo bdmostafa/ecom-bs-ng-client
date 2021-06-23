@@ -1,4 +1,3 @@
-import { ServerResponse } from './../../models/product.model';
 import { Router } from '@angular/router';
 import {
   IProductsResponse,
@@ -6,7 +5,7 @@ import {
 } from './../../services/product.service';
 import { Component, OnInit } from '@angular/core';
 import { IProduct } from 'src/app/models/product.model';
-import { CartService } from 'src/app/services/cart.service';
+import _ from 'lodash';
 
 @Component({
   selector: 'app-home',
@@ -18,17 +17,15 @@ export class HomeComponent implements OnInit {
   isCategory: boolean = false;
   isProduct: boolean = true;
 
-  constructor(private productService: ProductService, private router: Router) {}
+  constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
     this.productService
       .getProducts()
       .subscribe((prodData: IProductsResponse) => {
-        this.products = prodData.products;
+        this.products = _.shuffle(prodData.products);
         console.log(this.products);
       });
-
-      console.log(this.router.url)
   }
 
   selectCategory() {
