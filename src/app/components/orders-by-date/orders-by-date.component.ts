@@ -68,17 +68,23 @@ export class OrdersByDateComponent implements OnInit {
     // this.fetchOrdersForm.reset();
   }
 
-  // TODO status change functionality
   updateStatus(id: string, status: string) {
     this.statusData = { id, status };
     console.log(this.statusData);
 
-    this.orderService
-      .updateOrderStatus(id, status)
-      .then((order: IOrderResponse) => {
-        if (order?.success) {
-          //
-        }
-      });
+    // Add spinner
+    this.spinner.show().then((c) => {
+      this.orderService
+        .updateOrderStatus(id, status)
+        .then((order: IOrderResponse) => {
+          if (order.success) {
+            // console.log(order)
+          }
+        });
+    });
+    // Hide spinner
+    setTimeout(() => {
+      this.spinner.hide().then();
+    }, 1000);
   }
 }

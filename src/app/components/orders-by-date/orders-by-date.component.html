@@ -11,28 +11,28 @@
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1>Enter a valid date format</h1>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item">
-              <a [routerLink]="['/admin/dashboard']">Home</a>
-            </li>
-            <li class="breadcrumb-item active">Orders By date</li>
-          </ol>
-        </div>
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Enter a valid date format</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item">
+            <a [routerLink]="['/admin/dashboard']">Home</a>
+          </li>
+          <li class="breadcrumb-item active">Orders By date</li>
+        </ol>
       </div>
     </div>
-    <!-- /.container-fluid -->
-  </section>
-  
-  <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
-        <div class="row">
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
       <div class="col-12">
         <div class="input-date">
           <!-- Reactive Model Form -->
@@ -67,9 +67,7 @@
               </button>
               <span
                 class="text-danger"
-                *ngIf="
-                  date.invalid && date.touched && date.errors?.required
-                "
+                *ngIf="date.invalid && date.touched && date.errors?.required"
               >
                 Date is required
               </span>
@@ -78,130 +76,115 @@
         </div>
       </div>
     </div>
-      <div class="row">
-        <div class="col-12">
-          <!-- Editable table -->
-          <div *ngIf="orders?.length" class="card">
-            <div class="card-body">
-              <div id="table" class="table-editable">
-                <table
-                  class="
-                    table table-bordered table-responsive-md table-striped
-                    text-center
-                  "
-                >
-                  <tr>
-                    <th class="text-center">#No.</th>
-                    <th class="text-center">Order Id</th>
-                    <th class="text-center">Customer Name</th>
-                    <th class="text-center">
-                      Products
-                      <tr>
-                        <th>#No.</th>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>price</th>
-                        <th>quantity</th>
-                      </tr>
-                    </th>
-                    <th class="text-center">Date</th>
-                    <th class="text-center">Status</th>
-                    <th class="text-center">Update</th>
-                  </tr>
-                  <tr *ngFor="let order of orders; let idx = index">
-                    <td>
-                      <span>{{ idx + 1 }}</span>
-                    </td>
-                    <td>
-                      <span>{{ order?._id }}</span>
-                    </td>
-                    <td>
-                      <span>{{ order?.customer?.name }}</span>
-                    </td>
-                    <td>
-                      <tr *ngFor="let p of order.productOrdered; let idx = index">
-                        <td>
-                          <span>{{ idx + 1 }} </span>
-                        </td>
-                        <td class="w-25">
-                          <span
-                            ><img
-                              [src]="p.product.image"
-                              class="w-25 rounded img-thumbnail"
-                            />
-                          </span>
-                        </td>
-                        <td>
-                          <span>{{ p.product.title.slice(0, 25) }} </span>
-                        </td>
-                        <td>
-                          <span>{{ p.product.price | currency: 'USD' }} </span>
-                        </td>
-                        <td>
-                          <span>{{ p.quantity }} </span>
-                        </td>
-                      </tr>
-                    </td>
-                    <td>
-                      <span>{{ order.date | date }}</span>
-                    </td>
-                    <td>
-                      <span>{{ order.status | titlecase }}</span>
-                    </td>
-                    <td>
-                      <span>
-                        <!-- TODO Status change functionality -->
-                        <!-- <div ngbDropdown class="d-inline-block" >
-                          <button
-                            class="btn btn-outline-primary"
-                            id="dropdownBasic1"
-                            ngbDropdownToggle
-                          >
-                            {{ order.status | titlecase }}
-                          </button>
-                          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <button ngbDropdownItem>Pending</button>
-                            <button ngbDropdownItem>Approved</button>
-                            <button ngbDropdownItem>Delivered</button>
-                          </div>
-                        </div> -->
-                      
-                      <select
-                            class="form-control"
-                            name="status"
-                            (change)="updateStatus(order._id, $event.target.value)"
-                            [(ngModel)]="status"
-                            required
-                          >
-                            <option [value]="status" *ngFor="let status of statusList">
-                              {{ status }}
-                              <!-- <ng-container *ngFor="let s of statusData">
-                                {{ s.id === order._id ? s.status : order.status }}
-                              </ng-container> -->
-                            </option>
-                          </select>
+    <div class="row">
+      <div class="col-12">
+        <!-- Editable table -->
+        <div *ngIf="orders?.length" class="card">
+          <div class="card-body">
+            <div id="table" class="table-editable">
+              <table
+                class="
+                  table table-bordered table-responsive-md table-striped
+                  text-center
+                "
+              >
+                <tr>
+                  <th class="text-center">#No.</th>
+                  <th class="text-center">Order Id</th>
+                  <th class="text-center">Customer Name</th>
+                  <th class="text-center">
+                    Products
+                    <tr>
+                      <th>#No.</th>
+                      <th>Image</th>
+                      <th>Name</th>
+                      <th>price</th>
+                      <th>quantity</th>
+                    </tr>
+                  </th>
+                  <th class="text-center">Date</th>
+                  <th class="text-center">Status</th>
+                  <th class="text-center">Update</th>
+                </tr>
+                <tr *ngFor="let order of orders; let idx = index">
+                  <td>
+                    <span>{{ idx + 1 }}</span>
+                  </td>
+                  <td>
+                    <span>{{ order?._id }}</span>
+                  </td>
+                  <td>
+                    <span>{{ order?.customer?.name }}</span>
+                  </td>
+                  <td>
+                    <tr *ngFor="let p of order.productOrdered; let idx = index">
+                      <td>
+                        <span>{{ idx + 1 }} </span>
+                      </td>
+                      <td class="w-25">
+                        <span
+                          ><img
+                            [src]="p.product.image"
+                            class="w-25 rounded img-thumbnail"
+                          />
                         </span>
-                    </td>
-                  </tr>
-                </table>
-              </div>
+                      </td>
+                      <td>
+                        <span>{{ p.product.title.slice(0, 25) }} </span>
+                      </td>
+                      <td>
+                        <span>{{ p.product.price | currency: "USD" }} </span>
+                      </td>
+                      <td>
+                        <span>{{ p.quantity }} </span>
+                      </td>
+                    </tr>
+                  </td>
+                  <td>
+                    <span>{{ order.date | date }}</span>
+                  </td>
+                  <td>
+                    <span>{{ order.status | titlecase }}</span>
+                  </td>
+                  <td>
+                    <span>
+                      <select
+                        #selectStatus
+                        (change)="updateStatus(order._id, selectStatus.value)"
+                      >
+                        <option value="Select Status" hidden>
+                          Select Status
+                        </option>
+                        <ng-container *ngFor="let status of statusList">
+                          <option value="{{ status }}" [ngValue]="status">
+                            {{ status }}
+                          </option>
+                        </ng-container>
+                      </select>
+                    </span>
+                  </td>
+                </tr>
+              </table>
             </div>
           </div>
-          <!-- Editable table -->
-          <!-- Empty Message start -->
+        </div>
+        <!-- Editable table -->
+        <!-- Empty Message start -->
         <div class="empty-section" *ngIf="!orders?.length && isFetchOrders">
           <h2>Orders of {{ date.value }} are empty now.</h2>
         </div>
         <div class="empty-section" *ngIf="!isFetchOrders">
-          <h2>Please input a valid date format <strong> (yyyy-MM-dd) </strong>  to fetch the orders of the date</h2>
+          <h2>
+            Please input a valid date format <strong> (yyyy-MM-dd) </strong> to
+            fetch the orders of the date
+          </h2>
         </div>
         <!-- Empty Message end -->
-        </div>
-        <!-- /.col -->
       </div>
-      <!-- /.row -->
+      <!-- /.col -->
     </div>
-    <!-- /.container-fluid -->
-  </section>
-  <!-- /.content -->
-  
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
