@@ -1,0 +1,11 @@
+.card-body .price-section {
+    color: red !important;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.card-body .product-available {
+    color: red !important;
+    font-weight: normal;
+}
