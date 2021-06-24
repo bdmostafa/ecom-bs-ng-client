@@ -88,7 +88,7 @@ export class UserComponent implements OnInit {
       // console.log(ordersData.orders);
       this.userOrderData$.next(ordersData.orders);
       this.userOrderData = ordersData.orders;
-      console.log(this.userOrderData);
+      // console.log(this.userOrderData);
     });
 
     console.log(this.myUser)
@@ -133,7 +133,7 @@ export class UserComponent implements OnInit {
         orders.productOrdered.forEach((products: any) => {
           const subTotal: number = products?.product?.price * products?.quantity;
           total = Number(total + subTotal);
-          console.log(total);
+          // console.log(total);
         });
       });
       return total;

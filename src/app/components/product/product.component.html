@@ -75,7 +75,7 @@
               <i class="fa fa-star"></i>
               <i class="fa fa-star-o"></i>
             </div>
-            <a class="review-link" href="#">10 Review(s) | Add your review</a>
+            <a class="review-link" href="/">10 Review(s) | Add your review</a>
           </div>
           <div>
             <h3 class="product-price">{{ product?.price | currency: "USD" }}</h3>
@@ -128,33 +128,36 @@
 
           <ul class="product-btns">
             <li>
-              <a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a>
+              <a href="/"><i class="fa fa-heart-o"></i> add to wishlist</a>
             </li>
             <li>
-              <a href="#"><i class="fa fa-exchange"></i> add to compare</a>
+              <a href="/"><i class="fa fa-exchange"></i> add to compare</a>
             </li>
           </ul>
 
           <ul class="product-links">
             <li>Category:</li>
             <li>
-              <a href="#">{{ product?.category }}</a>
+              <a [routerLink]="['/products/category/' + product?.category]" >{{ product?.category }}</a>
             </li>
           </ul>
 
           <ul class="product-links">
             <li>Share:</li>
             <li>
-              <a href="#"><i class="fa fa-facebook"></i></a>
+              <a [routerLink]="['http://facebook.com']"><i class="fab fa-facebook-f"></i></a>
             </li>
             <li>
-              <a href="#"><i class="fa fa-twitter"></i></a>
+              <a [routerLink]="['http://twitter.com']"><i class="fab fa-twitter"></i></a>
             </li>
             <li>
-              <a href="#"><i class="fa fa-google-plus"></i></a>
+              <a [routerLink]="['http://youtube.com']"><i class="fab fa-youtube"></i></a>
             </li>
             <li>
-              <a href="#"><i class="fa fa-envelope"></i></a>
+              <a [routerLink]="['http://pinterest.com']"><i class="fab fa-pinterest"></i></a>
+            </li>
+            <li>
+              <a [routerLink]="['http://instagram.com']"><i class="fab fa-instagram"></i></a>
             </li>
           </ul>
         </div>
@@ -195,7 +198,7 @@
             <div class="product-body">
               <p class="product-category">{{ product?.category }}</p>
               <h3 class="product-name">
-                <a href="#">{{ product?.title }}</a>
+                <a href="/">{{ product?.title }}</a>
               </h3>
               <h4 class="product-price">
                 {{ product?.price | currency: "USD" }}
@@ -253,16 +256,16 @@
           </form>
           <ul class="newsletter-follow">
             <li>
-              <a href="#"><i class="fa fa-facebook"></i></a>
+              <a href="/"><i class="fa fa-facebook"></i></a>
             </li>
             <li>
-              <a href="#"><i class="fa fa-twitter"></i></a>
+              <a href="/"><i class="fa fa-twitter"></i></a>
             </li>
             <li>
-              <a href="#"><i class="fa fa-instagram"></i></a>
+              <a href="/"><i class="fa fa-instagram"></i></a>
             </li>
             <li>
-              <a href="#"><i class="fa fa-pinterest"></i></a>
+              <a href="/"><i class="fa fa-pinterest"></i></a>
             </li>
           </ul>
         </div>
