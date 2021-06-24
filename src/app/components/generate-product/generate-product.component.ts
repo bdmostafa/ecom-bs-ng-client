@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { IProductsResponse, ProductService } from 'src/app/services/product.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import {
+  IProductsResponse,
+  ProductService,
+} from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-generate-product',
@@ -10,7 +13,7 @@ import { IProductsResponse, ProductService } from 'src/app/services/product.serv
 })
 export class GenerateProductComponent implements OnInit {
   constructor(
-    private toastr: ToastrService,
+    private spinner: NgxSpinnerService,
     private router: Router,
     private productService: ProductService
   ) {}
@@ -18,12 +21,26 @@ export class GenerateProductComponent implements OnInit {
   ngOnInit(): void {}
 
   generateProducts() {
-    this.productService.generateProductsByThirdParty().subscribe(
-      (prodData: IProductsResponse) => {
-        if (prodData.products.length > 0) {
-          // console.log(prodData.products)
-        }
-      }
-    );
+    // Add spinner
+    this.spinner.show().then((c) => {
+      setTimeout(() => {
+        this.productService
+          .generateProductsByThirdParty()
+          .subscribe((prodData: IProductsResponse) => {
+            if (prodData.products.length > 0) {
+              // console.log(prodData.products)
+            }
+          });
+
+        // Hide spinner
+        this.spinner.hide().then();
+      }, 1000);
+    });
+
+    setTimeout(() => {
+      // Hide spinner from here while API error response issue
+      this.spinner.hide().then();
+      this.router.navigateByUrl('/admin/dashboard');
+    }, 1000);
   }
 }
