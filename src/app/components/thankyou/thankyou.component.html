@@ -2,16 +2,27 @@
   <div class="row">
     <div class="col-md-12" id="tableOrderData">
       <div class="jumbotron text-center">
-        <h1 class="display-3">Congratulations!!!</h1>
+        <h1 class="display-3">Congratulations... {{ customer.name | titlecase }} !!!</h1>
         <p class="lead">
           <!-- TODO SENDING EMAIL CONFIRMATION -->
           <strong>Please check your email</strong> for order confirmation copy.
         </p>
+        <p class="lead">
+          Or <strong>Download your order copy as PDF</strong> for future communication.
+        </p>
         <hr />
-        <p></p>
-
         <p>
           Your Order Id : <strong>{{ orderId }}</strong>
+        </p>
+        <hr />
+        <p class="customer-info">
+          Customer Id : <strong>{{ customer?._id }}</strong>
+        </p>
+        <p class="customer-info">
+          Customer Name : <strong>{{ customer?.name }}</strong>
+        </p>
+        <p class="customer-info">
+          Customer Email : <strong>{{ customer?.email }}</strong>
         </p>
       </div>
 
@@ -33,16 +44,16 @@
           <tr *ngFor="let p of productOrdered">
             <td>
               <img
-                [src]="p.product.image"
-                alt="{{ p.product.title }}"
+                [src]="p?.product?.image"
+                alt="{{ p?.product?.title }}"
                 class="img-thumbnail border: none"
                 width="100px"
               />
             </td>
-            <td>{{ p.product.title }}</td>
-            <td>{{ p.product.price | currency: "USD" }}</td>
-            <td>{{ p.quantity }}</td>
-            <td>{{ p.quantity * p.product.price | currency: "USD" }}</td>
+            <td>{{ p?.product?.title }}</td>
+            <td>{{ p?.product?.price | currency: "USD" }}</td>
+            <td>{{ p?.quantity }}</td>
+            <td>{{ p?.quantity * p?.product?.price | currency: "USD" }}</td>
           </tr>
 
           <tr class="border-0 font-weight-bold">

@@ -76,6 +76,8 @@ export class ToastrInterceptor implements HttpInterceptor {
         break;
       case 'All Products':
         break;
+      case 'Payment Status':
+        break;
       default:
         // Success notification with ToastrService
         this.toastr.success(evt.body.success.message, evt.body.success.title, {

@@ -13,6 +13,7 @@ export class ThankyouComponent implements OnInit {
 
   @ViewChild('tableOrderData') htmlData:ElementRef;
 
+  customer: ICustomer;
   orderId: string;
   productOrdered: IProductOrderedResponse[];
   cartTotal: number;
@@ -24,13 +25,15 @@ export class ThankyouComponent implements OnInit {
     console.log(navigation.extras);
     const state = navigation.extras.state as {
       order: {
+        _id: string;
+        customer: ICustomer;
         message: string;
         productOrdered: IProductOrderedResponse[];
-        _id: string;
       };
       totalPrice: number;
     };
 
+    this.customer = state.order.customer;
     this.message = state.order.message;
     this.productOrdered = state.order.productOrdered;
     this.orderId = state.order._id;
@@ -69,4 +72,10 @@ interface IProductOrderedResponse {
     image: string;
   };
   quantity: number;
+}
+
+interface ICustomer {
+  name: string;
+  email: string;
+  _id: string;
 }

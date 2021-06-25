@@ -21,13 +21,15 @@ export class JwtInterceptor implements HttpInterceptor {
     let token = localStorage.getItem('jwt');
 
     if (currentUser && token !== undefined) {
-      request = request.clone({
+      const cloned = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
         },
+        withCredentials: true,
       });
+      return next.handle(cloned);
+    } else {
+      return next.handle(request);
     }
-
-    return next.handle(request);
   }
 }

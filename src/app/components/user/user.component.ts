@@ -86,8 +86,8 @@ export class UserComponent implements OnInit {
     // Load user orders if he/she has any orders
     this.orderService.getMyOrders().then((ordersData: IOrdersResponse) => {
       // console.log(ordersData.orders);
-      this.userOrderData$.next(ordersData.orders);
-      this.userOrderData = ordersData.orders;
+      this.userOrderData$.next(ordersData?.orders);
+      this.userOrderData = ordersData?.orders;
       // console.log(this.userOrderData);
     });
 

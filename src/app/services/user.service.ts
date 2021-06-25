@@ -10,7 +10,6 @@ import {
   FacebookLoginProvider,
 } from 'angularx-social-login';
 import { HttpClient } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -60,6 +59,7 @@ export class UserService {
           this.userData$.next(data.user);
 
           const jwt: string = this.cookies.get('auth');
+
           localStorage.setItem('jwt', jwt);
           localStorage.setItem('loginStatus', '1');
           localStorage.setItem('userData', JSON.stringify(data.user));
