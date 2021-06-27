@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  SERVER_URL: 'http://localhost:5000'
-  // SERVER_URL: 'https://ecombs.herokuapp.com'
+  // SERVER_URL: 'http://localhost:5000'
+  SERVER_URL: 'https://ecombs.herokuapp.com'
 };
 
 /*
