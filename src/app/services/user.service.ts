@@ -52,15 +52,15 @@ export class UserService {
   //  Login User with Email and Password
   loginUser(email: string, password: string) {
     this.http
-      .post(`${this.SERVER_URL}/users/login`, { email, password })
-      .subscribe((data: IUserResponse) => {
+      .post<ILoginResponse>(`${this.SERVER_URL}/users/login`, { email, password })
+      .subscribe((data: ILoginResponse) => {
         if (data.success) {
           this.authState$.next(true);
           this.userData$.next(data.user);
 
-          const jwt: string = this.cookies.get('auth');
+          // const jwt: string = this.cookies.get('auth');
 
-          localStorage.setItem('jwt', jwt);
+          localStorage.setItem('jwt', data.token);
           localStorage.setItem('loginStatus', '1');
           localStorage.setItem('userData', JSON.stringify(data.user));
         }
@@ -132,7 +132,8 @@ export class UserService {
     if (loginCookie === '1') {
       if (
         localStorage.getItem('jwt') === null ||
-        localStorage.getItem('jwt') === undefined
+        localStorage.getItem('jwt') === undefined ||
+        localStorage.getItem('jwt') === ''
       ) {
         return false;
       }
@@ -140,7 +141,7 @@ export class UserService {
       // Get and Decode the Token
       const token = localStorage.getItem('jwt');
       const decoded: IDecodedToken = jwt_decode(token);
-
+      
       // Check if the cookie is valid
       if (decoded.exp === undefined) {
         return false;
@@ -187,6 +188,15 @@ export interface IUserResponse {
 
 export interface IUsersResponse {
   users: IUser[];
+  success: {
+    title: string;
+    message: string;
+  };
+}
+
+export interface ILoginResponse {
+  user: IUser;
+  token: string;
   success: {
     title: string;
     message: string;
