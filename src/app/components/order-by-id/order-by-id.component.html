@@ -1,3 +1,14 @@
+<!-- ngx spinner -->
+<ngx-spinner
+  bdColor="rgba(151,149,149,0.4)"
+  size="large"
+  color="orange"
+  type="ball-clip-rotate-pulse"
+  fullScreen="true"
+>
+  <p style="font-size: 20px; color: black">Loading Order...</p>
+</ngx-spinner>
+
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <div class="container-fluid">
@@ -103,7 +114,9 @@
                     <span>{{ order?.customer?.name }}</span>
                   </td>
                   <td>
-                    <tr *ngFor="let p of order?.productOrdered; let idx = index">
+                    <tr
+                      *ngFor="let p of order?.productOrdered; let idx = index"
+                    >
                       <td>
                         <span>{{ idx + 1 }} </span>
                       </td>
@@ -134,20 +147,18 @@
                   </td>
                   <td>
                     <span>
-                      <!-- TODO Status change functionality -->
                       <select
-                        class="form-control"
-                        name="status"
-                        (change)="updateStatus(order._id, $event.target.value)"
-                        [(ngModel)]="status"
-                        required
+                        #selectStatus
+                        (change)="updateStatus(order._id, selectStatus.value)"
                       >
-                        <option
-                          [value]="status"
-                          *ngFor="let status of statusList"
-                        >
-                          {{ status }}
+                        <option value="Select Status" hidden>
+                          Select Status
                         </option>
+                        <ng-container *ngFor="let status of statusList">
+                          <option value="{{ status }}" [ngValue]="status">
+                            {{ status }}
+                          </option>
+                        </ng-container>
                       </select>
                     </span>
                   </td>

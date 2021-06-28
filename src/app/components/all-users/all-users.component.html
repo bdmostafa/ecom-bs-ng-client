@@ -19,7 +19,7 @@
 </section>
 
 <!-- Main content -->
-<section class="content">
+<section *ngIf="users?.length > 0" class="content">
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
@@ -331,3 +331,9 @@
   <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+
+<!-- Spinner button while loading all users -->
+<button *ngIf="users?.length <= 0" class="btn btn-primary btn-spinner" type="button" disabled>
+  <span class="spinner-border spinner-border-md mr-2" role="status" aria-hidden="true"></span>
+  Loading users...
+</button>

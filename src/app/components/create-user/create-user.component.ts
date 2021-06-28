@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import {
   IUserInput,
   IUserResponse,
@@ -22,7 +23,8 @@ export class CreateUserComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private spinner: NgxSpinnerService
   ) {
     this.userForm = fb.group(
       {
@@ -75,15 +77,25 @@ export class CreateUserComponent implements OnInit {
       role: 'user',
       password: this.password.value,
       confirmPassword: this.confirmPassword.value,
-    }
+    };
 
-    this.userService
-      .registerUser(formData)
-      .subscribe((response: IUserResponse) => {
-        console.log(response);
+    // Create products after spinner loading 1 second
+    this.spinner.show().then((c) => {
+      this.userService
+        .registerUser(formData)
+        .subscribe((response: IUserResponse) => {
+          console.log(response);
 
-        this.router.navigateByUrl('/admin/all-users');
-      });
+          setTimeout(() => {
+            this.spinner.hide().then();
+            this.router.navigateByUrl('/admin/all-users');
+          }, 1000);
+        });
+
+      setTimeout(() => {
+        this.spinner.hide().then();
+      }, 1000);
+    });
 
     this.userForm.reset();
   }

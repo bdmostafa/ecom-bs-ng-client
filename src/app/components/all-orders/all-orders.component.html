@@ -6,7 +6,7 @@
   type="ball-clip-rotate-pulse"
   fullScreen="true"
 >
-  <p style="font-size: 20px; color: black">Pending Orders...</p>
+  <p style="font-size: 20px; color: black">Updating Order...</p>
 </ngx-spinner>
 
 <!-- Content Header (Page header) -->
@@ -30,7 +30,7 @@
 </section>
 
 <!-- Main content -->
-<section class="content">
+<section *ngIf="orders?.length > 0" class="content">
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
@@ -133,3 +133,9 @@
   <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+
+<!-- Spinner button while loading all orders -->
+<button *ngIf="orders?.length <= 0" class="btn btn-primary btn-spinner" type="button" disabled>
+  <span class="spinner-border spinner-border-md mr-2" role="status" aria-hidden="true"></span>
+  Loading all orders...
+</button>

@@ -1,4 +1,4 @@
-<div class="card">
+<div *ngIf="products.length > 0" class="card">
   <div class="card-header">
     <h3 class="card-title">DataTable with default features</h3>
   </div>
@@ -477,3 +477,9 @@
   </div>
   <!-- /.card-body -->
 </div>
+
+<!-- Spinner button while loading all products -->
+<button *ngIf="products.length <= 0" class="btn btn-primary btn-spinner" type="button" disabled>
+  <span class="spinner-border spinner-border-md mr-2" role="status" aria-hidden="true"></span>
+  Loading products...
+</button>

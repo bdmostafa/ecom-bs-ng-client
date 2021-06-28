@@ -4,3 +4,13 @@
     min-height: 25vh;
     align-items: center;
 }
+
+.btn-spinner {
+    margin: 0 auto;
+    display: flex;
+    margin-top: 50px;
+    padding: 7px;
+    font-size: 16px;
+    justify-content: center;
+    align-items: center;
+}
