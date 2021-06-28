@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { IProduct } from 'src/app/models/product.model';
-import { IProductResponse, ProductService } from 'src/app/services/product.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import {
+  IProductInput,
+  IProductResponse,
+  ProductService,
+} from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-create-product',
@@ -15,7 +18,7 @@ export class CreateProductComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private toastr: ToastrService,
+    private spinner: NgxSpinnerService,
     private router: Router,
     private fb: FormBuilder
   ) {
@@ -61,14 +64,26 @@ export class CreateProductComponent implements OnInit {
       return;
     }
 
-    // @ts-ignore
-    this.productService.createProduct({ ...this.productForm.value }).subscribe(
-      (response: IProductResponse) => {
-        console.log(response.product);
+    let formData: IProductInput = this.productForm.value;
+    
+    // Create products after spinner loading 1 second
+    this.spinner.show().then((c) => {
+      // @ts-ignore
+      this.productService
+        .createProduct(formData)
+        .subscribe((response: IProductResponse) => {
+          console.log(response.product);
 
-        this.router.navigateByUrl('/admin/dashboard');
-      }
-    );
+          setTimeout(() => {
+            this.spinner.hide().then();
+            this.router.navigateByUrl('/admin/dashboard');
+          }, 1000);
+        });
+
+      setTimeout(() => {
+        this.spinner.hide().then();
+      }, 1000);
+    });
 
     this.productForm.reset();
   }
