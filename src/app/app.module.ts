@@ -53,6 +53,7 @@ import { AllProductsComponent } from './components/admin-dashboard/all-products/
 import { ProductsComponent } from './components/home/products/products.component';
 import { CategoryProductsComponent } from './components/home/category-products/category-products.component';
 import { CallToActionComponent } from './components/home/call-to-action/call-to-action.component';
+import { NavigationComponent } from './components/home/navigation/navigation.component';
 
 // const config = new AuthServiceConfig([
 //   {
@@ -102,6 +103,7 @@ import { CallToActionComponent } from './components/home/call-to-action/call-to-
     ProductsComponent,
     CategoryProductsComponent,
     CallToActionComponent,
+    NavigationComponent,
   ],
   imports: [
     BrowserModule,

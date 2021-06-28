@@ -1,0 +1,49 @@
+<!-- NAVIGATION -->
+<nav id="navigation">
+    <!-- container -->
+    <div class="container">
+      <!-- responsive-nav -->
+      <div id="responsive-nav">
+        <!-- NAV -->
+        <ul class="main-nav nav h2">
+          <li>
+            <a
+              [routerLink]="['/']"
+              (click)="selectHome()"
+              routerLinkActive="router-link-active"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              [routerLink]="['/']"
+              routerLinkActive="router-link-active"
+              (click)="selectCategory()"
+              >Categories</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="['/']" routerLinkActive="router-link-active"
+              >Hot Deals</a
+            >
+          </li>
+          <li>
+            <a
+              [routerLink]="['/contact-us']"
+              routerLinkActive="router-link-active"
+              >Contact Us</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="['/blog']" routerLinkActive="router-link-active"
+              >Blog</a
+            >
+          </li>
+        </ul>
+        <!-- /NAV -->
+      </div>
+      <!-- /responsive-nav -->
+    </div>
+    <!-- /container -->
+  </nav>
+  <!-- /NAVIGATION -->

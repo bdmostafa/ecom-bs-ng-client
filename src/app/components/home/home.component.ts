@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import {
   IProductsResponse,
   ProductService,
@@ -15,7 +14,7 @@ import _ from 'lodash';
 export class HomeComponent implements OnInit {
   products: IProduct[] = [];
   isCategory: boolean = false;
-  isProduct: boolean = true;
+  isHome: boolean = true;
 
   constructor(private productService: ProductService) {}
 
@@ -28,13 +27,11 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  selectCategory() {
-    this.isCategory = true;
-    this.isProduct = false;
+  selectCategory(e) {
+    this.isCategory = e;
   }
 
-  selectHome() {
-    this.isProduct = true;
-    this.isCategory = false;
+  selectHome(e) {
+    this.isHome = e;
   }
 }
