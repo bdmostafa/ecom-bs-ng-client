@@ -1,0 +1,41 @@
+<!-- SECTION -->
+<div class="section">
+  <!-- container -->
+  <div class="container">
+    <!-- row -->
+    <div class="row">
+      <!-- shop -->
+      <ng-container
+        *ngFor="
+          let product of products | uniqueFilter: 'category';
+          let i = index
+        "
+      >
+        <div class="col-md-4 col-xs-6" *ngIf="i <= 2">
+          <div class="shop">
+            <div class="shop-img">
+              <img
+                [src]="product.image"
+                alt="{{ product.title }}"
+                width="200px"
+                height="250px"
+              />
+            </div>
+            <div class="shop-body">
+              <h3>{{ product?.category }}<br />Collection</h3>
+              <a
+                [routerLink]="['/products/category/' + product?.category]"
+                class="cta-btn"
+                >Shop now <i class="fa fa-arrow-circle-right"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <!-- /shop -->
+    </div>
+    <!-- /row -->
+  </div>
+  <!-- /container -->
+</div>
+<!-- /SECTION -->
