@@ -6,43 +6,8 @@
 
 <app-category-products *ngIf="isCategory"  [products]="products"></app-category-products>
 
-<!-- NEWSLETTER -->
-<div id="newsletter" class="section">
-  <!-- container -->
-  <div class="container">
-    <!-- row -->
-    <div class="row">
-      <div class="col-md-12">
-        <div class="newsletter">
-          <p>Sign Up for the <strong>NEWSLETTER</strong></p>
-          <form>
-            <input class="input" type="email" placeholder="Enter Your Email" />
-            <button class="newsletter-btn">
-              <i class="fa fa-envelope"></i> Subscribe
-            </button>
-          </form>
-          <ul class="newsletter-follow">
-            <li>
-              <a [routerLink]="['http://facebook.com']"><i class="fab fa-facebook-f"></i></a>
-            </li>
-            <li>
-              <a [routerLink]="['http://twitter.com']"><i class="fab fa-twitter"></i></a>
-            </li>
-            <li>
-              <a [routerLink]="['http://youtube.com']"><i class="fab fa-youtube"></i></a>
-            </li>
-            <li>
-              <a [routerLink]="['http://pinterest.com']"><i class="fab fa-pinterest"></i></a>
-            </li>
-            <li>
-              <a [routerLink]="['http://instagram.com']"><i class="fab fa-instagram"></i></a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <!-- /row -->
-  </div>
-  <!-- /container -->
-</div>
-<!-- /NEWSLETTER -->
+<app-hot-deals *ngIf="isHome"></app-hot-deals>
+
+<app-top-selling *ngIf="isHome"></app-top-selling>
+
+<app-newsletter></app-newsletter>

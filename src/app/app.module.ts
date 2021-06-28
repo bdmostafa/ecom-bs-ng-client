@@ -54,6 +54,9 @@ import { ProductsComponent } from './components/home/products/products.component
 import { CategoryProductsComponent } from './components/home/category-products/category-products.component';
 import { CallToActionComponent } from './components/home/call-to-action/call-to-action.component';
 import { NavigationComponent } from './components/home/navigation/navigation.component';
+import { NewsletterComponent } from './components/home/newsletter/newsletter.component';
+import { HotDealsComponent } from './components/home/hot-deals/hot-deals.component';
+import { TopSellingComponent } from './components/home/top-selling/top-selling.component';
 
 // const config = new AuthServiceConfig([
 //   {
@@ -104,6 +107,9 @@ import { NavigationComponent } from './components/home/navigation/navigation.com
     CategoryProductsComponent,
     CallToActionComponent,
     NavigationComponent,
+    NewsletterComponent,
+    HotDealsComponent,
+    TopSellingComponent,
   ],
   imports: [
     BrowserModule,
