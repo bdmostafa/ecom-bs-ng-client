@@ -52,6 +52,7 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { AllProductsComponent } from './components/admin-dashboard/all-products/all-products.component';
 import { ProductsComponent } from './components/home/products/products.component';
 import { CategoryProductsComponent } from './components/home/category-products/category-products.component';
+import { CallToActionComponent } from './components/home/call-to-action/call-to-action.component';
 
 // const config = new AuthServiceConfig([
 //   {
@@ -100,6 +101,7 @@ import { CategoryProductsComponent } from './components/home/category-products/c
     AllProductsComponent,
     ProductsComponent,
     CategoryProductsComponent,
+    CallToActionComponent,
   ],
   imports: [
     BrowserModule,

@@ -48,6 +48,8 @@
 </nav>
 <!-- /NAVIGATION -->
 
+<app-call-to-action *ngIf="isProduct" [products]="products"></app-call-to-action>
+
 <app-products *ngIf="isProduct" [products]="products"></app-products>
 <app-category-products
   *ngIf="isCategory"
