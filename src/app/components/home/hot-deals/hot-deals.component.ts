@@ -1,16 +1,66 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-hot-deals',
   templateUrl: './hot-deals.component.html',
-  styleUrls: ['./hot-deals.component.css']
+  styleUrls: ['./hot-deals.component.css'],
 })
 export class HotDealsComponent implements OnInit {
+  private subscription: Subscription;
 
-  constructor() { }
+  public toDay = moment(new Date());
+  public fromDay = moment(new Date()).add(2, 'd');
 
-  ngOnInit(): void {
+  milliSecondsInASecond = 1000;
+  hoursInADay = 24;
+  minutesInAnHour = 60;
+  SecondsInAMinute = 60;
+
+  public duration;
+  public secondsToDday;
+  public minutesToDday;
+  public hoursToDday;
+  public daysToDday;
+
+  private getTimeDifference() {
+    this.duration = moment.duration(this.fromDay.diff(moment(new Date())));
+
+    this.allocateTimeUnits(this.duration);
   }
 
-  // TODO timer functionality
+  private allocateTimeUnits(duration) {
+    this.secondsToDday = Math.floor(
+      (duration / this.milliSecondsInASecond) % this.SecondsInAMinute
+    );
+    this.minutesToDday = Math.floor(
+      (duration / (this.milliSecondsInASecond * this.minutesInAnHour)) %
+        this.SecondsInAMinute
+    );
+    this.hoursToDday = Math.floor(
+      (duration /
+        (this.milliSecondsInASecond *
+          this.minutesInAnHour *
+          this.SecondsInAMinute)) %
+        this.hoursInADay
+    );
+    this.daysToDday = Math.floor(
+      duration /
+        (this.milliSecondsInASecond *
+          this.minutesInAnHour *
+          this.SecondsInAMinute *
+          this.hoursInADay)
+    );
+  }
+
+  ngOnInit() {
+    this.subscription = interval(1000).subscribe((x) => {
+      this.getTimeDifference();
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }
