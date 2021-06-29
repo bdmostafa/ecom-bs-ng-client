@@ -12,4 +12,5 @@ export class HotDealsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // TODO timer functionality
 }

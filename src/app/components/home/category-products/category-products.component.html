@@ -33,11 +33,14 @@
                   height="300px"
                   class="card-img-top"
                   style="cursor: pointer"
-                  (click)="selectProduct(product._id)"
+                  [routerLink]="['products', product._id]"
                 />
-                <div class="card-header">
-                  <div class="card-title">
-                    <h2> {{ product.title.substr(0, 50) | uppercase }} </h2>
+                <div style="cursor: pointer" class="card-header">
+                  <div
+                    class="card-title"
+                    [routerLink]="['products', product._id]"
+                  >
+                    <h2>{{ product.title.substr(0, 50) | uppercase }}</h2>
                   </div>
                 </div>
                 <div class="card-body pb-0">
@@ -64,9 +67,7 @@
                     </span>
                     <span>
                       <strong>Category:</strong>
-                      <a
-                        [routerLink]="['products/category/' + product.category]"
-                      >
+                      <a [routerLink]="['products/category', product.category]">
                         {{ product.category }}
                       </a>
                     </span>

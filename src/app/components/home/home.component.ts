@@ -1,3 +1,4 @@
+import { CartService } from './../../services/cart.service';
 import {
   IProductsResponse,
   ProductService,
@@ -16,22 +17,41 @@ export class HomeComponent implements OnInit {
   isCategory: boolean = false;
   isHome: boolean = true;
 
-  constructor(private productService: ProductService) {}
+  ascProducts: IProduct[];
+
+  constructor(private productService: ProductService, private cartService: CartService) {}
 
   ngOnInit(): void {
     this.productService
       .getProducts()
       .subscribe((prodData: IProductsResponse) => {
+        this.ascProducts = prodData.products;
+
         this.products = _.shuffle(prodData.products);
-        console.log(this.products);
+
+        console.log('products==', this.products);
+
+        // Sort products by price in ascending order:
+        this.ascProducts?.length &&
+          this.ascProducts.sort((a, b) => a.price - b.price);
       });
   }
 
-  selectCategory(e) {
+  selectCategory(e: boolean) {
     this.isCategory = e;
   }
 
-  selectHome(e) {
+  selectHome(e: boolean) {
     this.isHome = e;
+  }
+
+  addToCart(id: string) {
+    this.cartService.addToCart(id);
+  }
+
+  notifyEmpty(product: string) {
+    alert(
+      `Oops! The product ${product} is out of stock now. Please stay updated with us.`
+    );
   }
 }

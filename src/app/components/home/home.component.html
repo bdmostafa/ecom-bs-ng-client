@@ -1,20 +1,47 @@
-<app-navigation (setCategory)="selectCategory($event)" (setHome)="selectHome($event)"></app-navigation>
+<app-navigation
+  (setCategory)="selectCategory($event)"
+  (setHome)="selectHome($event)"
+></app-navigation>
 
-<app-call-to-action *ngIf="isHome && products?.length" [products]="products"></app-call-to-action>
+<app-call-to-action
+  *ngIf="isHome && products?.length"
+  [products]="products"
+></app-call-to-action>
 
-<app-products *ngIf="isHome && products?.length" [products]="products"></app-products>
+<app-products
+  *ngIf="isHome && products?.length"
+  [products]="products"
+  (addToCartEvent)="addToCart($event)"
+  (notifyEmptyEvent)="notifyEmpty($event)"
+></app-products>
 
-<app-category-products *ngIf="isCategory && products?.length"  [products]="products"></app-category-products>
+<app-category-products
+  *ngIf="isCategory && products?.length"
+  [products]="products"
+  (addToCartEvent)="addToCart($event)"
+  (notifyEmptyEvent)="notifyEmpty($event)"
+></app-category-products>
 
 <!-- Spinner button while loading all products -->
-<button *ngIf="products?.length <= 0" class="btn btn-primary btn-spinner" type="button" disabled>
-  <span class="spinner-border spinner-border-md mr-2" role="status" aria-hidden="true"></span>
+<button
+  *ngIf="products?.length <= 0"
+  class="btn btn-primary btn-spinner"
+  type="button"
+  disabled
+>
+  <span
+    class="spinner-border spinner-border-md mr-2"
+    role="status"
+    aria-hidden="true"
+  ></span>
   Loading Products...
 </button>
 
 <app-hot-deals *ngIf="isHome && products?.length"></app-hot-deals>
 
-<app-top-selling *ngIf="isHome && products?.length"></app-top-selling>
+<app-top-selling
+  *ngIf="isHome && products?.length"
+  [ascProducts]="ascProducts"
+></app-top-selling>
 
 <app-newsletter></app-newsletter>
-

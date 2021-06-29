@@ -6,9 +6,9 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent implements OnInit {
-  @Output() setCategory = new EventEmitter();
-  @Output() setHome = new EventEmitter();
-  
+  @Output() setCategory: EventEmitter<boolean> = new EventEmitter();
+  @Output() setHome: EventEmitter<boolean> = new EventEmitter();
+
   isCategory: boolean = false;
   isHome: boolean = true;
 
