@@ -1,6 +1,6 @@
 <app-navigation
-  (setCategory)="selectCategory($event)"
-  (setHome)="selectHome($event)"
+  (setNav)="selectNav($event)"
+
 ></app-navigation>
 
 <app-call-to-action
@@ -37,7 +37,10 @@
   Loading Products...
 </button>
 
-<app-hot-deals *ngIf="isHome && products?.length"></app-hot-deals>
+<app-hot-deals
+  *ngIf="isHome && products?.length"
+  (setHotDeals)="selectHot($event)"
+></app-hot-deals>
 
 <app-top-selling
   *ngIf="isHome && products?.length"

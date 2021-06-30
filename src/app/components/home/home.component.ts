@@ -13,13 +13,20 @@ import _ from 'lodash';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  products: IProduct[] = [];
-  isCategory: boolean = false;
-  isHome: boolean = true;
+  public products: IProduct[] = [];
 
-  ascProducts: IProduct[];
+  public isHome: boolean = true;
+  public isCategory: boolean = false;
+  public isHotDeals: boolean = false;
+  public isContactUs: boolean = false;
+  public isBlog: boolean = false;
 
-  constructor(private productService: ProductService, private cartService: CartService) {}
+  public ascProducts: IProduct[];
+
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
     this.productService
@@ -37,19 +44,65 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  selectCategory(e: boolean) {
-    this.isCategory = e;
+  // navigation menu changing from child component by Output() decorator
+  public selectNav(value: string) {
+    switch (value) {
+      case 'home': {
+        this.isHome = true;
+        this.isCategory = false;
+        this.isHotDeals = false;
+        this.isContactUs = false;
+        this.isBlog = false;
+        break;
+      }
+      case 'category': {
+        this.isCategory = true;
+        this.isHome = false;
+        this.isHotDeals = false;
+        this.isContactUs = false;
+        this.isBlog = false;
+        break;
+      }
+      case 'hot-deals': {
+        this.isHome = false;
+        this.isCategory = false;
+        this.isHotDeals = true;
+        this.isContactUs = false;
+        this.isBlog = false;
+        break;
+      }
+      case 'contact-us': {
+        this.isHome = false;
+        this.isCategory = false;
+        this.isHotDeals = false;
+        this.isContactUs = true;
+        this.isBlog = false;
+        break;
+      }
+      case 'blog': {
+        this.isHome = false;
+        this.isCategory = false;
+        this.isHotDeals = false;
+        this.isContactUs = false;
+        this.isBlog = true;
+        break;
+      }
+      default: {
+        this.isHome = true;
+        this.isCategory = false;
+        this.isHotDeals = false;
+        this.isContactUs = false;
+        this.isBlog = false;
+        break;
+      }
+    }
   }
 
-  selectHome(e: boolean) {
-    this.isHome = e;
-  }
-
-  addToCart(id: string) {
+  public addToCart(id: string) {
     this.cartService.addToCart(id);
   }
 
-  notifyEmpty(product: string) {
+  public notifyEmpty(product: string) {
     alert(
       `Oops! The product ${product} is out of stock now. Please stay updated with us.`
     );

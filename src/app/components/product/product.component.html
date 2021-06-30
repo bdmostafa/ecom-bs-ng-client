@@ -30,12 +30,12 @@
       <!-- Product main img -->
       <div class="col-md-5 col-md-push-2">
         <div id="product-main-img">
-          <ng-template [ngIf]="thumbImages.length === 0">
+          <ng-template [ngIf]="thumbImages?.length === 0">
             <div class="product-preview">
               <img [src]="product?.image" alt="{{ product?.title }}" />
             </div>
           </ng-template>
-          <ng-template [ngIf]="thumbImages.length > 0">
+          <ng-template [ngIf]="thumbImages?.length > 0">
             <div class="product-preview" *ngFor="let t of thumbImages">
               <img [src]="t" alt="{{ product?.title }}" />
             </div>
@@ -46,14 +46,14 @@
 
       <!-- Product thumb imgs -->
       <div class="col-md-2 col-md-pull-5">
-        <ng-template [ngIf]="thumbImages.length > 0">
+        <ng-template [ngIf]="thumbImages?.length > 0">
           <div id="product-imgs">
             <div class="product-preview" *ngFor="let t of thumbImages">
               <img [src]="t" alt="{{ product?.title }}" />
             </div>
           </div>
         </ng-template>
-        <ng-template [ngIf]="thumbImages.length === 0">
+        <ng-template [ngIf]="thumbImages?.length === 0">
           <div id="product-imgs">
             <div class="product-preview">
               <img [src]="product?.image" alt="{{ product?.title }}" />

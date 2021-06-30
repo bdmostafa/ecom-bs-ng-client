@@ -21,10 +21,10 @@
           <li>
             <a
               [routerLink]="[
-                '/products/category/' + categoryProducts[0].category
+                '/products/category/', categoryProducts[0]?.category
               ]"
               routerLinkActive="router-link-active"
-              >{{ categoryProducts[0].category }}</a
+              >{{ categoryProducts[0]?.category }}</a
             >
           </li>
         </ul>
