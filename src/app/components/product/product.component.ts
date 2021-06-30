@@ -41,18 +41,18 @@ export class ProductComponent implements OnInit, AfterViewInit {
           // Load related products matching the current product's category
           this.productService.getProductsByCategory(prodData.product.category).subscribe((prodData: IProductsResponse) => {
             this.categoryProducts = prodData.products;
-            console.log(this.categoryProducts)
+            // console.log(this.categoryProducts);
           });
 
           // Assign the current product details
           this.product = prodData.product;
-          console.log(this.product);
+          // console.log(this.product);
 
-          if (prodData.product.images !== null) {
-            this.thumbImages = prodData?.product?.images?.split(';');
-          } else {
-            this.thumbImages = prodData?.product?.image?.split(';');
-          }
+          // if (prodData.product.images !== null) {
+          //   this.thumbImages = prodData?.product?.images?.split(';');
+          // } else {
+          //   this.thumbImages = prodData?.product?.image?.split(';');
+          // }
         });
       });
 
