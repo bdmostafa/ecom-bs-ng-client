@@ -35,7 +35,7 @@ export class CategoryComponent implements OnInit {
       // Load related products matching the current product's category
       this.productService.getProductsByCategory(category).subscribe((prodData: IProductsResponse) => {
         this.categoryProducts = prodData.products;
-        console.log(this.categoryProducts)
+        // console.log(this.categoryProducts);
       });
 
     });
