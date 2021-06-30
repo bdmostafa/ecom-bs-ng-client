@@ -15,21 +15,20 @@
               type="button"
               (click)="printData()"
             >
-            <i class="fas fa-print mr-2"></i>
-            
+              <i class="fas fa-print mr-2"></i>
+
               <span>Print</span>
               <i class="fa fa-download ml-2 icon-download"></i>
             </button>
 
             <!-- Download as CSV -->
-            
+
             <angular2csv
               class="btn btn-secondary buttons-csv buttons-html5"
               [data]="products"
               filename="products.csv"
               [options]="options"
             >
-            
             </angular2csv>
           </div>
         </div>
@@ -54,7 +53,6 @@
       <div class="row">
         <div class="col-sm-12">
           <table
-            
             id="tableRecords"
             class="table table-bordered table-striped dataTable dtr-inline"
             role="grid"
@@ -93,7 +91,7 @@
                     {{ product?.price | currency: "USD" }}
                   </td>
                   <td class="text-center">{{ product?.quantity }}</td>
-                  <td class="text-center">
+                  <td>
                     <span class="d-flex">
                       <button
                         (click)="deleteProduct(product._id)"
@@ -328,7 +326,7 @@
                 ? (page - 1) * pageSize + pageSize
                 : collectionSize
             }}
-            of {{ collectionSize }} entries
+            of {{ collectionSize }} products
           </div>
         </div>
         <div class="col-sm-12 col-md-7">

@@ -62,7 +62,15 @@
                   <th class="text-center">Status</th>
                   <th class="text-center">Update</th>
                 </tr>
-                <tr *ngFor="let order of orders; let idx = index">
+                <tr
+                  *ngFor="
+                    let order of orders
+                      | slice
+                        : (page - 1) * pageSize
+                        : (page - 1) * pageSize + pageSize;
+                    let idx = index
+                  "
+                >
                   <td>
                     <span>{{ idx + 1 }}</span>
                   </td>
@@ -73,7 +81,9 @@
                     <span>{{ order?.customer?.name }}</span>
                   </td>
                   <td>
-                    <tr *ngFor="let p of order?.productOrdered; let idx = index">
+                    <tr
+                      *ngFor="let p of order?.productOrdered; let idx = index"
+                    >
                       <td>
                         <span>{{ idx + 1 }} </span>
                       </td>
@@ -89,7 +99,7 @@
                         <span>{{ p?.product?.title.slice(0, 25) }} </span>
                       </td>
                       <td>
-                        <span>{{ p?.product?.price | currency: 'USD' }} </span>
+                        <span>{{ p?.product?.price | currency: "USD" }} </span>
                       </td>
                       <td>
                         <span>{{ p?.quantity }} </span>
@@ -122,6 +132,40 @@
                 </tr>
               </table>
             </div>
+
+            <!-- Pagination -->
+            <div class="row">
+              <div
+                class="
+                  col-sm-12 col-md-5
+                  d-flex
+                  justify-content-left
+                  align-items-center
+                "
+              >
+                <div>
+                  Showing {{ (page - 1) * pageSize + 1 }} to
+                  {{
+                    (page - 1) * pageSize + pageSize <= collectionSize
+                      ? (page - 1) * pageSize + pageSize
+                      : collectionSize
+                  }}
+                  of {{ collectionSize }} orders
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-7 d-flex justify-content-end">
+                <div>
+                  <!-- Showing pagination -->
+                  <ngb-pagination
+                    [(page)]="page"
+                    [pageSize]="pageSize"
+                    [collectionSize]="collectionSize"
+                    [boundaryLinks]="true"
+                  >
+                  </ngb-pagination>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <!-- Editable table -->
@@ -135,7 +179,16 @@
 <!-- /.content -->
 
 <!-- Spinner button while loading all orders -->
-<button *ngIf="orders?.length <= 0" class="btn btn-primary btn-spinner" type="button" disabled>
-  <span class="spinner-border spinner-border-md mr-2" role="status" aria-hidden="true"></span>
+<button
+  *ngIf="orders?.length <= 0"
+  class="btn btn-primary btn-spinner"
+  type="button"
+  disabled
+>
+  <span
+    class="spinner-border spinner-border-md mr-2"
+    role="status"
+    aria-hidden="true"
+  ></span>
   Loading all orders...
 </button>

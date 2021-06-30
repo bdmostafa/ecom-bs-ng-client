@@ -24,6 +24,10 @@ export class AllUsersComponent implements OnInit {
   user: any;
   roleList = ['user', 'admin', 'superAdmin'];
 
+  public page: number = 1;
+  public pageSize: number = 10;
+  public collectionSize: number;
+
   constructor(
     private userService: UserService,
     private router: Router,
@@ -79,6 +83,7 @@ export class AllUsersComponent implements OnInit {
     this.userService.getAllUsers().then((usersData: IUsersResponse) => {
       console.log(usersData.users);
       this.users = usersData.users;
+      this.collectionSize = usersData?.users?.length;
     });
   }
 

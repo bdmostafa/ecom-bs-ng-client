@@ -18,6 +18,10 @@ export class AllOrdersComponent implements OnInit {
   statusList = ['Pending', 'Approved', 'On going', 'Delivered'];
   statusData: IStatusInfo;
 
+  public page: number = 1;
+  public pageSize: number = 3;
+  public collectionSize: number;
+
   constructor(
     private router: Router,
     private orderService: OrderService,
@@ -29,6 +33,7 @@ export class AllOrdersComponent implements OnInit {
     this.orderService.getAllOrders().then((ordersData: IOrdersResponse) => {
       console.log(ordersData.orders);
       this.orders = ordersData.orders;
+      this.collectionSize = ordersData?.orders?.length;
     });
   }
 
@@ -56,8 +61,8 @@ export class AllOrdersComponent implements OnInit {
         });
     });
   }
-}
 
+}
 export interface IStatusInfo {
   id: string;
   status: string;
