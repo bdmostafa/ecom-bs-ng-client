@@ -58,6 +58,8 @@ import { NewsletterComponent } from './components/home/newsletter/newsletter.com
 import { HotDealsComponent } from './components/home/hot-deals/hot-deals.component';
 import { TopSellingComponent } from './components/home/top-selling/top-selling.component';
 import { HotDealsProductsComponent } from './components/home/hot-deals-products/hot-deals-products.component';
+import { ContactUsComponent } from './components/home/contact-us/contact-us.component';
+import { BlogComponent } from './components/home/blog/blog.component';
 
 // const config = new AuthServiceConfig([
 //   {
@@ -112,6 +114,8 @@ import { HotDealsProductsComponent } from './components/home/hot-deals-products/
     HotDealsComponent,
     TopSellingComponent,
     HotDealsProductsComponent,
+    ContactUsComponent,
+    BlogComponent,
   ],
   imports: [
     BrowserModule,

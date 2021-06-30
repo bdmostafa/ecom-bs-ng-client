@@ -1,7 +1,4 @@
-<app-navigation
-  (setNav)="selectNav($event)"
-
-></app-navigation>
+<app-navigation (setNav)="selectNav($event)"></app-navigation>
 
 <app-call-to-action
   *ngIf="isHome && products?.length"
@@ -52,6 +49,8 @@
   [products]="products"
 ></app-hot-deals-products>
 
+<app-contact-us *ngIf="isContactUs"></app-contact-us>
 
+<app-blog *ngIf="isBlog"></app-blog>
 
-<app-newsletter></app-newsletter>
+<app-newsletter *ngIf="!isContactUs"></app-newsletter>
