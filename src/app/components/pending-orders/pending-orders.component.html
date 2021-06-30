@@ -62,7 +62,15 @@
                   <th class="text-center">Status</th>
                   <th class="text-center">Update</th>
                 </tr>
-                <tr *ngFor="let order of orders; let idx = index">
+                <tr
+                  *ngFor="
+                    let order of orders
+                      | slice
+                        : (page - 1) * pageSize
+                        : (page - 1) * pageSize + pageSize;
+                    let idx = index
+                  "
+                >
                   <td>
                     <span>{{ idx + 1 }}</span>
                   </td>
@@ -121,6 +129,40 @@
                   </td>
                 </tr>
               </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="row">
+              <div
+                class="
+                  col-sm-12 col-md-5
+                  d-flex
+                  justify-content-left
+                  align-items-center
+                "
+              >
+                <div>
+                  Showing {{ (page - 1) * pageSize + 1 }} to
+                  {{
+                    (page - 1) * pageSize + pageSize <= collectionSize
+                      ? (page - 1) * pageSize + pageSize
+                      : collectionSize
+                  }}
+                  of {{ collectionSize }} orders
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-7 d-flex justify-content-end">
+                <div>
+                  <!-- Showing pagination -->
+                  <ngb-pagination
+                    [(page)]="page"
+                    [pageSize]="pageSize"
+                    [collectionSize]="collectionSize"
+                    [boundaryLinks]="true"
+                  >
+                  </ngb-pagination>
+                </div>
+              </div>
             </div>
           </div>
         </div>

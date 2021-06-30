@@ -21,6 +21,10 @@ export class PendingOrdersComponent implements OnInit {
   statusList = ['Pending', 'Approved', 'On going', 'Delivered'];
   statusData: IStatusInfo;
 
+  public page: number = 1;
+  public pageSize: number = 3;
+  public collectionSize: number;
+
   constructor(
     private orderService: OrderService,
     private router: Router,
@@ -37,6 +41,7 @@ export class PendingOrdersComponent implements OnInit {
 
           setTimeout(() => {
             this.orders = ordersData.orders;
+            this.collectionSize = ordersData?.orders?.length;
             this.spinner.hide().then();
           }, 1000);
         });
