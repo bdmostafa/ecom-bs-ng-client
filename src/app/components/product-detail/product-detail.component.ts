@@ -6,12 +6,13 @@ import { ProductService } from 'src/app/services/product.service';
 import { map } from 'rxjs/operators';
 
 declare let $: any;
+
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css'],
+  selector: 'app-product-detail',
+  templateUrl: './product-detail.component.html',
+  styleUrls: ['./product-detail.component.css']
 })
-export class ProductComponent implements OnInit, AfterViewInit {
+export class ProductDetailComponent implements OnInit, AfterViewInit {
   id: string;
   product: IProduct;
   thumbImages: any[] = [];

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import { ProductComponent } from './components/product/product.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ThankyouComponent } from './components/thankyou/thankyou.component';
@@ -24,6 +23,7 @@ import { OrdersByDateComponent } from './components/orders-by-date/orders-by-dat
 import { AllUsersComponent } from './components/all-users/all-users.component';
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import { AdminGuard } from './guard/admin.guard';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 
 const routes: Routes = [
   // Define routes for the landing / home page under a separate component for the layout of home page
@@ -37,7 +37,7 @@ const routes: Routes = [
       },
       {
         path: 'products/:productId',
-        component: ProductComponent,
+        component: ProductDetailComponent,
       },
       {
         path: 'products/category/:categoryName',

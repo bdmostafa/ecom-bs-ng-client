@@ -1,14 +1,12 @@
 import { ToastrInterceptor } from './_helpers/toastr.interceptor';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
-import { ProductComponent } from './components/product/product.component';
 import { ThankyouComponent } from './components/thankyou/thankyou.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
@@ -60,6 +58,7 @@ import { TopSellingComponent } from './components/home/top-selling/top-selling.c
 import { HotDealsProductsComponent } from './components/home/hot-deals-products/hot-deals-products.component';
 import { ContactUsComponent } from './components/home/contact-us/contact-us.component';
 import { BlogComponent } from './components/home/blog/blog.component';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 
 // const config = new AuthServiceConfig([
 //   {
@@ -78,7 +77,6 @@ import { BlogComponent } from './components/home/blog/blog.component';
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    ProductComponent,
     ThankyouComponent,
     CartComponent,
     CheckoutComponent,
@@ -116,6 +114,7 @@ import { BlogComponent } from './components/home/blog/blog.component';
     HotDealsProductsComponent,
     ContactUsComponent,
     BlogComponent,
+    ProductDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -127,7 +126,7 @@ import { BlogComponent } from './components/home/blog/blog.component';
     ToastrModule.forRoot(),
     FormsModule,
     SocialLoginModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     {
@@ -152,18 +151,18 @@ import { BlogComponent } from './components/home/blog/blog.component';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ToastrInterceptor,
-      multi: true
+      multi: true,
     },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RestInterceptor,
-      multi: true
+      multi: true,
     },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
