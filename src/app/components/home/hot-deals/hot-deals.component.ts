@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import * as moment from 'moment';
 import { interval, Subscription } from 'rxjs';
 
@@ -8,6 +8,8 @@ import { interval, Subscription } from 'rxjs';
   styleUrls: ['./hot-deals.component.css'],
 })
 export class HotDealsComponent implements OnInit {
+  @Output() setNav: EventEmitter<string> = new EventEmitter<string>();
+
   private subscription: Subscription;
 
   public toDay = moment(new Date());
@@ -58,6 +60,10 @@ export class HotDealsComponent implements OnInit {
     this.subscription = interval(1000).subscribe((x) => {
       this.getTimeDifference();
     });
+  }
+
+  public selectNav(e: string) {
+    this.setNav.emit(e);
   }
 
   ngOnDestroy() {

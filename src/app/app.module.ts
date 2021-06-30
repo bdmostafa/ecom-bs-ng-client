@@ -57,6 +57,7 @@ import { NavigationComponent } from './components/home/navigation/navigation.com
 import { NewsletterComponent } from './components/home/newsletter/newsletter.component';
 import { HotDealsComponent } from './components/home/hot-deals/hot-deals.component';
 import { TopSellingComponent } from './components/home/top-selling/top-selling.component';
+import { HotDealsProductsComponent } from './components/home/hot-deals-products/hot-deals-products.component';
 
 // const config = new AuthServiceConfig([
 //   {
@@ -110,6 +111,7 @@ import { TopSellingComponent } from './components/home/top-selling/top-selling.c
     NewsletterComponent,
     HotDealsComponent,
     TopSellingComponent,
+    HotDealsProductsComponent,
   ],
   imports: [
     BrowserModule,

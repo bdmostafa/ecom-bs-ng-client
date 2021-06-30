@@ -39,12 +39,19 @@
 
 <app-hot-deals
   *ngIf="isHome && products?.length"
-  (setHotDeals)="selectHot($event)"
+  (setNav)="selectNav($event)"
 ></app-hot-deals>
 
 <app-top-selling
   *ngIf="isHome && products?.length"
   [ascProducts]="ascProducts"
 ></app-top-selling>
+
+<app-hot-deals-products
+  *ngIf="isHotDeals && products?.length"
+  [products]="products"
+></app-hot-deals-products>
+
+
 
 <app-newsletter></app-newsletter>

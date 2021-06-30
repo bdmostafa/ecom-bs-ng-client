@@ -12,7 +12,7 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  selectNav(e: string) {
+  public selectNav(e: string) {
     this.setNav.emit(e);
   }
 }

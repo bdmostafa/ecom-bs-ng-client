@@ -26,6 +26,7 @@
               *ngFor="let product of categorizedProducts[i]"
             >
               <div class="card my-3 h-100">
+                <p [class.sold-out]="product?.quantity === 0" *ngIf="product?.quantity === 0">Sold Out</p>
                 <img
                   [src]="product.image"
                   alt="{{ product.title }}"

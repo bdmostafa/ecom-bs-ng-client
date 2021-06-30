@@ -21,6 +21,7 @@
               *ngFor="let product of products; let idx = index"
             >
               <div class="card my-3 h-100" *ngIf="idx <= 11">
+                <p [class.sold-out]="product?.quantity === 0" *ngIf="product?.quantity === 0">Sold Out</p>
                 <img
                   [src]="product.image"
                   alt="{{ product.title }}"

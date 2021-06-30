@@ -14,3 +14,16 @@
     color: red !important;
     font-weight: normal;
 }
+
+.sold-out {
+    content: "Sold out";
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: red;
+    padding: 5px 10px;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-decoration: none;
+}

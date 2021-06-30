@@ -22,3 +22,15 @@
     font-weight: 700;
     text-decoration: none;
 }
+
+.new {
+    content: "new";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgb(6, 165, 6);
+    color: #ffffff;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
