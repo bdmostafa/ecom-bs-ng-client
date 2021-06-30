@@ -7,3 +7,34 @@
     justify-content: center;
     align-items: center;
 }
+
+/deep/ angular2csv {
+    background-color: #6c757d;
+}
+
+/deep/ angular2csv > button {
+    color: transparent;  /* hides 'download' label */
+    line-height: 0;      /* Collapse the original line */
+    background-color: #6c757d;
+    border: none;
+}
+  
+/deep/ angular2csv > button::after {
+    content: "Export to CSV";   
+    color: white;             
+    display: block;
+    line-height: initial; 
+    margin-top: -5px;
+}
+
+/deep/ angular2csv > button:hover {
+    background-color: #59646d;
+}
+
+.icon-download {
+    position: absolute;
+    z-index: 11111;
+    top: 6px;
+    left: 45px;
+    padding-left: 2px;
+}

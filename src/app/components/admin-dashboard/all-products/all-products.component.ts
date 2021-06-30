@@ -9,6 +9,7 @@ import {
   IProductsResponse,
   ProductService,
 } from 'src/app/services/product.service';
+// import { Angular2Csv } from 'angular2-csv/Angular2-csv';
 
 @Component({
   selector: 'app-all-products',
@@ -16,9 +17,16 @@ import {
   styleUrls: ['./all-products.component.css'],
 })
 export class AllProductsComponent implements OnInit {
-  products: IProduct[] = [];
-  productForm: FormGroup;
-  product;
+  public products: IProduct[];
+  public productForm: FormGroup;
+  public product;
+
+  public page: number = 1;
+  public pageSize: number = 10;
+  public collectionSize: number;
+
+  public searchTerm: string;
+  public allProducts: IProduct[];
 
   constructor(
     private productService: ProductService,
@@ -64,16 +72,32 @@ export class AllProductsComponent implements OnInit {
     return this.productForm.get('_id');
   }
 
+  // option veriable to use in angular2csv
+  public options = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: false,
+    headers: ['Image', 'Title', 'Description', 'Category', 'Price', 'Quantity'],
+    showTitle: true,
+    title: 'Products List',
+    useBom: true,
+    removeNewLines: true,
+    keys: ['image', 'title', 'description', 'category', 'price', 'quantity'],
+  };
+
   ngOnInit(): void {
     this.productService
       .getProducts()
       .subscribe((prodData: IProductsResponse) => {
-        this.products = prodData.products;
-        console.log(this.products);
+        this.collectionSize = prodData?.products?.length;
+        this.products = prodData?.products;
+        // console.log(this.products);
+        this.allProducts = this.products.length && this.products;
       });
   }
 
-  deleteProduct(productId: string) {
+  public deleteProduct(productId: string) {
     this.productService
       .deleteProduct(productId)
       .then((data: IProductResponse) => {
@@ -86,11 +110,11 @@ export class AllProductsComponent implements OnInit {
       });
   }
 
-  processProductInfo(product) {
+  public processProductInfo(product) {
     this.product = this.productForm.patchValue(product);
   }
 
-  updateProduct() {
+  public updateProduct() {
     console.log(this._id, this.productForm.value);
     if (this.productForm.invalid) {
       return;
@@ -118,5 +142,22 @@ export class AllProductsComponent implements OnInit {
       });
 
     this.productForm.reset();
+  }
+
+  public search(value: string): void {
+    this.products = this.allProducts.filter((val) =>
+      val.title.toLowerCase().includes(value)
+    );
+    this.collectionSize = this.products.length;
+    console.log(this.products);
+  }
+
+  // TODO - printData does not work. To be fixed later
+  public printData() {
+    let divToPrint = document.getElementById('tableRecords');
+    let newWin = window.open('');
+    newWin.document.write(divToPrint.outerHTML);
+    newWin.print();
+    newWin.close();
   }
 }

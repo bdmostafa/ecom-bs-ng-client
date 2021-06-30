@@ -11,7 +11,7 @@ import { ThankyouComponent } from './components/thankyou/thankyou.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import { UniqueFilterPipe } from './pipes/unique-filter.pipe';
@@ -59,6 +59,8 @@ import { HotDealsProductsComponent } from './components/home/hot-deals-products/
 import { ContactUsComponent } from './components/home/contact-us/contact-us.component';
 import { BlogComponent } from './components/home/blog/blog.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+import { ListFilterPipe } from './pipes/list-filter.pipe';
+import { Angular2CsvModule } from 'angular2-csv';
 
 // const config = new AuthServiceConfig([
 //   {
@@ -115,6 +117,7 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
     ContactUsComponent,
     BlogComponent,
     ProductDetailComponent,
+    ListFilterPipe,
   ],
   imports: [
     BrowserModule,
@@ -127,6 +130,8 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
     FormsModule,
     SocialLoginModule,
     ReactiveFormsModule,
+    NgbPaginationModule,
+    Angular2CsvModule
   ],
   providers: [
     {

@@ -1,7 +1,7 @@
-<div *ngIf="products.length > 0" class="card">
-  <div class="card-header">
+<div *ngIf="products?.length > 0" class="card">
+  <!-- <div class="card-header">
     <h3 class="card-title">DataTable with default features</h3>
-  </div>
+  </div> -->
   <!-- /.card-header -->
   <div class="card-body">
     <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -13,142 +13,87 @@
               tabindex="0"
               aria-controls="example1"
               type="button"
+              (click)="printData()"
             >
-              <span>Copy</span>
-            </button>
-            <button
-              class="btn btn-secondary buttons-csv buttons-html5"
-              tabindex="0"
-              aria-controls="example1"
-              type="button"
-            >
-              <span>CSV</span>
-            </button>
-            <button
-              class="btn btn-secondary buttons-print"
-              tabindex="0"
-              aria-controls="example1"
-              type="button"
-            >
+            <i class="fas fa-print mr-2"></i>
+            
               <span>Print</span>
+              <i class="fa fa-download ml-2 icon-download"></i>
             </button>
-            <div class="btn-group">
-              <button
-                class="
-                  btn btn-secondary
-                  buttons-collection
-                  dropdown-toggle
-                  buttons-colvis
-                "
-                tabindex="0"
-                aria-controls="example1"
-                type="button"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <span>Column visibility</span>
-              </button>
-            </div>
+
+            <!-- Download as CSV -->
+            
+            <angular2csv
+              class="btn btn-secondary buttons-csv buttons-html5"
+              [data]="products"
+              filename="products.csv"
+              [options]="options"
+            >
+            
+            </angular2csv>
           </div>
         </div>
+
         <div class="col-sm-12 col-md-6">
           <div id="example1_filter" class="dataTables_filter">
-            <label
-              >Search:<input
-                type="search"
-                class="form-control form-control-sm"
-                placeholder=""
-                aria-controls="example1"
-            /></label>
+            <form>
+              <label
+                >Search Product:<input
+                  type="text"
+                  class="form-control form-control-sm"
+                  placeholder="Product name here"
+                  aria-controls="example1"
+                  name="searchTerm"
+                  [(ngModel)]="searchTerm"
+                  (input)="search($event.target.value)"
+              /></label>
+            </form>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-sm-12">
           <table
-            id="example1"
+            
+            id="tableRecords"
             class="table table-bordered table-striped dataTable dtr-inline"
             role="grid"
             aria-describedby="example1_info"
           >
             <thead>
-              <tr role="row">
-                <th
-                  class="sorting sorting_asc"
-                  tabindex="0"
-                  aria-controls="example1"
-                  rowspan="1"
-                  colspan="1"
-                  aria-sort="ascending"
-                  aria-label="Rendering engine: activate to sort column descending"
-                >
-                  Image
-                </th>
-                <th
-                  class="sorting"
-                  tabindex="0"
-                  aria-controls="example1"
-                  rowspan="1"
-                  colspan="1"
-                  aria-label="Browser: activate to sort column ascending"
-                >
-                  Title
-                </th>
-                <th
-                  class="sorting"
-                  tabindex="0"
-                  aria-controls="example1"
-                  rowspan="1"
-                  colspan="1"
-                  aria-label="Platform(s): activate to sort column ascending"
-                >
-                  Description
-                </th>
-                <th
-                  class="sorting"
-                  tabindex="0"
-                  aria-controls="example1"
-                  rowspan="1"
-                  colspan="1"
-                  aria-label="Platform(s): activate to sort column ascending"
-                >
-                  Category
-                </th>
-                <th
-                  class="sorting"
-                  tabindex="0"
-                  aria-controls="example1"
-                  rowspan="1"
-                  colspan="1"
-                  aria-label="Engine version: activate to sort column ascending"
-                >
-                  Price
-                </th>
-                <th
-                  class="sorting"
-                  tabindex="0"
-                  aria-controls="example1"
-                  rowspan="1"
-                  colspan="1"
-                  aria-label="CSS grade: activate to sort column ascending"
-                >
-                  Quantity
-                </th>
+              <tr class="text-center" role="row">
+                <th>Image</th>
+                <th class="sorting">Title</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Quantity</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              <ng-container *ngFor="let product of products; let idx = index">
+              <!-- If '| listFilter: searchTerm' pipe is used before slice, products do not show -->
+              <ng-container
+                *ngFor="
+                  let product of products
+                    | slice
+                      : (page - 1) * pageSize
+                      : (page - 1) * pageSize + pageSize;
+                  let idx = index
+                "
+              >
                 <tr [class]="idx % 2 === 0 ? 'even' : 'odd'">
-                  <td class="dtr-control sorting_1" tabindex="0" width="100">
+                  <td class="text-center" width="100">
                     <img [src]="product?.image" class="w-25" />
                   </td>
                   <td>{{ product?.title }}</td>
                   <td>{{ product?.description.substr(0, 150) }}</td>
-                  <td>{{ product?.category }}</td>
-                  <td>{{ product?.price | currency: "USD" }}</td>
-                  <td>{{ product?.quantity }}</td>
-                  <td>
+                  <td class="text-center">{{ product?.category }}</td>
+                  <td class="text-center">
+                    {{ product?.price | currency: "USD" }}
+                  </td>
+                  <td class="text-center">{{ product?.quantity }}</td>
+                  <td class="text-center">
                     <span class="d-flex">
                       <button
                         (click)="deleteProduct(product._id)"
@@ -377,7 +322,13 @@
             role="status"
             aria-live="polite"
           >
-            Showing 1 to 10 of 57 entries
+            Showing {{ (page - 1) * pageSize + 1 }} to
+            {{
+              (page - 1) * pageSize + pageSize <= collectionSize
+                ? (page - 1) * pageSize + pageSize
+                : collectionSize
+            }}
+            of {{ collectionSize }} entries
           </div>
         </div>
         <div class="col-sm-12 col-md-7">
@@ -385,91 +336,14 @@
             class="dataTables_paginate paging_simple_numbers"
             id="example1_paginate"
           >
-            <ul class="pagination">
-              <li
-                class="paginate_button page-item previous disabled"
-                id="example1_previous"
-              >
-                <a
-                  href="/admin/dashboard"
-                  aria-controls="example1"
-                  data-dt-idx="0"
-                  tabindex="0"
-                  class="page-link"
-                  >Previous</a
-                >
-              </li>
-              <li class="paginate_button page-item active">
-                <a
-                  href="/admin/dashboard"
-                  aria-controls="example1"
-                  data-dt-idx="1"
-                  tabindex="0"
-                  class="page-link"
-                  >1</a
-                >
-              </li>
-              <li class="paginate_button page-item">
-                <a
-                  href="/admin/dashboard"
-                  aria-controls="example1"
-                  data-dt-idx="2"
-                  tabindex="0"
-                  class="page-link"
-                  >2</a
-                >
-              </li>
-              <li class="paginate_button page-item">
-                <a
-                  href="/admin/dashboard"
-                  aria-controls="example1"
-                  data-dt-idx="3"
-                  tabindex="0"
-                  class="page-link"
-                  >3</a
-                >
-              </li>
-              <li class="paginate_button page-item">
-                <a
-                  href="/admin/dashboard"
-                  aria-controls="example1"
-                  data-dt-idx="4"
-                  tabindex="0"
-                  class="page-link"
-                  >4</a
-                >
-              </li>
-              <li class="paginate_button page-item">
-                <a
-                  href="/admin/dashboard"
-                  aria-controls="example1"
-                  data-dt-idx="5"
-                  tabindex="0"
-                  class="page-link"
-                  >5</a
-                >
-              </li>
-              <li class="paginate_button page-item">
-                <a
-                  href="/admin/dashboard"
-                  aria-controls="example1"
-                  data-dt-idx="6"
-                  tabindex="0"
-                  class="page-link"
-                  >6</a
-                >
-              </li>
-              <li class="paginate_button page-item next" id="example1_next">
-                <a
-                  href="/admin/dashboard"
-                  aria-controls="example1"
-                  data-dt-idx="7"
-                  tabindex="0"
-                  class="page-link"
-                  >Next</a
-                >
-              </li>
-            </ul>
+            <!-- Showing pagination -->
+            <ngb-pagination
+              [(page)]="page"
+              [pageSize]="pageSize"
+              [collectionSize]="collectionSize"
+              [boundaryLinks]="true"
+            >
+            </ngb-pagination>
           </div>
         </div>
       </div>
@@ -479,7 +353,16 @@
 </div>
 
 <!-- Spinner button while loading all products -->
-<button *ngIf="products.length <= 0" class="btn btn-primary btn-spinner" type="button" disabled>
-  <span class="spinner-border spinner-border-md mr-2" role="status" aria-hidden="true"></span>
+<button
+  *ngIf="products?.length <= 0"
+  class="btn btn-primary btn-spinner"
+  type="button"
+  disabled
+>
+  <span
+    class="spinner-border spinner-border-md mr-2"
+    role="status"
+    aria-hidden="true"
+  ></span>
   Loading products...
 </button>
