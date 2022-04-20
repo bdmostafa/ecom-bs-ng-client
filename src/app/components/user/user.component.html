@@ -1,22 +1,19 @@
 <div class="container user-profile">
-  <h2 class="text-center mb-3">Hi {{ myUser?.name }}, Welcome to your profile page</h2>
+  <h2 class="text-center mb-3">Hi {{ myUser?.name }}, Welcome to your profile page!</h2>
   <form novalidate>
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-12">
         <div class="profile-img">
-          <img
-            [src]="
+          <img [src]="
               'https://banner2.cleanpng.com/20180505/upw/kisspng-computer-icons-avatar-businessperson-interior-desi-corporae-5aee195c6d1683.4671087315255535004468.jpg'
-            "
-            alt="{{ myUser?.name }}"
-          />
-          <div class="file btn btn-lg btn-primary">
+            " alt="{{ myUser?.name }}" />
+          <!-- <div class="file btn btn-lg btn-primary">
             Change Photo
             <input name="file" type="file" />
-          </div>
+          </div> -->
         </div>
         <div class="profile-work">
-          <h4>PROFILE INFO</h4>
+          <h1>PROFILE INFO</h1>
 
           <p><strong>User Id: </strong> {{ myUser?._id }}</p>
 
@@ -34,36 +31,28 @@
             {{ "Your Profession" }}
           </p>
         </div>
-        <span class="d-flex">
-          <button
-            class="btn btn-secondary btn-lg mr-2"
-            data-toggle="modal"
-            data-target="#updateFormModal"
-          >
+
+        <span class="d-flex justify-content-center w-100">
+          <button class="btn btn-primary btn-lg mt-2 mb-2" data-toggle="modal" data-target="#viewOrdersForModal">
+            View Orders
+          </button>
+        </span>
+
+        <span class="d-flex justify-content-center">
+          <button class="btn btn-secondary btn-lg mr-2" data-toggle="modal" data-target="#updateFormModal">
             Update
           </button>
 
           <!-- Update User Modal Form -->
-          <div
-            class="modal fade"
-            id="updateFormModal"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
+          <div class="modal fade" id="updateFormModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLabel">
                     Update User
                   </h5>
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
@@ -71,35 +60,20 @@
                   <div class="card card-body">
                     <div class="pl-3 pr-3 card-primary">
                       <!-- Reactive Model Form -->
-                      <form
-                        (ngSubmit)="updateUser()"
-                        [formGroup]="userForm"
-                        class="form-horizontal"
-                        novalidate
-                      >
+                      <form (ngSubmit)="updateUser()" [formGroup]="userForm" class="form-horizontal" novalidate>
                         <div class="input-group form-group">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
                               <i class="fas fa-user"></i>
                             </span>
                           </div>
-                          <input
-                            class="form-control w-75"
-                            formControlName="name"
-                            id="name"
-                            name="name"
-                            placeholder="John"
-                            required
-                            type="text"
-                          />
-                          <span
-                            class="text-danger"
-                            *ngIf="
+                          <input class="form-control w-75" formControlName="name" id="name" name="name"
+                            placeholder="John" required type="text" />
+                          <span class="text-danger" *ngIf="
                               name.invalid &&
                               name.touched &&
                               name.errors?.required
-                            "
-                          >
+                            ">
                             Name is required
                           </span>
                         </div>
@@ -109,26 +83,13 @@
                               <i class="fas fa-envelope"></i>
                             </span>
                           </div>
-                          <input
-                            class="form-control w-75"
-                            formControlName="email"
-                            id="email"
-                            name="email"
-                            placeholder="you@example.com"
-                            required
-                            type="text"
-                          />
+                          <input class="form-control w-75" formControlName="email" id="email" name="email"
+                            placeholder="you@example.com" required type="text" />
                           <span *ngIf="email.invalid && email.touched">
-                            <span
-                              class="text-danger"
-                              *ngIf="email.errors?.required"
-                            >
+                            <span class="text-danger" *ngIf="email.errors?.required">
                               Email is required
                             </span>
-                            <span
-                              class="text-danger"
-                              *ngIf="email.errors?.email"
-                            >
+                            <span class="text-danger" *ngIf="email.errors?.email">
                               Enter a valid email address
                             </span>
                           </span>
@@ -140,33 +101,17 @@
                               <i class="fas fa-key"></i>
                             </span>
                           </div>
-                          <input
-                            class="form-control w-75"
-                            formControlName="password"
-                            id="password"
-                            name="password"
-                            placeholder="Password ('password' word is not allowed)"
-                            required
-                            type="password"
-                          />
+                          <input class="form-control w-75" formControlName="password" id="password" name="password"
+                            placeholder="Password ('password' word is not allowed)" required type="password" />
                           <span *ngIf="password.invalid && password.touched">
-                            <span
-                              class="text-danger"
-                              *ngIf="password.errors?.required"
-                            >
+                            <span class="text-danger" *ngIf="password.errors?.required">
                               Password is required
                             </span>
-                            <span
-                              class="text-danger"
-                              *ngIf="password.errors?.forbiddenPassword"
-                            >
+                            <span class="text-danger" *ngIf="password.errors?.forbiddenPassword">
                               '{{ password.errors?.forbiddenPassword.value }}'
                               is not allowed as a password <br />
                             </span>
-                            <span
-                              class="text-danger"
-                              *ngIf="password.errors?.pattern"
-                            >
+                            <span class="text-danger" *ngIf="password.errors?.pattern">
                               Password should have minimum 6 characters, at
                               least 1 uppercase letter, 1 lowercase letter and 1
                               number
@@ -179,47 +124,27 @@
                               <i class="fas fa-key"></i>
                             </span>
                           </div>
-                          <input
-                            class="form-control w-75"
-                            formControlName="confirmPassword"
-                            id="confirmPassword"
-                            name="confirmPassword"
-                            placeholder="Confirm Password"
-                            required
-                            type="password"
-                          />
+                          <input class="form-control w-75" formControlName="confirmPassword" id="confirmPassword"
+                            name="confirmPassword" placeholder="Confirm Password" required type="password" />
                           <span *ngIf="confirmPassword.touched">
-                            <span
-                              class="text-danger"
-                              *ngIf="
+                            <span class="text-danger" *ngIf="
                                 confirmPassword.invalid &&
                                 confirmPassword.errors?.required
-                              "
-                            >
+                              ">
                               Confirm Password is required
                             </span>
-                            <span
-                              class="text-danger"
-                              *ngIf="userForm.errors?.misMatch"
-                            >
+                            <span class="text-danger" *ngIf="userForm.errors?.misMatch">
                               Password does not match
                             </span>
                           </span>
                         </div>
 
                         <div class="form-group modal-footer form-group">
-                          <button
-                            type="button"
-                            class="btn btn-secondary"
-                            data-dismiss="modal"
-                          >
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">
                             <i class="far fa-window-close"></i> Close
                           </button>
-                          <button
-                            [disabled]="userForm.invalid && userForm.touched"
-                            class="btn btn-secondary"
-                            type="submit"
-                          >
+                          <button [disabled]="userForm.invalid && userForm.touched" class="btn btn-secondary"
+                            type="submit">
                             <i class="fas fa-edit"></i> Update
                           </button>
                         </div>
@@ -234,111 +159,134 @@
           <button (click)="logout()" class="btn btn-secondary btn-lg">
             Logout
           </button>
+
         </span>
+
       </div>
-      <div class="col-md-8">
-        <!-- When Orders are available -->
-        <table *ngIf="userOrderData?.length > 0" class="table">
-          <thead class="table-dark">
-            <tr class="text-center">
-              <th>#Order Qty</th>
-              <th>Image</th>
-              <th>Title</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Subtotal</th>
-            </tr>
-          </thead>
+      <div class="col-md-12 modal fade" id="viewOrdersForModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel">
 
-          <tbody>
-            <ng-container *ngFor="let order of userOrderData; let idx = index">
-              <tr>
-                <td>{{ idx + 1 }}</td>
-              </tr>
-              <tr *ngFor="let u of order?.productOrdered; let idx = index">
-                <td></td>
-                <td class="d-flex align-items-center justify-content-around">
-                  <img
-                    [src]="u?.product?.image"
-                    alt="{{ u?.product?.title }}"
-                    height="60"
-                    class="order-1"
-                  />
-                </td>
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Your Orders
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="card card-body">
+                <div class="pl-3 pr-3 card-primary">
 
-                <td>
-                  <p
-                    class="
+                  <!-- When Orders are available -->
+                  <table *ngIf="userOrderData?.length > 0" class="table">
+                    <thead class="table-dark">
+                      <tr class="text-center">
+                        <th>#Order Qty</th>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <ng-container *ngFor="let order of userOrderData; let idx = index">
+                        <tr>
+                          <td>{{ idx + 1 }}</td>
+                        </tr>
+                        <tr *ngFor="let u of order?.productOrdered; let idx = index">
+                          <td></td>
+                          <td class="d-flex align-items-center justify-content-around">
+                            <img [src]="u?.product?.image" alt="{{ u?.product?.title }}" height="60" class="order-1" />
+                          </td>
+
+                          <td>
+                            <p class="
                       d-flex
                       align-items-center
                       justify-content-center
                       mt-4
-                    "
-                  >
-                    {{ u?.product?.title | uppercase }}
-                  </p>
-                </td>
+                    ">
+                              {{ u?.product?.title | uppercase }}
+                            </p>
+                          </td>
 
-                <td>
-                  <p
-                    class="
+                          <td>
+                            <p class="
                       d-flex
                       align-items-center
                       justify-content-center
                       mt-4
-                    "
-                  >
-                    {{ u?.product?.price | currency: "USD" }}
-                  </p>
-                </td>
+                    ">
+                              {{ u?.product?.price | currency: "USD" }}
+                            </p>
+                          </td>
 
-                <td>
-                  <p
-                    class="
+                          <td>
+                            <p class="
                       d-flex
                       align-items-center
                       justify-content-center
                       mt-4
-                    "
-                  >
-                    {{ u?.quantity }}
-                  </p>
-                </td>
-                <td>
-                  <p
-                    class="
+                    ">
+                              {{ u?.quantity }}
+                            </p>
+                          </td>
+                          <td>
+                            <p class="
                       d-flex
                       align-items-center
                       justify-content-center
                       mt-4
-                    "
-                  >
-                    {{ u?.quantity * u?.product?.price | currency: "USD" }}
-                  </p>
-                </td>
-              </tr>
-            </ng-container>
-          </tbody>
-          <tr class="border-0">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><h5>TOTAL</h5></td>
-            <td>
-              <h5>{{ calculateTotal() | currency: "USD" }}</h5>
-            </td>
-            <td></td>
-          </tr>
-        </table>
+                    ">
+                              {{ u?.quantity * u?.product?.price | currency: "USD" }}
+                            </p>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                    <tr class="border-0">
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>
+                        <h5>TOTAL</h5>
+                      </td>
+                      <td>
+                        <h5>{{ calculateTotal() | currency: "USD" }}</h5>
+                      </td>
+                      <td></td>
+                    </tr>
+                  </table>
 
-        <!-- When Orders are empty -->
-        <div *ngIf="userOrderData?.length <= 0" class="text-center mt-4">
-          <h2>Oops... Your order is empty now.</h2>
-          <button [routerLink]="['/']" class="btn btn-primary btn-lg">
-            Go To Shop page
-          </button>
+                  <!-- When Orders are empty -->
+                  <div *ngIf="userOrderData?.length <= 0" class="text-center mt-4">
+                    <h2>Oops... Your order is empty now.</h2>
+                    <button [routerLink]="['/']" class="btn btn-primary btn-lg">
+                      Go To Shop page
+                    </button>
+                  </div>
+
+                  <div class="form-group modal-footer form-group">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                      <i class="far fa-window-close"></i> Close
+                    </button>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
+
+
       </div>
     </div>
   </form>
